@@ -7,6 +7,9 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
+import java.io.IOException;
+import java.util.Set;
+
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class StrokeMapServiceTests {
 
@@ -21,8 +24,17 @@ public class StrokeMapServiceTests {
 
     @Test
     void codePointCharacterSequencyRawLineTest() {
-        assertEquals(2, 1+1);
-        assertEquals(this.strokeMapService.test, "123");
+
+        Set<String> result = null;
+        try {
+            result = strokeMapService.codePointCharacterSequencyRawLine();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        assertEquals(28095, result.size());
+              
+        
     }
 
 }
