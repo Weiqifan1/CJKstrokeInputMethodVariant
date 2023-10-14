@@ -4,7 +4,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class StrokeMapService {
-    public static Set<String> codePointCharacterSequencyRawData() {
+
+    public String test = "123";
+
+
+    public Set<String> codePointCharacterSequencyRawLine() {
         return new HashSet<>();
     }
 }
