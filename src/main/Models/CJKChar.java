@@ -1,15 +1,17 @@
 package main.Models;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-
-@AllArgsConstructor
-@Builder
 public class CJKChar {
     private String CJK;
     private String CJKWithSetMark;
     private String UnicodeHex;
     private String ConwayCode;
+
+    public CJKChar(String CJK, String CJKWithSetMark, String unicodeHex, String conwayCode) {
+        this.CJK = CJK;
+        this.CJKWithSetMark = CJKWithSetMark;
+        UnicodeHex = unicodeHex;
+        ConwayCode = conwayCode;
+    }
 
     public boolean isMultiSet() {
         return CJK == CJKWithSetMark;
