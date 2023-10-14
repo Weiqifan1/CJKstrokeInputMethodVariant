@@ -1,4 +1,4 @@
-package dataFileGenerators.staticDataFileReaders;
+package main.dataFileGenerators.staticDataFileReaders;
 
 import java.util.ArrayList;
 import java.util.List;

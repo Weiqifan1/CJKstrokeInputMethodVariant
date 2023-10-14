@@ -1,4 +1,4 @@
-package dataFileGenerators.stokeMapGenerators;
+package main.dataFileGenerators.stokeMapGenerators;
 
 import java.util.HashSet;
 import java.util.Set;
