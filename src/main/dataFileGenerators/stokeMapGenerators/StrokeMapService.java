@@ -10,8 +10,9 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class StrokeMapService {
-// assertEquals(9931, jundaNumbers.size());
-//        assertEquals(13058
+
+
+
     public Map<String, CJKChaaar> charToInfoCJKMap() {
         CodepointCharacterSequenceReader reader = new CodepointCharacterSequenceReader();
         Set<String> rawConwayStrings = reader.codePointCharacterSequencyRawLine();
