@@ -5,12 +5,16 @@ public class CJKChaaar {
     private String CJKWithSetMark;
     private String UnicodeHex;
     private String ConwayCode;
+    private CJKfrequency junda;
+    private CJKfrequency tzai;
 
-    public CJKChaaar(String CJK, String CJKWithSetMark, String unicodeHex, String conwayCode) {
+    public CJKChaaar(String CJK, String CJKWithSetMark, String unicodeHex, String conwayCode, CJKfrequency junda, CJKfrequency tzai) {
         this.CJK = CJK;
         this.CJKWithSetMark = CJKWithSetMark;
-        UnicodeHex = unicodeHex;
-        ConwayCode = conwayCode;
+        this.UnicodeHex = unicodeHex;
+        this.ConwayCode = conwayCode;
+        this.junda = junda;
+        this.tzai = tzai;
     }
 
     public boolean isMultiSet() {
@@ -31,5 +35,13 @@ public class CJKChaaar {
 
     public String getConwayCode() {
         return ConwayCode;
+    }
+
+    public CJKfrequency getJunda() {
+        return junda;
+    }
+
+    public CJKfrequency getTzai() {
+        return tzai;
     }
 }
