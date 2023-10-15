@@ -1,12 +1,12 @@
 package main.Models;
 
-public class CJKChar {
+public class CJKChaaar {
     private String CJK;
     private String CJKWithSetMark;
     private String UnicodeHex;
     private String ConwayCode;
 
-    public CJKChar(String CJK, String CJKWithSetMark, String unicodeHex, String conwayCode) {
+    public CJKChaaar(String CJK, String CJKWithSetMark, String unicodeHex, String conwayCode) {
         this.CJK = CJK;
         this.CJKWithSetMark = CJKWithSetMark;
         UnicodeHex = unicodeHex;

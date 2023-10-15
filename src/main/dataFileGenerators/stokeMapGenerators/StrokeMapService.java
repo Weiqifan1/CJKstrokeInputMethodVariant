@@ -1,48 +1,48 @@
 package main.dataFileGenerators.stokeMapGenerators;
 
-import java.io.IOException;
+import main.Models.CJKChaaar;
+import main.dataFileGenerators.CodepointCharacterSequenceReader;
+
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static main.dataFileGenerators.staticDataFileReaders.CodepointCharacterSequenceReader.readCodepointCharacterSequency;
-
 public class StrokeMapService {
 
-    public Set<String> codePointCharacterSequencyRawLine() throws IOException {
-        List<String> fileData = readCodepointCharacterSequency();
-        List<String> compliantLines = fileData.stream().filter(line -> lineMatchPrescribedRegex(line)).toList();
-        List<String> nonCompliant = fileData.stream().filter(line -> !lineMatchPrescribedRegex(line)).toList();
-        return compliantLines.stream().collect(Collectors.toSet());
+    public Map<String, CJKChaaar> charToInfoCJKMap() {
+        CodepointCharacterSequenceReader reader = new CodepointCharacterSequenceReader();
+        Set<String> rawConwayStrings = reader.codePointCharacterSequencyRawLine();
+
+        Set<CJKChaaar> CJKset = rawConwayStrings.stream()
+                .map(line -> conwayRawStringToObj(line)).collect(Collectors.toSet());
+
+        Map<String, CJKChaaar> result = CJKset.stream()
+                .collect(Collectors.toMap(
+                        a -> a.getCJK(),
+                        a -> a
+                ));
+        return result;
     }
 
-    /*
-    Each compliant line shall be a tab-separated
-    (code point, character, stroke sequence regex) triplet,
-    where:
-      1. the stroke sequence regex shall match `[1-5|()\\]+`, and
-      2. the character may be immediately followed by either
-         (a) nothing, to indicate that it is dual, or
-         (b) a caret (^), to indicate that it is traditional-only, or
-         (c) an asterisk (*), to indicate that it is simplified-only.
-    */
-    private boolean lineMatchPrescribedRegex(String inputLine) {
-        List<String> lineSplit = List.of(inputLine.split("\t"));
-
-        if (lineSplit.size() < 3) {
-            return false;
+    private CJKChaaar conwayRawStringToObj(String rawConwayLine) {
+        List<String> conwayList = List.of(rawConwayLine.split("\t"))
+                .stream().map(item -> item.trim()).toList();
+        String CJKcharWithSetMark = conwayList.get(1);
+        String cleanCJKChar = "";
+        String lastChar = "" + CJKcharWithSetMark.charAt(CJKcharWithSetMark.length() - 1);
+        if (lastChar.equals("^") || lastChar.equals("*")) {
+            cleanCJKChar = CJKcharWithSetMark.substring(0, CJKcharWithSetMark.length() - 1);
+        } else {
+            cleanCJKChar = CJKcharWithSetMark;
         }
 
-        String codepoint = lineSplit.get(0);
-        String charAndSetmarker = lineSplit.get(1);
-        String strokes = lineSplit.get(2);
-
-        boolean codepointStartWithUplus = codepoint.startsWith("U+");
-        boolean strokesMatch = strokes.matches("[1-5|\\\\()]+");
-        if (!(codepointStartWithUplus && strokesMatch)) {
-            return false;
-        }
-        return true;
+        CJKChaaar cjkChar = new CJKChaaar(
+                cleanCJKChar,
+                CJKcharWithSetMark,
+                conwayList.get(0),
+                conwayList.get(2));
+        return cjkChar;
     }
 
 }
