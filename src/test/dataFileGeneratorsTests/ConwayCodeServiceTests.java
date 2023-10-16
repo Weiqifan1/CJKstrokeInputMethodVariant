@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -31,11 +32,28 @@ public class ConwayCodeServiceTests {
 
     */
 
+    String[] exampleStrings = {
+            "32(1534|1543)\\1",
+            "413(1234|1235)\\1(2|3)111211122",
+            "(1|4)111251(554234|554444)\\212",
+            "314314(51533|51541)\\1",
+            "(351251214|353251214)\\1\\1",
+            "(534332534|534335342)\\1\\1",
+            "34(1|4)(51154|511211)(1534|1543)\\3"
+    };
+
     @Test
     void SimpleCodeTest() {
         //U+4E0D	不	1324
         ConwayCodeService conwayService = new ConwayCodeService();
-        Set<String> codeList = conwayService.codesFromConway("1324");
+
+        for (String eachStr : exampleStrings) {
+            List<String> eachEks = conwayService.codesFromConway(eachStr);
+            String test = "";
+        }
+
+
+        List<String> codeList = conwayService.codesFromConway("1324");
         assertEquals(Set.of("1324"), codeList);
     }
 
