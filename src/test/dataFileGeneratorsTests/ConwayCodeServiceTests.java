@@ -20,6 +20,85 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class ConwayCodeServiceTests {
 
+    //*******************************************************
+    //**********   fullCode set to 2-2 codeSet
+    //*******************************************************
+
+    @Test
+    void twoTwoTest() {
+        Set<String> input = List.of(
+                "3415115415431543",
+                "3415115415341534",
+                "34151121115431543",
+                "34151121115341534",
+                "3445115415431543",
+                "3445115415341534",
+                "34451121115431543",
+                "34451121115341534"
+        ).stream().collect(Collectors.toSet());
+
+        Set<String> testSet = List.of(
+                "3443",
+                "3434"
+        ).stream().collect(Collectors.toSet());
+
+        ConwayCodeService conwayService = new ConwayCodeService();
+        Set<String> codeList = conwayService.fullCodesToTwoTwoCodes(input);
+        assertEquals(testSet, codeList);
+
+    }
+
+    @Test
+    void threeThreeTest() {
+        Set<String> input = List.of(
+                "3415115415431543",
+                "3415115415341534",
+                "34151121115431543",
+                "34151121115341534",
+                "3445115415431543",
+                "3445115415341534",
+                "34451121115431543",
+                "34451121115341534"
+        ).stream().collect(Collectors.toSet());
+
+        Set<String> testSet = List.of(
+                "341543",
+                "341534",
+                "344543",
+                "344534"
+        ).stream().collect(Collectors.toSet());
+
+        ConwayCodeService conwayService = new ConwayCodeService();
+        Set<String> codeList = conwayService.fullCodeToThreeThree(input);
+        assertEquals(testSet, codeList);
+    }
+
+    @Test
+    void twoFourTest() {
+        Set<String> input = List.of(
+                "3415115415431543",
+                "3415115415341534",
+                "34151121115431543",
+                "34151121115341534",
+                "3445115415431543",
+                "3445115415341534",
+                "34451121115431543",
+                "34451121115341534"
+        ).stream().collect(Collectors.toSet());
+
+        Set<String> testSet = List.of(
+                "341543",
+                "341534"
+        ).stream().collect(Collectors.toSet());
+
+        ConwayCodeService conwayService = new ConwayCodeService();
+        Set<String> codeList = conwayService.fullCodeToTwoFour(input);
+        assertEquals(testSet, codeList);
+    }
+
+    //*******************************************************
+    //**********    conwayCode to full code set tests  ******
+    //******************************************************
     /* Test cases:
 U+4E0D	不	1324
 U+4FF4	俴	32(1534|1543)\1
