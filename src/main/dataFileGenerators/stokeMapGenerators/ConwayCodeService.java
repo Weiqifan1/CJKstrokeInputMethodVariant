@@ -1,9 +1,5 @@
 package main.dataFileGenerators.stokeMapGenerators;
 
-import main.Models.CJKChaaar;
-import main.Models.CJKfrequency;
-import main.dataFileGenerators.CodepointCharacterSequenceReader;
-
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -11,15 +7,11 @@ import java.util.stream.Collectors;
 
 public class ConwayCodeService {
 
-    public List<String> codesFromConway(String conwayCode) {
-
+    public Set<String> codesFromConway(String conwayCode) {
         List<String> listofParens = getParens(conwayCode);
         String replaceparens = replaceParensWithCapitalLetters(conwayCode);
-
-        //lav kode der tager alle parenteserne og laver conway strings af dem.
         List<String> conwayList = toConwayStringList(List.of(replaceparens), listofParens);
-
-        return listofParens;
+        return conwayList.stream().collect(Collectors.toSet());
     }
 
     private List<String> toConwayStringList(List<String> replaceparens, List<String> listofParens) {
@@ -42,12 +34,10 @@ public class ConwayCodeService {
     }
 
     private String insertParenInCurrentString(String eachReplace, String eachelem) {
-        //getLovestNumber with backslash
         Integer lowest = findAllBackslashIndexes(eachReplace);
         String resultStr = eachReplace.replace("\\"+lowest, eachelem);
         return resultStr;
     }
-
 
     public static Integer findAllBackslashIndexes(String str) {
         List<Integer> indexes = new ArrayList<>();
@@ -56,7 +46,6 @@ public class ConwayCodeService {
             indexes.add(index);
             index = str.indexOf("\\", index + 1);
         }
-
         if (!indexes.isEmpty()) {
             List<Integer> increase = indexes.stream().map(eachint -> eachint + 1).collect(Collectors.toList());
             List<Integer> intsFromIntegers = increase.stream()
@@ -68,14 +57,6 @@ public class ConwayCodeService {
         }
     }
 
-    public static String getCharacters(String str, List<Integer> indexes) {
-        StringBuilder sb = new StringBuilder();
-        for (int i : indexes) {
-            sb.append(str.charAt(i));
-        }
-        return sb.toString();
-    }
-
     private List<String> getParens(String conwayCode) {
         Pattern pattern = Pattern.compile("\\((.*?)\\)");
         Matcher matcher = pattern.matcher(conwayCode);
@@ -85,8 +66,7 @@ public class ConwayCodeService {
         }
         return result;
     }
-    
-    
+
     public static String replaceParensWithCapitalLetters(String input) {
         StringBuilder output = new StringBuilder();
         int capitalLetter = 1;
@@ -104,5 +84,4 @@ public class ConwayCodeService {
         }
         return output.toString();
     }
-
 }
