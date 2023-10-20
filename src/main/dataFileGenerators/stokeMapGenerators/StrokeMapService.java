@@ -6,11 +6,47 @@ import main.dataFileGenerators.CodepointCharacterSequenceReader;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 public class StrokeMapService {
 
+    public Map<Integer, CJKChaaar> tzaiToCJKMap() {
+        CodepointCharacterSequenceReader reader = new CodepointCharacterSequenceReader();
+        Set<String> rawConwayStrings = reader.codePointCharacterSequencyRawLine();
+        Map<String, CJKfrequency> jundaMap = reader.jundaMap();
+        Map<String, CJKfrequency> tzaiMap = reader.tzaiMap();
+
+        Set<CJKChaaar> CJKset = rawConwayStrings.stream()
+                .map(line -> conwayRawStringToObj(line, jundaMap, tzaiMap)).collect(Collectors.toSet());
+
+        Map<Integer, CJKChaaar> result = CJKset.stream()
+                .filter(CJK -> !Objects.isNull(CJK.getTzai()))
+                .collect(Collectors.toMap(
+                        a -> a.getTzai().getOrdinal(),
+                        a -> a
+                ));
+        return result;
+    }
+
+    public Map<Integer, CJKChaaar> jundaToCJKMap() {
+        CodepointCharacterSequenceReader reader = new CodepointCharacterSequenceReader();
+        Set<String> rawConwayStrings = reader.codePointCharacterSequencyRawLine();
+        Map<String, CJKfrequency> jundaMap = reader.jundaMap();
+        Map<String, CJKfrequency> tzaiMap = reader.tzaiMap();
+
+        Set<CJKChaaar> CJKset = rawConwayStrings.stream()
+                .map(line -> conwayRawStringToObj(line, jundaMap, tzaiMap)).collect(Collectors.toSet());
+
+        Map<Integer, CJKChaaar> result = CJKset.stream()
+                .filter(CJK -> !Objects.isNull(CJK.getJunda()))
+                .collect(Collectors.toMap(
+                        a -> a.getJunda().getOrdinal(),
+                        a -> a
+                ));
+        return result;
+    }
 
 
     public Map<String, CJKChaaar> charToInfoCJKMap() {

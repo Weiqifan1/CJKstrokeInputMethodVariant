@@ -125,6 +125,57 @@ public class ConwayCodeService {
         return result;
     }
 
+
+    public Set<String> fullCodeToFourOne(Set<String> input) {
+        Set<String> result = input.stream()
+                .map(fullCode -> toFourOneCode(fullCode)).collect(Collectors.toSet());
+        return result;
+    }
+
+    public Set<String> fullCodeToFourTwo(Set<String> input) {
+        Set<String> result = input.stream()
+                .map(fullCode -> toFourTwoCode(fullCode)).collect(Collectors.toSet());
+        return result;
+    }
+
+    public Set<String> fullCodeToFirstThree(Set<String> input) {
+        Set<String> result = input.stream()
+                .map(fullCode -> toFirstThreeCode(fullCode)).collect(Collectors.toSet());
+        return result;
+    }
+
+    private String toFirstThreeCode(String fullCode) {
+        if (fullCode.length() < 3) {
+            return fullCode;
+        } else {
+            String result =
+                    fullCode.substring(0,3);
+            return result;
+        }
+    }
+
+    private String toFourTwoCode(String fullCode) {
+        if (fullCode.length() < 6) {
+            return fullCode;
+        } else {
+            String result =
+                    fullCode.substring(0,4) +
+                            fullCode.substring(fullCode.length()-2, fullCode.length());
+            return result;
+        }
+    }
+
+    private String toFourOneCode(String fullCode) {
+        if (fullCode.length() < 5) {
+            return fullCode;
+        } else {
+            String result =
+                    fullCode.substring(0,4) +
+                            fullCode.substring(fullCode.length()-1, fullCode.length());
+            return result;
+        }
+    }
+
     private String toTwoFourCode(String fullCode) {
         if (fullCode.length() < 6) {
             return fullCode;

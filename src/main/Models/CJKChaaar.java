@@ -12,9 +12,12 @@ public class CJKChaaar {
     private CJKfrequency junda;
     private CJKfrequency tzai;
     private Set<String> fullCode;
+    private Set<String> firstThreeCode;
     private Set<String> twotwoCode;
-    private Set<String> threethreeCode;
     private Set<String> twofourCode;
+    private Set<String> fourOneCode;
+    private Set<String> fourTwoCode;
+    private Set<String> threethreeCode;
 
 
     public CJKChaaar(String CJK,
@@ -64,24 +67,31 @@ public class CJKChaaar {
         return fullCode;
     }
 
+    public Set<String> getFirstThreeCode() { return firstThreeCode; }
+
     public Set<String> getTwotwoCode() {
         return twotwoCode;
-    }
-
-    public Set<String> getThreethreeCode() {
-        return threethreeCode;
     }
 
     public Set<String> getTwofourCode() {
         return twofourCode;
     }
 
+    public Set<String> getFourTwoCode() { return fourTwoCode; }
+
+    public Set<String> getFourOne() { return this.fourOneCode; }
+
+    public Set<String> getThreeThreeCode() { return this.threethreeCode; }
+
     private void generateCodesFromConwayCode(String conwayCode) {
         ConwayCodeService cs = new ConwayCodeService();
         Set<String> fullCode = cs.codesFromConway(conwayCode);
         this.fullCode = fullCode;
+        this.firstThreeCode = cs.fullCodeToFirstThree(fullCode);
         this.twotwoCode = cs.fullCodesToTwoTwoCodes(fullCode);
-        this.threethreeCode = cs.fullCodeToThreeThree(fullCode);
         this.twofourCode = cs.fullCodeToTwoFour(fullCode);
+        this.fourOneCode = cs.fullCodeToFourOne(fullCode);
+        this.fourTwoCode = cs.fullCodeToFourTwo(fullCode);
+        this.threethreeCode = cs.fullCodeToThreeThree(fullCode);
     }
 }

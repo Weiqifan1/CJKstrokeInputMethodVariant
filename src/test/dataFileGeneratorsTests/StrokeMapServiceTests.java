@@ -33,6 +33,13 @@ public class StrokeMapServiceTests {
     }
 
     @Test
+    void testJundaToCJk() {
+        Map<Integer, CJKChaaar> result = strokeMapService.jundaToCJKMap();
+        assertEquals(9931, result.size());
+        assertEquals("他", result.get(10).getCJK());
+    }
+
+    @Test
     void CharToInfoCJKMap_FrequencyOverlapsTest() {
         Set<Integer> jundaNumbers = charToInfoCJKMap.values().stream()
                 .map(CJK -> CJK.getJunda())
