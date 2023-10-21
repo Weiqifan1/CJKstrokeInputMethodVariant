@@ -169,17 +169,17 @@ public class CJKChaaar {
     */
         String initial = switch (partToChange) {
 
-            case "121" -> "x"; // 土  -> 121, junda = 1218, tzai = 1408
-            case "251" -> "c"; // 日 -> 251, junda = 1130, tzai = 1213
-            case "122" -> "v"; // 古 -> 122, junda = 789, tzai = 670
-            case "211" -> "b"; // 上 -> 211, junda = 672, tzai = 684
+            case "121" -> "v"; // 土  -> 121, junda = 1218, tzai = 1408
+            case "251" -> "m"; // 日 -> 251, junda = 1130, tzai = 1213
+            case "122" -> "c"; // 古 -> 122, junda = 789, tzai = 670
+            case "211" -> "."; // 上 -> 211, junda = 672, tzai = 684
             //case "311" -> "n"; // 午 -> 311, junda = 362, tzai =
-            case "441" -> "n"; // 斗  -> 441, junda = 360, tzai = 562
+            case "441" -> "."; // 斗  -> 441, junda = 360, tzai = 562
             //case "341" -> ","; // 金 -> 341, junda = 356, tzai = 466
-            case "123" -> "m"; // 木 -> 123, junda = 261, tzai = 454
-            case "112" -> ","; // 王-> 112
-            case "413" -> "."; // 文 -> 413
-            default -> partToChange; //
+            case "123" -> "x"; // 木 -> 123, junda = 261, tzai = 454
+            case "112" -> "b"; // 王-> 112, junda = 225, tzai = 276
+            case "413" -> "n"; // 文 -> 413, junda = 273, tzai = 313
+            default -> partToChange; // x木 c古 v土 b王 n文 m日 ,上 .斗
         };
 
         String result = initial + x.substring(3, x.length());
