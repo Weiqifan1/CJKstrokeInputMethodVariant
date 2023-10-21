@@ -59,6 +59,18 @@ public class IntevtigationMapService {
                     }
                 }
             }
+            List<CJKChaaar> fullEDITEDCodeHasLength = CJKsWithEditedFullCodeWithLen(chLength);
+            for (CJKChaaar full : fullEDITEDCodeHasLength) {
+                for (String eachFull : full.getEditedFullCode()) {
+                    String fileStr = full.getCJK() + separator + eachFull;
+                    if (!CJKcharSet.contains(fileStr)) {
+                        String doubleStr = full.getIntersperced().toString();
+                        String CJK = full.getCJK();
+                        CJKsWithLength.add(List.of(doubleStr, CJK, fileStr));
+                        CJKcharSet.add(fileStr);
+                    }
+                }
+            }
             List<CJKChaaar> threeThreeCodeHasLength = CJKsWithThreeThreeCodeWithLen(chLength);
             for (CJKChaaar threethree : threeThreeCodeHasLength) {
                 for (String eachThreeThree : threethree.getThreeThreeCode()) {
@@ -132,6 +144,24 @@ public class IntevtigationMapService {
             }
             if (newFulls.size() > 0) {
                 value.setThreethreeCode(newFulls);
+                onlyWithFullOfLen.add(value);
+            }
+        }
+        return onlyWithFullOfLen;
+    }
+
+    private List<CJKChaaar> CJKsWithEditedFullCodeWithLen(Integer chLength) {
+        List<CJKChaaar> onlyWithFullOfLen = new ArrayList<>();
+        for (CJKChaaar value : charToInfoCJKMap.values()) {
+            Set<String> fulls = value.getEditedFullCode();
+            Set<String> newFulls = new HashSet<>();
+            for (String code : fulls) {
+                if (code.length() == chLength) {
+                    newFulls.add(code);
+                }
+            }
+            if (newFulls.size() > 0) {
+                value.setEditedFullCode(newFulls);
                 onlyWithFullOfLen.add(value);
             }
         }

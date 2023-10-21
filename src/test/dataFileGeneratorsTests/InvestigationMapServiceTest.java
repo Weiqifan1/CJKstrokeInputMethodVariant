@@ -34,7 +34,8 @@ public class InvestigationMapServiceTest {
     void generateMapOfElemsToCreateFileTest() {
         List<String> readyToprint = IMS.generateMapOfElemsToCreateFile("\t");
 
-        assertEquals(105592, readyToprint.size());
+        //with only fullcode, 3-3 and plain3-3 you get length 105592
+        assertEquals(121114, readyToprint.size());
         assertEquals("一\t1",readyToprint.get(0));
         assertEquals("卩\t52", readyToprint.get(100));
     }
