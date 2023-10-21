@@ -33,8 +33,12 @@ public class CJKChaaar {
     private Set<String> twofourCode;
     private Set<String> fourOneCode;
     private Set<String> fourTwoCode;
+    private Set<String> plainThreeThreeCode;
     private Set<String> threethreeCode;
 
+    public Set<String> getPlainThreeThreeCode() {
+        return plainThreeThreeCode;
+    }
 
     public CJKChaaar(String CJK,
                      String CJKWithSetMark,
@@ -134,6 +138,7 @@ public class CJKChaaar {
         this.fourOneCode = cs.fullCodeToFourOne(editedFullCode);
         this.fourTwoCode = cs.fullCodeToFourTwo(editedFullCode);
         this.threethreeCode = cs.fullCodeToThreeThree(editedFullCode);
+        this.plainThreeThreeCode = cs.fullCodeToThreeThree(fullCode);
     }
 
     private Set<String> editFullCode(Set<String> fullCode) {
@@ -179,5 +184,69 @@ public class CJKChaaar {
 
         String result = initial + x.substring(3, x.length());
         return result;
+    }
+
+    public void setCJK(String CJK) {
+        this.CJK = CJK;
+    }
+
+    public void setCJKWithSetMark(String CJKWithSetMark) {
+        this.CJKWithSetMark = CJKWithSetMark;
+    }
+
+    public void setUnicodeHex(String unicodeHex) {
+        UnicodeHex = unicodeHex;
+    }
+
+    public void setConwayCode(String conwayCode) {
+        ConwayCode = conwayCode;
+    }
+
+    public void setJunda(CJKfrequency junda) {
+        this.junda = junda;
+    }
+
+    public void setTzai(CJKfrequency tzai) {
+        this.tzai = tzai;
+    }
+
+    public void setIntersperced(Double intersperced) {
+        this.intersperced = intersperced;
+    }
+
+    public void setFullCode(Set<String> fullCode) {
+        this.fullCode = fullCode;
+    }
+
+    public void setEditedFullCode(Set<String> editedFullCode) {
+        this.editedFullCode = editedFullCode;
+    }
+
+    public void setFirstThreeCode(Set<String> firstThreeCode) {
+        this.firstThreeCode = firstThreeCode;
+    }
+
+    public void setTwotwoCode(Set<String> twotwoCode) {
+        this.twotwoCode = twotwoCode;
+    }
+
+    public void setTwofourCode(Set<String> twofourCode) {
+        this.twofourCode = twofourCode;
+    }
+
+    public void setFourOneCode(Set<String> fourOneCode) {
+        this.fourOneCode = fourOneCode;
+    }
+
+    public void setFourTwoCode(Set<String> fourTwoCode) {
+        this.fourTwoCode = fourTwoCode;
+    }
+
+    public void setPlainThreeThreeCode(Set<String> plainThreeThreeCode) {
+        this.plainThreeThreeCode = plainThreeThreeCode;
+    }
+
+    public void setThreethreeCode(Set<String> threethreeCode) {
+        this.threethreeCode = threethreeCode;
     }
 }

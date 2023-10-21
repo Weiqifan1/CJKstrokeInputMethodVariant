@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 public class IntevtigationMapService {
 
     public Map<String, CJKChaaar> charToInfoCJKMap;
+    public List<CJKChaaar> CJKList;
 
     public HashMap<String, List<CJKChaaar>> firstThreeMap;
     public HashMap<String, List<CJKChaaar>> twoTwoHashmap;
@@ -32,6 +33,141 @@ public class IntevtigationMapService {
         fourOnehashMap = groupByFourOne(charToInfoCJKMap.values().stream().toList());
         fourTwohashMap = groupByFourTwo(charToInfoCJKMap.values().stream().toList());
         threeThreehashMap = groupByThreeeThree(charToInfoCJKMap.values().stream().toList());
+        CJKList = charToInfoCJKMap.values().stream().toList();
+    }
+
+    public List<String> generateMapOfElemsToCreateFile(String separator) {
+        List<Integer> charLength = differentSizecodes(charToInfoCJKMap);
+        List<String> result = generateDataForFile(charLength, separator);
+        return result;
+    }
+
+    private List<String> generateDataForFile(List<Integer> charLength, String separator) {
+        Map<Integer, List<List<String>>> result_1 = new HashMap<>();
+        Set<String> CJKcharSet = new HashSet<>();
+        for (Integer chLength : charLength) {
+            List<List<String>> CJKsWithLength = new ArrayList<>();
+            List<CJKChaaar> fullCodeHasLength = CJKsWithFullCodeWithLen(chLength);
+            for (CJKChaaar full : fullCodeHasLength) {
+                for (String eachFull : full.getFullCode()) {
+                    String fileStr = full.getCJK() + separator + eachFull;
+                    if (!CJKcharSet.contains(fileStr)) {
+                        String doubleStr = full.getIntersperced().toString();
+                        String CJK = full.getCJK();
+                        CJKsWithLength.add(List.of(doubleStr, CJK, fileStr));
+                        CJKcharSet.add(fileStr);
+                    }
+                }
+            }
+            List<CJKChaaar> threeThreeCodeHasLength = CJKsWithThreeThreeCodeWithLen(chLength);
+            for (CJKChaaar threethree : threeThreeCodeHasLength) {
+                for (String eachThreeThree : threethree.getThreeThreeCode()) {
+                    String fileStr = threethree.getCJK() + separator + eachThreeThree;
+                    if (!CJKcharSet.contains(fileStr)) {
+                        String doubleStr = threethree.getIntersperced().toString();
+                        String CJK = threethree.getCJK();
+                        CJKsWithLength.add(List.of(doubleStr, CJK, fileStr));
+                        CJKcharSet.add(fileStr);
+                    }
+                }
+            }
+            List<CJKChaaar> PlainThreeThreeCodeHasLength = CJKsWithPlainThreeThreeWithLen(chLength);
+            for (CJKChaaar plainThreeThree : PlainThreeThreeCodeHasLength) {
+                for (String eachPlainThreeThree : plainThreeThree.getPlainThreeThreeCode()) {
+                    String fileStr = plainThreeThree.getCJK() + separator + eachPlainThreeThree;
+                    if (!CJKcharSet.contains(fileStr)) {
+                        String doubleStr = plainThreeThree.getIntersperced().toString();
+                        String CJK = plainThreeThree.getCJK();
+                        CJKsWithLength.add(List.of(doubleStr, CJK, fileStr));
+                        CJKcharSet.add(fileStr);
+                    }
+                }
+            }
+
+            Comparator<List<String>> comparator = Comparator.comparingDouble(list -> Double.parseDouble(list.get(0)));
+            comparator = comparator.thenComparing(list -> list.get(2));
+            Collections.sort(CJKsWithLength, comparator);
+
+            result_1.put(chLength, CJKsWithLength);
+        }
+
+        List<String> finalStr = new ArrayList<>();
+        List<Integer> codeLengths = result_1.keySet().stream().sorted().collect(Collectors.toList());
+        for (Integer codeLen : codeLengths) {
+            List<List<String>> levelOfCodeLenSprted = result_1.get(codeLen);
+            for (List<String> eachCodeEntry : levelOfCodeLenSprted) {
+                finalStr.add(eachCodeEntry.get(2));
+            }
+        }
+        return finalStr;
+    }
+
+    private List<CJKChaaar> CJKsWithPlainThreeThreeWithLen(Integer chLength) {
+        List<CJKChaaar> onlyWithFullOfLen = new ArrayList<>();
+        for (CJKChaaar value : charToInfoCJKMap.values()) {
+            Set<String> fulls = value.getPlainThreeThreeCode();
+            Set<String> newFulls = new HashSet<>();
+            for (String code : fulls) {
+                if (code.length() == chLength) {
+                    newFulls.add(code);
+                }
+            }
+            if (newFulls.size() > 0) {
+                value.setPlainThreeThreeCode(newFulls);
+                onlyWithFullOfLen.add(value);
+            }
+        }
+        return onlyWithFullOfLen;
+    }
+
+    private List<CJKChaaar> CJKsWithThreeThreeCodeWithLen(Integer chLength) {
+        List<CJKChaaar> onlyWithFullOfLen = new ArrayList<>();
+        for (CJKChaaar value : charToInfoCJKMap.values()) {
+            Set<String> fulls = value.getThreeThreeCode();
+            Set<String> newFulls = new HashSet<>();
+            for (String code : fulls) {
+                if (code.length() == chLength) {
+                    newFulls.add(code);
+                }
+            }
+            if (newFulls.size() > 0) {
+                value.setThreethreeCode(newFulls);
+                onlyWithFullOfLen.add(value);
+            }
+        }
+        return onlyWithFullOfLen;
+    }
+
+    private List<CJKChaaar> CJKsWithFullCodeWithLen(Integer chLength) {
+        List<CJKChaaar> onlyWithFullOfLen = new ArrayList<>();
+        for (CJKChaaar value : charToInfoCJKMap.values()) {
+            Set<String> fulls = value.getFullCode();
+            Set<String> newFulls = new HashSet<>();
+            for (String code : fulls) {
+                if (code.length() == chLength) {
+                    newFulls.add(code);
+                }
+            }
+            if (newFulls.size() > 0) {
+                value.setFullCode(newFulls);
+                onlyWithFullOfLen.add(value);
+            }
+        }
+        return onlyWithFullOfLen;
+    }
+
+
+    private List<Integer> differentSizecodes(Map<String, CJKChaaar> map) {
+        Set<String> allStringsToFile = new HashSet<>();
+        for (CJKChaaar chaar : map.values()) {
+            allStringsToFile.addAll(chaar.getThreeThreeCode());
+            allStringsToFile.addAll(chaar.getPlainThreeThreeCode());
+            allStringsToFile.addAll(chaar.getFullCode());
+            String test = "";
+        }
+        List<Integer> charLength = allStringsToFile.stream()
+                .map(x -> x.length()).distinct().sorted().collect(Collectors.toList());
+        return charLength;
     }
 
     private HashMap<String, List<CJKChaaar>> groupByThreeeThree(List<CJKChaaar> list) {
