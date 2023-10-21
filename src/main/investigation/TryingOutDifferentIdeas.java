@@ -32,27 +32,16 @@ public class TryingOutDifferentIdeas {
         Map<Integer, CJKChaaar> jundaMap = strokeMapService.jundaToCJKMap();
         Map<Integer, CJKChaaar> tzaiMap = strokeMapService.tzaiToCJKMap();
 
-        //among the 2-4 hashmap entries, turn thm into jundaOrdinals, sort them, remove the first 16,
-        //remove numbers above 4000, return the longest list.
+        //////////
 
-        List<List<Integer>> jundaNumbersBelow5000 = mapOfCharToNestedListOfIntTZAI(IS.firstThreeMap);
-        jundaNumbersBelow5000.sort((a, b) -> Integer.compare(b.size(), a.size()));
-        //find procenten af tegn skrevet der ligger iden for 16
-        List<List<Integer>> percentbelowLimit = jundaNumbersBelow5000.stream().map(sublist -> onlyLast(sublist, 16)).collect(Collectors.toList());
-        List<List<Long>> percentbelowLimit2 = percentbelowLimit.stream().map(sub -> getListSetFunctionTZAI(sub, tzaiMap)).collect(Collectors.toList());
-        Long percentbelowLimit3 = percentbelowLimit2.stream()
-                .flatMap(List::stream).collect(Collectors.toSet()).stream()
-                .mapToLong(Long::longValue)
-                .sum();
+        List<List<String>> jundaFIRSTTHREE = frequencyOfCodeJUNDA(IS.firstThreeMap, jundaMap,  16);
+        List<List<String>> tzaiFIRStTHREE = frequencyOfCodeTZAI(IS.firstThreeMap, tzaiMap,  16);
 
-        List<List<String>> percentbelowLimitWITHCHAR = percentbelowLimit.stream()
-                .map(numlist -> numlist.stream()
-                        .map(item -> tzaiMap.get(item).getCJK() + " " + tzaiMap.get(item).getTzai().getOrdinal())
-                        .collect(Collectors.toList()))
-                .collect(Collectors.toList());
+        CJKChaaar horse1 = IS.charToInfoCJKMap.get("馬");
+        CJKChaaar horse2 = IS.charToInfoCJKMap.get("駛");
+        
         
         Long totalJunda = tzaiMap.get(1).getTzai().getTotalOccurrences();
-        Double jundaRatio = (double) percentbelowLimit3 / totalJunda;
 
         //fourOne == 0.011698878521478556
         //twoFour == 0.0010701431533065118
@@ -66,8 +55,53 @@ public class TryingOutDifferentIdeas {
         //find procenten af tegn skrevet der ligger iden for 32
 
         System.out.println("end");
+    }
 
 
+    private List<List<String>>  frequencyOfCodeJUNDA(HashMap<String, List<CJKChaaar>> fourOnehashMap,
+                                                     Map<Integer, CJKChaaar> jundaMap, int limit) {
+        //among the 2-4 hashmap entries, turn thm into jundaOrdinals, sort them, remove the first 16,
+        //remove numbers above 4000, return the longest list.
+
+        List<List<Integer>> jundaNumbersBelow5000 = mapOfCharToNestedListOfIntJUNDA(fourOnehashMap);
+        jundaNumbersBelow5000.sort((a, b) -> Integer.compare(b.size(), a.size()));
+        //find procenten af tegn skrevet der ligger iden for 16
+        List<List<Integer>> percentbelowLimit = jundaNumbersBelow5000.stream().map(sublist -> onlyLast(sublist, limit)).collect(Collectors.toList());
+        List<List<Long>> percentbelowLimit2 = percentbelowLimit.stream().map(sub -> getListSetFunctionJUNDA(sub, jundaMap)).collect(Collectors.toList());
+        Long percentbelowLimit3 = percentbelowLimit2.stream()
+                .flatMap(List::stream).collect(Collectors.toSet()).stream()
+                .mapToLong(Long::longValue)
+                .sum();
+
+        List<List<String>> percentbelowLimitWITHCHAR = percentbelowLimit.stream()
+                .map(numlist -> numlist.stream()
+                        .map(item -> jundaMap.get(item).getCJK() + " " + jundaMap.get(item).getJunda().getOrdinal())
+                        .collect(Collectors.toList()))
+                .collect(Collectors.toList());
+        return percentbelowLimitWITHCHAR;
+    }
+
+    private List<List<String>>  frequencyOfCodeTZAI(HashMap<String, List<CJKChaaar>> fourOnehashMap,
+                                                    Map<Integer, CJKChaaar> tzaiMap, int limit) {
+        //among the 2-4 hashmap entries, turn thm into jundaOrdinals, sort them, remove the first 16,
+        //remove numbers above 4000, return the longest list.
+
+        List<List<Integer>> jundaNumbersBelow5000 = mapOfCharToNestedListOfIntTZAI(fourOnehashMap);
+        jundaNumbersBelow5000.sort((a, b) -> Integer.compare(b.size(), a.size()));
+        //find procenten af tegn skrevet der ligger iden for 16
+        List<List<Integer>> percentbelowLimit = jundaNumbersBelow5000.stream().map(sublist -> onlyLast(sublist, limit)).collect(Collectors.toList());
+        List<List<Long>> percentbelowLimit2 = percentbelowLimit.stream().map(sub -> getListSetFunctionTZAI(sub, tzaiMap)).collect(Collectors.toList());
+        Long percentbelowLimit3 = percentbelowLimit2.stream()
+                .flatMap(List::stream).collect(Collectors.toSet()).stream()
+                .mapToLong(Long::longValue)
+                .sum();
+
+        List<List<String>> percentbelowLimitWITHCHAR = percentbelowLimit.stream()
+                .map(numlist -> numlist.stream()
+                        .map(item -> tzaiMap.get(item).getCJK() + " " + tzaiMap.get(item).getTzai().getOrdinal())
+                        .collect(Collectors.toList()))
+                .collect(Collectors.toList());
+        return percentbelowLimitWITHCHAR;
     }
 
     private static List<List<Integer>> mapOfCharToNestedListOfIntTZAI(HashMap<String, List<CJKChaaar>> fourOnehashMap) {

@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 public class IntevtigationMapService {
 
-    private Map<String, CJKChaaar> charToInfoCJKMap;
+    public Map<String, CJKChaaar> charToInfoCJKMap;
 
     public HashMap<String, List<CJKChaaar>> firstThreeMap;
     public HashMap<String, List<CJKChaaar>> twoTwoHashmap;
@@ -25,7 +25,7 @@ public class IntevtigationMapService {
 
     public IntevtigationMapService() {
         StrokeMapService strokeMapService = new StrokeMapService();
-        Map<String, CJKChaaar> charToInfoCJKMap = strokeMapService.charToInfoCJKMap();
+        charToInfoCJKMap = strokeMapService.charToInfoCJKMap();
         firstThreeMap = groupByFirstThree(charToInfoCJKMap.values().stream().toList());
         twoTwoHashmap = groupByTwoTwo(charToInfoCJKMap.values().stream().toList());
         twofourhashMap = groupByTwoFour(charToInfoCJKMap.values().stream().toList());
