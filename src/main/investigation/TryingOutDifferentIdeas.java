@@ -16,11 +16,34 @@ public class TryingOutDifferentIdeas {
         StrokeMapService strokeMapService = new StrokeMapService();
         Map<String, CJKChaaar> charToInfoCJKMap = strokeMapService.charToInfoCJKMap();
 
-        HashMap<String, List<CJKChaaar>> twoFour = IS.twofourhashMap;
+        HashMap<String, List<CJKChaaar>> twoFour = IS.threeThreehashMap;
         Map<String, List<CJKChaaar>> sortedByListLengthAndJunda = getSortedByJundaAndListLength(twoFour);
         Map<String, List<String>> charPlusJundaOrd = getCharPlusJundaord(twoFour);
 
+        Map<String, List<CJKChaaar>> sortedByListLengthAndTzai = getSortedByTzaiAndListLength(twoFour);
+        Map<String, List<String>> charPlusTzaiOrd = getCharPlusTzaiord(twoFour);
+
         String test = "";
+    }
+
+    private Map<String, List<String>> getCharPlusTzaiord(HashMap<String, List<CJKChaaar>> twoFour) {
+        HashMap<String, Integer> intMap = new HashMap<>();
+        for (String shortCode : twoFour.keySet()) {
+            intMap.put(shortCode, twoFour.get(shortCode).size());
+        }
+        List<Map.Entry<String, Integer>> entryList = new ArrayList<>(intMap.entrySet());
+        entryList.sort(Map.Entry.<String, Integer>comparingByValue().reversed());
+        Map<String, List<String>> sortedMap = new LinkedHashMap<>();
+        for (Map.Entry<String, Integer> entry : entryList) {
+            List<CJKChaaar> eachCJklist = twoFour.get(entry.getKey()).stream()
+                    .filter(x -> Objects.nonNull(x.getTzai())).collect(Collectors.toList());
+            Comparator<CJKChaaar> comparator = Comparator.comparingInt(a -> a.getTzai().getOrdinal());
+            Collections.sort(eachCJklist, comparator);
+            List<String> CJkToString = eachCJklist.stream()
+                    .map(x -> x.getCJK() + " " + x.getTzai().getOrdinal()).collect(Collectors.toList());
+            sortedMap.put(entry.getKey(), CJkToString);
+        }
+        return sortedMap;
     }
 
     private Map<String, List<String>> getCharPlusJundaord(HashMap<String, List<CJKChaaar>> twoFour) {
@@ -39,6 +62,24 @@ public class TryingOutDifferentIdeas {
             List<String> CJkToString = eachCJklist.stream()
                     .map(x -> x.getCJK() + " " + x.getJunda().getOrdinal()).collect(Collectors.toList());
             sortedMap.put(entry.getKey(), CJkToString);
+        }
+        return sortedMap;
+    }
+
+    private Map<String, List<CJKChaaar>> getSortedByTzaiAndListLength(HashMap<String, List<CJKChaaar>> twoFour) {
+        HashMap<String, Integer> intMap = new HashMap<>();
+        for (String shortCode : twoFour.keySet()) {
+            intMap.put(shortCode, twoFour.get(shortCode).size());
+        }
+        List<Map.Entry<String, Integer>> entryList = new ArrayList<>(intMap.entrySet());
+        entryList.sort(Map.Entry.<String, Integer>comparingByValue().reversed());
+        Map<String, List<CJKChaaar>> sortedMap = new LinkedHashMap<>();
+        for (Map.Entry<String, Integer> entry : entryList) {
+            List<CJKChaaar> eachCJklist = twoFour.get(entry.getKey()).stream()
+                    .filter(x -> Objects.nonNull(x.getTzai())).collect(Collectors.toList());
+            Comparator<CJKChaaar> comparator = Comparator.comparingInt(a -> a.getTzai().getOrdinal());
+            Collections.sort(eachCJklist, comparator);
+            sortedMap.put(entry.getKey(), eachCJklist);
         }
         return sortedMap;
     }
