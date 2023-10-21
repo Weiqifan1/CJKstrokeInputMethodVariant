@@ -1,7 +1,9 @@
 package main.Models;
 
 import main.dataFileGenerators.stokeMapGenerators.ConwayCodeService;
+import main.dataFileGenerators.stokeMapGenerators.IntevtigationMapService;
 
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -12,6 +14,12 @@ public class CJKChaaar {
     private String ConwayCode;
     private CJKfrequency junda;
     private CJKfrequency tzai;
+
+    public Double getIntersperced() {
+        return intersperced;
+    }
+
+    private Double intersperced;
     private Set<String> fullCode;
 
     private Set<String> editedFullCode;
@@ -40,7 +48,31 @@ public class CJKChaaar {
         this.ConwayCode = conwayCode;
         this.junda = junda;
         this.tzai = tzai;
+        this.intersperced = generateInterspercedFrequency(junda, tzai, UnicodeHex);
         generateCodesFromConwayCode(conwayCode);
+    }
+
+    private Double generateInterspercedFrequency(CJKfrequency junda, CJKfrequency tzai, String unicodeHex) {
+        // CJKfrequency(String character, int ordinal, Long occurrences, Long totalOccurrences)
+        if (Objects.nonNull(junda) && Objects.nonNull(tzai)) {
+            double jundaInt = junda.getOrdinal();
+            double tzaiInt = tzai.getOrdinal();
+            if (jundaInt < tzaiInt) {
+                return jundaInt;
+            } else if (tzaiInt < jundaInt) {
+                return tzaiInt + 0.5;
+            } else {
+                return jundaInt;
+            }
+        } else if (Objects.nonNull(junda)) {
+            return Double.valueOf(junda.getOrdinal());
+        } else if (Objects.nonNull(tzai)) {
+            return Double.valueOf(tzai.getOrdinal()) + 0.5;
+        } else {
+            String hex = unicodeHex.substring(2, unicodeHex.length());
+            Integer result = Integer.parseUnsignedInt(hex, 16);
+            return Double.parseDouble(String.valueOf(result));
+        }
     }
 
     public boolean isMultiSet() {
@@ -118,14 +150,15 @@ public class CJKChaaar {
         }
 
         String initial = switch (partToChange) {
+            /*
             case "121" -> "x"; // 土  -> 121, junda = 1218, tzai = 1408
             case "251" -> "c"; // 日 -> 251, junda = 1130, tzai = 1213
             case "122" -> "v"; // 古 -> 122, junda = 789, tzai = 670
             case "211" -> "b"; // 上 -> 211, junda = 672, tzai = 684
             case "311" -> "n"; // 午 -> 311, junda = 362, tzai =
             case "441" -> "m"; // 斗  -> 441, junda = 360, tzai = 562
-            //case "341" -> ","; // 金 -> 341, junda = 356, tzai = 466
-            //case "123" -> "."; // 木 -> 123, junda = 261, tzai = 454
+            case "341" -> ","; // 金 -> 341, junda = 356, tzai = 466
+            case "123" -> "."; // 木 -> 123, junda = 261, tzai = 454*/
             default -> partToChange;
         };
 

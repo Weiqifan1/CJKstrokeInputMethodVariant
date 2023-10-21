@@ -6,6 +6,7 @@ import main.dataFileGenerators.stokeMapGenerators.StrokeMapService;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.Map.Entry;
 
 public class TryingOutDifferentIdeas {
 
@@ -23,7 +24,103 @@ public class TryingOutDifferentIdeas {
         Map<String, List<CJKChaaar>> sortedByListLengthAndTzai = getSortedByTzaiAndListLength(twoFour);
         Map<String, List<String>> charPlusTzaiOrd = getCharPlusTzaiord(twoFour);
 
+        Map<String, List<CJKChaaar>> sortByIntersperced = getSortedByInterspercedAndListLength(twoFour);
+        Map<String, List<String>> charPlusInterspercedOrd = getCharPlusIntersperced(twoFour);
+
         String test = "";
+    }
+
+    public void generateFrequencyOfAllCharAbove16() {
+        System.out.println("hello");
+
+        IntevtigationMapService IS = new IntevtigationMapService();
+        StrokeMapService strokeMapService = new StrokeMapService();
+        Map<String, CJKChaaar> charToInfoCJKMap = strokeMapService.charToInfoCJKMap();
+        Map<Integer, CJKChaaar> jundaMap = strokeMapService.jundaToCJKMap();
+        Map<Integer, CJKChaaar> tzaiMap = strokeMapService.tzaiToCJKMap();
+
+        //////////
+
+        List<List<String>> jundaFIRSTTHREE = frequencyOfCodeJUNDA(IS.firstThreeMap, jundaMap,  16);
+        List<List<String>> tzaiFIRStTHREE = frequencyOfCodeTZAI(IS.firstThreeMap, tzaiMap,  16);
+
+        CJKChaaar horse1 = IS.charToInfoCJKMap.get("馬");
+        CJKChaaar horse2 = IS.charToInfoCJKMap.get("駛");
+
+
+        Long totalJunda = tzaiMap.get(1).getTzai().getTotalOccurrences();
+
+        //fourOne == 0.011698878521478556
+        //twoFour == 0.0010701431533065118
+        //FourTwo == 0.001978449873841896
+        //threethree == 0.0024097535793804552
+
+        CJKChaaar threeSixFour = jundaMap.get(364);
+        CJKChaaar fourSevenThree = jundaMap.get(473);
+
+
+        //find procenten af tegn skrevet der ligger iden for 32
+
+        Map<String, List<String>> interspercedNoLimit = getInterspercedNoLimit(IS.firstThreeMap);
+
+        System.out.println("end");
+    }
+
+    private Map<String, List<String>> getInterspercedNoLimit(HashMap<String, List<CJKChaaar>> firstThreeMap) {
+        Map<String, List<Double>> entryList = new LinkedHashMap<>();
+        for (String key : firstThreeMap.keySet()) {
+            List<Double> sublistSort = firstThreeMap.get(key).stream()
+                    .map(x -> x.getIntersperced()).sorted(Comparator.reverseOrder()).collect(Collectors.toList());
+            entryList.put(key, sublistSort);
+        }
+
+        Map<String, Integer> intMap = new HashMap<>();
+        for (String kkey : firstThreeMap.keySet()) {
+            intMap.put(kkey, firstThreeMap.get(kkey).size());
+        }
+
+        List<Entry<String, Integer>> newMap = new ArrayList<>(intMap.entrySet());
+        newMap.sort(Entry.comparingByValue(Comparator.reverseOrder()));
+
+
+        Map<String, List<String>> result = new LinkedHashMap<>();
+        for (Entry<String, Integer> eentry : newMap) {
+            List<CJKChaaar> li1 = firstThreeMap.get(eentry.getKey());
+            Map<Double, CJKChaaar> ma1 = new HashMap<>();
+            for (CJKChaaar ent1 : li1) {
+                ma1.put(ent1.getIntersperced(), ent1);
+            }
+            List<Double> vall = firstThreeMap.get(eentry.getKey()).stream()
+                    .map(x -> x.getIntersperced())
+                    .sorted().collect(Collectors.toList());
+            List<String> busres = new ArrayList<>();
+            for (Double inter : vall) {
+                CJKChaaar mares = ma1.get(inter);
+                busres.add(mares.getCJK() + " " + mares.getIntersperced());
+            }
+            result.put(eentry.getKey(), busres);
+        }
+
+        return result;
+    }
+
+    private Map<String, List<String>> getCharPlusIntersperced(HashMap<String, List<CJKChaaar>> twoFour) {
+        HashMap<String, Integer> intMap = new HashMap<>();
+        for (String shortCode : twoFour.keySet()) {
+            intMap.put(shortCode, twoFour.get(shortCode).size());
+        }
+        List<Map.Entry<String, Integer>> entryList = new ArrayList<>(intMap.entrySet());
+        entryList.sort(Map.Entry.<String, Integer>comparingByValue().reversed());
+        Map<String, List<String>> sortedMap = new LinkedHashMap<>();
+        for (Map.Entry<String, Integer> entry : entryList) {
+            List<CJKChaaar> eachCJklist = twoFour.get(entry.getKey());
+            Comparator<CJKChaaar> comparator = Comparator.comparingDouble(a -> a.getIntersperced());
+            Collections.sort(eachCJklist, comparator);
+            List<String> CJkToString = eachCJklist.stream()
+                    .map(x -> x.getCJK() + " " + x.getIntersperced()).collect(Collectors.toList());
+            sortedMap.put(entry.getKey(), CJkToString);
+        }
+        return sortedMap;
     }
 
     private Map<String, List<String>> getCharPlusTzaiord(HashMap<String, List<CJKChaaar>> twoFour) {
@@ -84,6 +181,23 @@ public class TryingOutDifferentIdeas {
         return sortedMap;
     }
 
+    private Map<String, List<CJKChaaar>> getSortedByInterspercedAndListLength(HashMap<String, List<CJKChaaar>> twoFour) {
+        HashMap<String, Integer> intMap = new HashMap<>();
+        for (String shortCode : twoFour.keySet()) {
+            intMap.put(shortCode, twoFour.get(shortCode).size());
+        }
+        List<Map.Entry<String, Integer>> entryList = new ArrayList<>(intMap.entrySet());
+        entryList.sort(Map.Entry.<String, Integer>comparingByValue().reversed());
+        Map<String, List<CJKChaaar>> sortedMap = new LinkedHashMap<>();
+        for (Map.Entry<String, Integer> entry : entryList) {
+            List<CJKChaaar> eachCJklist = twoFour.get(entry.getKey());
+            Comparator<CJKChaaar> comparator = Comparator.comparingDouble(a -> a.getIntersperced());
+            Collections.sort(eachCJklist, comparator);
+            sortedMap.put(entry.getKey(), eachCJklist);
+        }
+        return sortedMap;
+    }
+
     private Map<String, List<CJKChaaar>> getSortedByJundaAndListLength(HashMap<String, List<CJKChaaar>> twoFour) {
         HashMap<String, Integer> intMap = new HashMap<>();
         for (String shortCode : twoFour.keySet()) {
@@ -101,41 +215,6 @@ public class TryingOutDifferentIdeas {
         }
         return sortedMap;
     }
-
-    public void generateFrequencyOfAllCharAbove16() {
-        System.out.println("hello");
-
-        IntevtigationMapService IS = new IntevtigationMapService();
-        StrokeMapService strokeMapService = new StrokeMapService();
-        Map<String, CJKChaaar> charToInfoCJKMap = strokeMapService.charToInfoCJKMap();
-        Map<Integer, CJKChaaar> jundaMap = strokeMapService.jundaToCJKMap();
-        Map<Integer, CJKChaaar> tzaiMap = strokeMapService.tzaiToCJKMap();
-
-        //////////
-
-        List<List<String>> jundaFIRSTTHREE = frequencyOfCodeJUNDA(IS.firstThreeMap, jundaMap,  16);
-        List<List<String>> tzaiFIRStTHREE = frequencyOfCodeTZAI(IS.firstThreeMap, tzaiMap,  16);
-
-        CJKChaaar horse1 = IS.charToInfoCJKMap.get("馬");
-        CJKChaaar horse2 = IS.charToInfoCJKMap.get("駛");
-        
-        
-        Long totalJunda = tzaiMap.get(1).getTzai().getTotalOccurrences();
-
-        //fourOne == 0.011698878521478556
-        //twoFour == 0.0010701431533065118
-        //FourTwo == 0.001978449873841896
-        //threethree == 0.0024097535793804552
-
-        CJKChaaar threeSixFour = jundaMap.get(364);
-        CJKChaaar fourSevenThree = jundaMap.get(473);
-
-
-        //find procenten af tegn skrevet der ligger iden for 32
-
-        System.out.println("end");
-    }
-
 
     private List<List<String>>  frequencyOfCodeJUNDA(HashMap<String, List<CJKChaaar>> fourOnehashMap,
                                                      Map<Integer, CJKChaaar> jundaMap, int limit) {
