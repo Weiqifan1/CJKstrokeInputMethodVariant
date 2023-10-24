@@ -19,10 +19,8 @@ public class TryingOutDifferentIdeasTests {
     }
 
     @Test
-    void removeSpecificShapesFromFullCode() {
+    void generateLetterKeyfrequencyTest() {
         TryingOutDifferentIdeas ti = new TryingOutDifferentIdeas();
-        ti.removeSpecificShapesFromFull();
+        ti.generateLetterKeyFrequency();
     }
-
-
 }

@@ -7,6 +7,7 @@ import main.dataFileGenerators.stokeMapGenerators.StrokeMapService;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.Map.Entry;
+import java.util.stream.Stream;
 
 public class TryingOutDifferentIdeas {
 
@@ -17,7 +18,7 @@ public class TryingOutDifferentIdeas {
         StrokeMapService strokeMapService = new StrokeMapService();
         Map<String, CJKChaaar> charToInfoCJKMap = strokeMapService.charToInfoCJKMap();
 
-        HashMap<String, List<CJKChaaar>> twoFour = IS.threeThreehashMap;
+        HashMap<String, List<CJKChaaar>> twoFour = IS.sixSixMap;
         Map<String, List<CJKChaaar>> sortedByListLengthAndJunda = getSortedByJundaAndListLength(twoFour);
         Map<String, List<String>> charPlusJundaOrd = getCharPlusJundaord(twoFour);
 
@@ -26,6 +27,8 @@ public class TryingOutDifferentIdeas {
 
         Map<String, List<CJKChaaar>> sortByIntersperced = getSortedByInterspercedAndListLength(twoFour);
         Map<String, List<String>> charPlusInterspercedOrd = getCharPlusIntersperced(twoFour);
+
+
 
         String test = "";
     }
@@ -313,13 +316,84 @@ public class TryingOutDifferentIdeas {
         }
     }
 
-    public void removeSpecificShapesFromFull() {
-        System.out.println("removeSpecificShapesFromFullCode");
+    public void generateLetterKeyFrequency() {
+        System.out.println("hello");
         IntevtigationMapService IS = new IntevtigationMapService();
-        StrokeMapService strokeMapService = new StrokeMapService();
-        Map<String, CJKChaaar> charToInfoCJKMap = strokeMapService.charToInfoCJKMapONLYPLANT();
+        //Map<String, List<String>> interspercedNoLimit = getInterspercedNoLimit(IS.firstThreeMap);
+        Map<String, List<String>> interspercedSixSix = getInterspercedNoLimit(IS.sixSixMap);
+        Map<String, List<CJKChaaar>> sortByIntersperced = getSortedByInterspercedAndListLength(IS.sixSixMap);
 
-        String test = "";
+        Set<String> keys = interspercedSixSix.keySet();
+        Map<String, Long> totalJundaFreq = new HashMap<>();
+
+        for (String eachKey : keys) {
+            Long res = sortByIntersperced.get(eachKey).stream()
+                    .filter(y -> Objects.nonNull(y.getJunda()))
+                    .map(x -> x.getJunda().getOccurrences())
+                    .mapToLong(Long::longValue).sum();
+            totalJundaFreq.put(eachKey, res);
+        }
+
+        List<String> allChars = Arrays.stream(keys.stream().collect(Collectors.joining()).split(""))
+                .distinct().sorted().collect(Collectors.toList());
+
+        Map<String, Long> myMap = new HashMap<>();
+        for (char c = 'a'; c <= 'z'; c++) {
+            myMap.put(String.valueOf(c), 0L);
+        }
+
+        for (String eachKey : keys) {
+            Long res = totalJundaFreq.get(eachKey);
+            for (String chh : eachKey.split("")) {
+                Long currentVal = myMap.get(chh);
+                currentVal += res;
+                myMap.put(chh, currentVal);
+            }
+        }
+
+        List<Map.Entry<String, Long>> list = new ArrayList<>(myMap.entrySet());
+        list.sort(Map.Entry.comparingByValue());
+
+        Map<String, Long> sortedMap = new LinkedHashMap<>();
+        for (Map.Entry<String, Long> entry : list) {
+            sortedMap.put(entry.getKey(), entry.getValue());
+        }
+
+
+        long qwert = sortedMap.keySet().stream()
+                .filter(z -> Arrays.stream("qwert".split("")).toList().contains(z))
+                .map(y -> sortedMap.get(y)).mapToLong(Long::longValue).sum();
+        long yuiop = sortedMap.keySet().stream()
+                .filter(z -> Arrays.stream("yuiop".split("")).toList().contains(z))
+                .map(y -> sortedMap.get(y)).mapToLong(Long::longValue).sum();
+        long asdfg = sortedMap.keySet().stream()
+                .filter(z -> Arrays.stream("asdfg".split("")).toList().contains(z))
+                .map(y -> sortedMap.get(y)).mapToLong(Long::longValue).sum();
+        long hjklm = sortedMap.keySet().stream()
+                .filter(z -> Arrays.stream("hjklm".split("")).toList().contains(z))
+                .map(y -> sortedMap.get(y)).mapToLong(Long::longValue).sum();
+        long xcvbn = sortedMap.keySet().stream()
+                .filter(z -> Arrays.stream("xcvbn".split("")).toList().contains(z))
+                .map(y -> sortedMap.get(y)).mapToLong(Long::longValue).sum();
+
+        long qyahx = sortedMap.keySet().stream()
+                .filter(z -> Arrays.stream("qwert".split("")).toList().contains(z))
+                .map(y -> sortedMap.get(y)).mapToLong(Long::longValue).sum();
+        long wusjc = sortedMap.keySet().stream()
+                .filter(z -> Arrays.stream("yuiop".split("")).toList().contains(z))
+                .map(y -> sortedMap.get(y)).mapToLong(Long::longValue).sum();
+        long eidkv = sortedMap.keySet().stream()
+                .filter(z -> Arrays.stream("asdfg".split("")).toList().contains(z))
+                .map(y -> sortedMap.get(y)).mapToLong(Long::longValue).sum();
+        long roflb = sortedMap.keySet().stream()
+                .filter(z -> Arrays.stream("hjklm".split("")).toList().contains(z))
+                .map(y -> sortedMap.get(y)).mapToLong(Long::longValue).sum();
+        long tpgmn = sortedMap.keySet().stream()
+                .filter(z -> Arrays.stream("xcvbn".split("")).toList().contains(z))
+                .map(y -> sortedMap.get(y)).mapToLong(Long::longValue).sum();
+
+
+        System.out.println("it looks like the order shoud be leftRight: 3 4 5 1 2");
+        System.out.println("and by category: asdfg = 1, hjklm = 5, qwert = 3, yuiop = 4, xcvbn = 2");
     }
-
 }

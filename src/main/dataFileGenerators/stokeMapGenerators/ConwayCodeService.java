@@ -188,14 +188,55 @@ public class ConwayCodeService {
     }
 
     public String fullCodeToSixSix(String fullCode) {
+        String sixCodeRaw;
         if (fullCode.length() < 12) {
-            return fullCode;
+            sixCodeRaw = fullCode;
         } else {
-            String result =
+            sixCodeRaw =
                     fullCode.substring(0,6) +
                             fullCode.substring(fullCode.length()-6, fullCode.length());
-            return result;
         }
+        List<String> pairs = Arrays.stream(sixCodeRaw.split("(?<=\\G.{2})")).toList();
+
+        Map<String, String> numToLetter = new HashMap<>();
+        numToLetter.put("11",  "q");
+        numToLetter.put("12",  "w");
+        numToLetter.put("13",  "e");
+        numToLetter.put("14",  "r");
+        numToLetter.put("15",  "t");
+
+        numToLetter.put("21", "y");
+        numToLetter.put("22", "u");
+        numToLetter.put("23", "i");
+        numToLetter.put("24", "o");
+        numToLetter.put("25", "p");
+
+        numToLetter.put("31", "a");
+        numToLetter.put("32", "s");
+        numToLetter.put("33", "d");
+        numToLetter.put("34", "f");
+        numToLetter.put("35", "g");
+
+        numToLetter.put("41", "h");
+        numToLetter.put("42", "j");
+        numToLetter.put("43", "k");
+        numToLetter.put("44", "l");
+        numToLetter.put("45", "m");
+
+        numToLetter.put("51", "x");
+        numToLetter.put("52", "c");
+        numToLetter.put("53", "v");
+        numToLetter.put("54", "b");
+        numToLetter.put("55", "n");
+
+        numToLetter.put("1", "q");
+        numToLetter.put("2", "y");
+        numToLetter.put("3", "a");
+        numToLetter.put("4", "h");
+        numToLetter.put("5", "x");
+
+        String pairsWithLetter = pairs.stream().map(x -> numToLetter.get(x)).collect(Collectors.joining());
+        return pairsWithLetter;
     }
 
     public Set<String> editFullCodeToSix(Set<String> input) {
