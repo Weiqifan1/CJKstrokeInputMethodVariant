@@ -18,5 +18,11 @@ public class TryingOutDifferentIdeasTests {
         ti.generateradicalCandidates();
     }
 
+    @Test
+    void removeSpecificShapesFromFullCode() {
+        TryingOutDifferentIdeas ti = new TryingOutDifferentIdeas();
+        ti.removeSpecificShapesFromFull();
+    }
+
 
 }

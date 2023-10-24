@@ -4,10 +4,7 @@ import main.Models.CJKChaaar;
 import main.Models.CJKfrequency;
 import main.dataFileGenerators.CodepointCharacterSequenceReader;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class StrokeMapService {
@@ -90,6 +87,34 @@ public class StrokeMapService {
                 jundaLookup,
                 tzaiLookup);
         return cjkChar;
+    }
+
+    public Map<String, CJKChaaar> charToInfoCJKMapONLYPLANT() {
+        CodepointCharacterSequenceReader reader = new CodepointCharacterSequenceReader();
+        Set<String> rawConwayStrings = reader.codePointCharacterSequencyRawLine();
+        Map<String, CJKfrequency> jundaMap = reader.jundaMap();
+        Map<String, CJKfrequency> tzaiMap = reader.tzaiMap();
+
+        Set<CJKChaaar> CJKset = rawConwayStrings.stream()
+                .map(line -> conwayRawStringToObj(line, jundaMap, tzaiMap)).collect(Collectors.toSet());
+
+        //onlyPlant
+        Set<CJKChaaar> modifiedCJK = CJKset.stream().filter(x -> hasPlantonly(x)).collect(Collectors.toSet());
+
+        Map<String, CJKChaaar> result = modifiedCJK.stream()
+                .collect(Collectors.toMap(
+                        a -> a.getCJK(),
+                        a -> a
+                ));
+        return result;
+    }
+
+    private boolean hasPlantonly(CJKChaaar x) {
+
+        String conway = x.getConwayCode();
+        List<String> splittet = Arrays.stream(conway.split("[|)(]")).toList();
+        boolean result = splittet.contains("122");
+        return result;
     }
 
 }

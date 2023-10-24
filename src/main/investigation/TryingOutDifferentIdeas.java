@@ -313,4 +313,13 @@ public class TryingOutDifferentIdeas {
         }
     }
 
+    public void removeSpecificShapesFromFull() {
+        System.out.println("removeSpecificShapesFromFullCode");
+        IntevtigationMapService IS = new IntevtigationMapService();
+        StrokeMapService strokeMapService = new StrokeMapService();
+        Map<String, CJKChaaar> charToInfoCJKMap = strokeMapService.charToInfoCJKMapONLYPLANT();
+
+        String test = "";
+    }
+
 }
