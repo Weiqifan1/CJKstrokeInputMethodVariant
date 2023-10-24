@@ -17,6 +17,7 @@ public class IntevtigationMapService {
     public Map<String, CJKChaaar> charToInfoCJKMap;
     public List<CJKChaaar> CJKList;
 
+    public HashMap<String, List<CJKChaaar>> sixSixMap;
     public HashMap<String, List<CJKChaaar>> firstThreeMap;
     public HashMap<String, List<CJKChaaar>> twoTwoHashmap;
     public HashMap<String, List<CJKChaaar>> twofourhashMap;
@@ -27,6 +28,7 @@ public class IntevtigationMapService {
     public IntevtigationMapService() {
         StrokeMapService strokeMapService = new StrokeMapService();
         charToInfoCJKMap = strokeMapService.charToInfoCJKMap();
+        sixSixMap = groupBySixSix(charToInfoCJKMap.values().stream().toList());
         firstThreeMap = groupByFirstThree(charToInfoCJKMap.values().stream().toList());
         twoTwoHashmap = groupByTwoTwo(charToInfoCJKMap.values().stream().toList());
         twofourhashMap = groupByTwoFour(charToInfoCJKMap.values().stream().toList());
@@ -217,6 +219,20 @@ public class IntevtigationMapService {
         HashMap<String, List<CJKChaaar>> map = new HashMap<>();
         for (CJKChaaar a : list) {
             for (String b : a.getFourTwoCode()) {
+                if (!map.containsKey(b)) {
+                    map.put(b, new ArrayList<>());
+                }
+                map.get(b).add(a);
+            }
+        }
+        return map;
+    }
+
+
+    private HashMap<String, List<CJKChaaar>> groupBySixSix(List<CJKChaaar> list) {
+        HashMap<String, List<CJKChaaar>> map = new HashMap<>();
+        for (CJKChaaar a : list) {
+            for (String b : a.getSixSix()) {
                 if (!map.containsKey(b)) {
                     map.put(b, new ArrayList<>());
                 }

@@ -62,6 +62,7 @@ public class TryingOutDifferentIdeas {
         //find procenten af tegn skrevet der ligger iden for 32
 
         Map<String, List<String>> interspercedNoLimit = getInterspercedNoLimit(IS.firstThreeMap);
+        Map<String, List<String>> interspercedSixSix = getInterspercedNoLimit(IS.sixSixMap);
 
         System.out.println("end");
     }

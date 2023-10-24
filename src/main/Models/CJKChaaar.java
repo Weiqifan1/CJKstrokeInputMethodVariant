@@ -28,6 +28,7 @@ public class CJKChaaar {
         return editedFullCode;
     }
 
+    private Set<String> sixSixCode;
     private Set<String> firstThreeCode;
     private Set<String> twotwoCode;
     private Set<String> twofourCode;
@@ -110,6 +111,7 @@ public class CJKChaaar {
     public Set<String> getFullCode() {
         return fullCode;
     }
+    public Set<String> getSixSix() { return sixSixCode; }
 
     public Set<String> getFirstThreeCode() { return firstThreeCode; }
 
@@ -132,6 +134,7 @@ public class CJKChaaar {
         Set<String> fullCode = cs.codesFromConway(conwayCode);
         this.fullCode = fullCode;
         this.editedFullCode = editFullCode(fullCode);
+        this.sixSixCode = cs.editFullCodeToSix(fullCode);
         this.firstThreeCode = cs.fullCodeToFirstThree(editedFullCode);
         this.twotwoCode = cs.fullCodesToTwoTwoCodes(editedFullCode);
         this.twofourCode = cs.fullCodeToTwoFour(editedFullCode);

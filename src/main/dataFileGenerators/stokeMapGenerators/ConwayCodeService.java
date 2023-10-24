@@ -186,4 +186,21 @@ public class ConwayCodeService {
             return result;
         }
     }
+
+    public String fullCodeToSixSix(String fullCode) {
+        if (fullCode.length() < 12) {
+            return fullCode;
+        } else {
+            String result =
+                    fullCode.substring(0,6) +
+                            fullCode.substring(fullCode.length()-6, fullCode.length());
+            return result;
+        }
+    }
+
+    public Set<String> editFullCodeToSix(Set<String> input) {
+        Set<String> result = input.stream()
+                .map(fullCode -> fullCodeToSixSix(fullCode)).collect(Collectors.toSet());
+        return result;
+    }
 }
