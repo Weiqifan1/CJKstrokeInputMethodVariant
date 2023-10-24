@@ -393,7 +393,7 @@ public class TryingOutDifferentIdeas {
                 .map(y -> sortedMap.get(y)).mapToLong(Long::longValue).sum();
 
 
-        System.out.println("it looks like the order shoud be leftRight: 3 4 5 1 2");
+        System.out.println("it looks like the order shoud be leftRight: 3 4 5 1 2 - 2 1 5 4 3");
         System.out.println("and by category: asdfg = 1, hjklm = 5, qwert = 3, yuiop = 4, xcvbn = 2");
     }
 }
