@@ -328,8 +328,8 @@ public class TryingOutDifferentIdeas {
 
         for (String eachKey : keys) {
             Long res = sortByIntersperced.get(eachKey).stream()
-                    .filter(y -> Objects.nonNull(y.getJunda()))
-                    .map(x -> x.getJunda().getOccurrences())
+                    .filter(y -> Objects.nonNull(y.getTzai()))
+                    .map(x -> x.getTzai().getOccurrences())
                     .mapToLong(Long::longValue).sum();
             totalJundaFreq.put(eachKey, res);
         }

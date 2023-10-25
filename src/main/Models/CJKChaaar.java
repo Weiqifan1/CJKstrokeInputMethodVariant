@@ -54,7 +54,7 @@ public class CJKChaaar {
         this.junda = junda;
         this.tzai = tzai;
         this.intersperced = generateInterspercedFrequency(junda, tzai, UnicodeHex);
-        generateCodesFromConwayCode(conwayCode);
+        generateCodesFromConwayCode(conwayCode, CJK);
     }
 
     private Double generateInterspercedFrequency(CJKfrequency junda, CJKfrequency tzai, String unicodeHex) {
@@ -129,12 +129,12 @@ public class CJKChaaar {
 
     public Set<String> getThreeThreeCode() { return this.threethreeCode; }
 
-    private void generateCodesFromConwayCode(String conwayCode) {
+    private void generateCodesFromConwayCode(String conwayCode, String cjk) {
         ConwayCodeService cs = new ConwayCodeService();
         Set<String> fullCode = cs.codesFromConway(conwayCode);
         this.fullCode = fullCode;
         this.editedFullCode = editFullCode(fullCode);
-        this.sixSixCode = cs.editFullCodeToSix(fullCode);
+        this.sixSixCode = cs.editFullCodeToSix(fullCode, cjk);
         this.firstThreeCode = cs.fullCodeToFirstThree(editedFullCode);
         this.twotwoCode = cs.fullCodesToTwoTwoCodes(editedFullCode);
         this.twofourCode = cs.fullCodeToTwoFour(editedFullCode);

@@ -49,9 +49,13 @@ public class IntevtigationMapService {
         Set<String> CJKcharSet = new HashSet<>();
         for (Integer chLength : charLength) {
             List<List<String>> CJKsWithLength = new ArrayList<>();
+            //List<CJKChaaar> fullCodeHasLength = CJKsWithFullCodeWithLen(chLength);
             List<CJKChaaar> fullCodeHasLength = CJKsWithFullCodeWithLen(chLength);
             for (CJKChaaar full : fullCodeHasLength) {
                 for (String eachFull : full.getFullCode()) {
+                    if (full.getFullCode().contains("d")) {
+                        String test = "";
+                    }
                     String fileStr = full.getCJK() + separator + eachFull;
                     if (!CJKcharSet.contains(fileStr)) {
                         String doubleStr = full.getIntersperced().toString();
@@ -61,6 +65,7 @@ public class IntevtigationMapService {
                     }
                 }
             }
+            /*
             List<CJKChaaar> fullEDITEDCodeHasLength = CJKsWithEditedFullCodeWithLen(chLength);
             for (CJKChaaar full : fullEDITEDCodeHasLength) {
                 for (String eachFull : full.getEditedFullCode()) {
@@ -72,7 +77,7 @@ public class IntevtigationMapService {
                         CJKcharSet.add(fileStr);
                     }
                 }
-            }
+            }*//*
             List<CJKChaaar> threeThreeCodeHasLength = CJKsWithThreeThreeCodeWithLen(chLength);
             for (CJKChaaar threethree : threeThreeCodeHasLength) {
                 for (String eachThreeThree : threethree.getThreeThreeCode()) {
@@ -84,7 +89,7 @@ public class IntevtigationMapService {
                         CJKcharSet.add(fileStr);
                     }
                 }
-            }
+            }*//*
             List<CJKChaaar> PlainThreeThreeCodeHasLength = CJKsWithPlainThreeThreeWithLen(chLength);
             for (CJKChaaar plainThreeThree : PlainThreeThreeCodeHasLength) {
                 for (String eachPlainThreeThree : plainThreeThree.getPlainThreeThreeCode()) {
@@ -96,7 +101,7 @@ public class IntevtigationMapService {
                         CJKcharSet.add(fileStr);
                     }
                 }
-            }
+            }*/
 
             Comparator<List<String>> comparator = Comparator.comparingDouble(list -> Double.parseDouble(list.get(0)));
             comparator = comparator.thenComparing(list -> list.get(2));
@@ -173,7 +178,7 @@ public class IntevtigationMapService {
     private List<CJKChaaar> CJKsWithFullCodeWithLen(Integer chLength) {
         List<CJKChaaar> onlyWithFullOfLen = new ArrayList<>();
         for (CJKChaaar value : charToInfoCJKMap.values()) {
-            Set<String> fulls = value.getFullCode();
+            Set<String> fulls = value.getSixSix();
             Set<String> newFulls = new HashSet<>();
             for (String code : fulls) {
                 if (code.length() == chLength) {
@@ -192,9 +197,10 @@ public class IntevtigationMapService {
     private List<Integer> differentSizecodes(Map<String, CJKChaaar> map) {
         Set<String> allStringsToFile = new HashSet<>();
         for (CJKChaaar chaar : map.values()) {
-            allStringsToFile.addAll(chaar.getThreeThreeCode());
-            allStringsToFile.addAll(chaar.getPlainThreeThreeCode());
-            allStringsToFile.addAll(chaar.getFullCode());
+            //allStringsToFile.addAll(chaar.getThreeThreeCode());
+            //allStringsToFile.addAll(chaar.getPlainThreeThreeCode());
+            //allStringsToFile.addAll(chaar.getFullCode());
+            allStringsToFile.addAll(chaar.getSixSix());
             String test = "";
         }
         List<Integer> charLength = allStringsToFile.stream()

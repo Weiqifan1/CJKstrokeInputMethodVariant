@@ -43,21 +43,24 @@ public class InvestigationMapServiceTest {
         List<String> readyToprint = IMS.generateMapOfElemsToCreateFile("\t");
 
         //with only fullcode, 3-3 and plain3-3 you get length 105592
-        assertEquals(121114, readyToprint.size());
-        assertEquals("一\t1",readyToprint.get(0));
-        assertEquals("卩\t52", readyToprint.get(100));
+        //assertEquals(121114, readyToprint.size());
+        assertEquals(50393, readyToprint.size());
+        assertEquals("一\td",readyToprint.get(0));
+        assertEquals("比\tfm", readyToprint.get(100));
+        //assertEquals("一\t1",readyToprint.get(0));
+        //assertEquals("卩\t52", readyToprint.get(100));
 
         //generate file:
         String filename = "src/main/generatedDataFiles/EightFormInputCodes.txt";
         String filePath = new File("").getAbsolutePath();
         filePath.concat(filename);
-/*
+
         Path path = Paths.get(filename);
         try {
             Files.write(path, readyToprint, StandardCharsets.UTF_8);
         } catch (IOException e) {
             System.out.println("failed to Print file in generateMapOfElemsToCreateFileTest: " + e);
-        }*/
+        }
 
     }
 

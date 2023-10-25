@@ -189,7 +189,7 @@ public class ConwayCodeService {
 
     public String fullCodeToSixSix(String fullCode) {
         String sixCodeRaw;
-        if (fullCode.length() < 12) {
+        if (fullCode.length() < 10) {
             sixCodeRaw = fullCode;
         } else {
             sixCodeRaw =
@@ -282,7 +282,10 @@ public class ConwayCodeService {
         numToLetter.put("5", "x");
     */
 
-    public Set<String> editFullCodeToSix(Set<String> input) {
+    public Set<String> editFullCodeToSix(Set<String> input, String cjk) {
+        if (input.contains("1")) {
+            String test = "";
+        }
         Set<String> result = input.stream()
                 .map(fullCode -> fullCodeToSixSix(fullCode)).collect(Collectors.toSet());
         return result;

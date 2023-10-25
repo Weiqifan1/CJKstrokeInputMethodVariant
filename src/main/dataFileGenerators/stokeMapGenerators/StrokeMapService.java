@@ -79,6 +79,10 @@ public class StrokeMapService {
         CJKfrequency jundaLookup = jundaMap.get(cleanCJKChar);
         CJKfrequency tzaiLookup = tzaiMap.get(cleanCJKChar);
 
+        if (cleanCJKChar.equals("一")) {
+            String test = "";
+        }
+
         CJKChaaar cjkChar = new CJKChaaar(
                 cleanCJKChar,
                 CJKcharWithSetMark,
