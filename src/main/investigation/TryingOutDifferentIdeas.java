@@ -47,8 +47,8 @@ public class TryingOutDifferentIdeas {
         List<List<String>> jundaFIRSTTHREE = frequencyOfCodeJUNDA(IS.firstThreeMap, jundaMap,  16);
         List<List<String>> tzaiFIRStTHREE = frequencyOfCodeTZAI(IS.firstThreeMap, tzaiMap,  16);
 
-        CJKChaaar horse1 = IS.charToInfoCJKMap.get("馬");
-        CJKChaaar horse2 = IS.charToInfoCJKMap.get("駛");
+        CJKChaaar horse1 = IS.charToInfoCJKMap.get("贔");
+        CJKChaaar horse2 = IS.charToInfoCJKMap.get("顥");
 
 
         Long totalJunda = tzaiMap.get(1).getTzai().getTotalOccurrences();
@@ -376,19 +376,19 @@ public class TryingOutDifferentIdeas {
                 .filter(z -> Arrays.stream("xcvbn".split("")).toList().contains(z))
                 .map(y -> sortedMap.get(y)).mapToLong(Long::longValue).sum();
 
-        long qyahx = sortedMap.keySet().stream()
+        long tyghx = sortedMap.keySet().stream()
                 .filter(z -> Arrays.stream("qwert".split("")).toList().contains(z))
                 .map(y -> sortedMap.get(y)).mapToLong(Long::longValue).sum();
-        long wusjc = sortedMap.keySet().stream()
+        long rufjc = sortedMap.keySet().stream()
                 .filter(z -> Arrays.stream("yuiop".split("")).toList().contains(z))
                 .map(y -> sortedMap.get(y)).mapToLong(Long::longValue).sum();
         long eidkv = sortedMap.keySet().stream()
                 .filter(z -> Arrays.stream("asdfg".split("")).toList().contains(z))
                 .map(y -> sortedMap.get(y)).mapToLong(Long::longValue).sum();
-        long roflb = sortedMap.keySet().stream()
+        long woslb = sortedMap.keySet().stream()
                 .filter(z -> Arrays.stream("hjklm".split("")).toList().contains(z))
                 .map(y -> sortedMap.get(y)).mapToLong(Long::longValue).sum();
-        long tpgmn = sortedMap.keySet().stream()
+        long qpamn = sortedMap.keySet().stream()
                 .filter(z -> Arrays.stream("xcvbn".split("")).toList().contains(z))
                 .map(y -> sortedMap.get(y)).mapToLong(Long::longValue).sum();
 

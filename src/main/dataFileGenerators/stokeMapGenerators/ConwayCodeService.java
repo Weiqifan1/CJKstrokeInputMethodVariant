@@ -193,12 +193,58 @@ public class ConwayCodeService {
             sixCodeRaw = fullCode;
         } else {
             sixCodeRaw =
-                    fullCode.substring(0,6) +
+                    fullCode.substring(0,4) +
                             fullCode.substring(fullCode.length()-6, fullCode.length());
         }
         List<String> pairs = Arrays.stream(sixCodeRaw.split("(?<=\\G.{2})")).toList();
 
         Map<String, String> numToLetter = new HashMap<>();
+
+        numToLetter.put("1", "d");
+
+        numToLetter.put("12",  "g");
+        numToLetter.put("15",  "f");
+        numToLetter.put("11",  "d");
+        numToLetter.put("14",  "s");
+        numToLetter.put("13",  "a");
+
+        numToLetter.put("5", "k");
+
+        numToLetter.put("52", "h");
+        numToLetter.put("55", "j");
+        numToLetter.put("51", "k");
+        numToLetter.put("54", "l");
+        numToLetter.put("53", "m");
+
+        numToLetter.put("3", "e");
+
+        numToLetter.put("32", "t");
+        numToLetter.put("35", "r");
+        numToLetter.put("31", "e");
+        numToLetter.put("34", "w");
+        numToLetter.put("33", "q");
+
+        numToLetter.put("4", "i");
+
+        numToLetter.put("42", "y");
+        numToLetter.put("45", "u");
+        numToLetter.put("41", "i");
+        numToLetter.put("44", "o");
+        numToLetter.put("43", "p");
+
+        numToLetter.put("2", "v");
+
+        numToLetter.put("22", "x");
+        numToLetter.put("25", "c");
+        numToLetter.put("21", "v");
+        numToLetter.put("24", "b");
+        numToLetter.put("23", "n");
+
+        String pairsWithLetter = pairs.stream().map(x -> numToLetter.get(x)).collect(Collectors.joining());
+        return pairsWithLetter;
+    }
+    /*
+    Map<String, String> numToLetter = new HashMap<>();
         numToLetter.put("11",  "q");
         numToLetter.put("12",  "w");
         numToLetter.put("13",  "e");
@@ -234,10 +280,7 @@ public class ConwayCodeService {
         numToLetter.put("3", "a");
         numToLetter.put("4", "h");
         numToLetter.put("5", "x");
-
-        String pairsWithLetter = pairs.stream().map(x -> numToLetter.get(x)).collect(Collectors.joining());
-        return pairsWithLetter;
-    }
+    */
 
     public Set<String> editFullCodeToSix(Set<String> input) {
         Set<String> result = input.stream()
