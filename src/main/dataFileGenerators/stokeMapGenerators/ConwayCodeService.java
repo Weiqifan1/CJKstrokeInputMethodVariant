@@ -189,15 +189,24 @@ public class ConwayCodeService {
 
     public String fullCodeToSixSix(String fullCode) {
         String sixCodeRaw;
-        if (fullCode.length() < 10) {
+        if (fullCode.length() < 4) {
             sixCodeRaw = fullCode;
         } else {
             sixCodeRaw =
-                    fullCode.substring(0,4) +
-                            fullCode.substring(fullCode.length()-6, fullCode.length());
+                    fullCode.substring(0,4); //+
+                            //fullCode.substring(fullCode.length()-6, fullCode.length());
         }
         List<String> pairs = Arrays.stream(sixCodeRaw.split("(?<=\\G.{2})")).toList();
 
+        Map<String, String> numToLetter = doubleLetters();
+
+        String pairsWithLetter = pairs.stream().map(x -> numToLetter.get(x)).collect(Collectors.joining());
+        return pairsWithLetter;
+    }
+
+
+
+    private Map<String, String> doubleLetters() {
         Map<String, String> numToLetter = new HashMap<>();
 
         numToLetter.put("1", "d");
@@ -239,10 +248,9 @@ public class ConwayCodeService {
         numToLetter.put("21", "v");
         numToLetter.put("24", "b");
         numToLetter.put("23", "n");
-
-        String pairsWithLetter = pairs.stream().map(x -> numToLetter.get(x)).collect(Collectors.joining());
-        return pairsWithLetter;
+        return numToLetter;
     }
+
     /*
     Map<String, String> numToLetter = new HashMap<>();
         numToLetter.put("11",  "q");

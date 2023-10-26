@@ -49,7 +49,7 @@ public class InvestigationMapServiceTest {
         assertEquals("比\tfm", readyToprint.get(100));
         //assertEquals("一\t1",readyToprint.get(0));
         //assertEquals("卩\t52", readyToprint.get(100));
-
+/*
         //generate file:
         String filename = "src/main/generatedDataFiles/EightFormInputCodes.txt";
         String filePath = new File("").getAbsolutePath();
@@ -60,7 +60,7 @@ public class InvestigationMapServiceTest {
             Files.write(path, readyToprint, StandardCharsets.UTF_8);
         } catch (IOException e) {
             System.out.println("failed to Print file in generateMapOfElemsToCreateFileTest: " + e);
-        }
+        }*/
 
     }
 
