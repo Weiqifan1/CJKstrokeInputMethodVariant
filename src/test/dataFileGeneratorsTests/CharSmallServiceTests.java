@@ -20,10 +20,7 @@ import org.junit.jupiter.api.TestInstance;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import java.nio.charset.StandardCharsets;
@@ -50,14 +47,20 @@ public class CharSmallServiceTests {
     @Test
     void generateCharSmall_jundaFirst() {
 
-        Parameters params = new Parameters(List.of(5,0),
+        Parameters params = new Parameters(List.of(8,2),
                 BasicStroke.DoubleStrokeOnly,
-                Freq.JundaFirst,
+                Freq.TzaiFirst,
                 InitialRadicals.InitialRadicalsOnly);
 
         List<CharSmall> jundaSorted = SCS.generateChars(params);
+        Map<String, List<CharSmall>> sortByFreq = SCS.codeToCharSortetByFreq(jundaSorted);
+        Map<String, List<CharSmall>> sortedMap = SCS.sortMapByListLength(sortByFreq);
+        Map<String, List<String>> stringifyed = SCS.stringifyMap(sortedMap);
 
-
+        List<String> toListTest = SCS.getStringsFromIndex(stringifyed, 8);
+        
         assertEquals(51663, 123);
     }
+
+
 }
