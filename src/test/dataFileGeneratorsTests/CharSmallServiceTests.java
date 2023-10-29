@@ -4,6 +4,11 @@ package test.dataFileGeneratorsTests;
 
 import main.Models.CJKChaaar;
 import main.Models.CJKfrequency;
+import main.Models.CharSmall;
+import main.Models.Parameters;
+import main.Models.sortingEnums.BasicStroke;
+import main.Models.sortingEnums.Freq;
+import main.Models.sortingEnums.InitialRadicals;
 import main.dataFileGenerators.CodepointCharacterSequenceReader;
 import main.dataFileGenerators.stokeMapGenerators.CharSmallService;
 import main.dataFileGenerators.stokeMapGenerators.ConwayCodeService;
@@ -43,8 +48,15 @@ public class CharSmallServiceTests {
     }
 
     @Test
-    void generateMapOfElemsToCreateFileTest() {
-        Map<String, CJKChaaar> charmap = SCS.charToInfoCJKMap;
+    void generateCharSmall_jundaFirst() {
+
+        Parameters params = new Parameters(List.of(5,0),
+                BasicStroke.DoubleStrokeOnly,
+                Freq.JundaFirst,
+                InitialRadicals.InitialRadicalsOnly);
+
+        List<CharSmall> jundaSorted = SCS.generateChars(params);
+
 
         assertEquals(51663, 123);
     }
