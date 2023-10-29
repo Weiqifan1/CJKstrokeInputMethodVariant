@@ -48,45 +48,45 @@ public class CharSmallService {
     private Map<String, String> doubleLetters() {
         Map<String, String> numToLetter = new HashMap<>();
 
-        numToLetter.put("1", "d");
+        numToLetter.put("1", "g");
 
-        numToLetter.put("12",  "g");
-        numToLetter.put("15",  "f");
-        numToLetter.put("11",  "d");
+        numToLetter.put("11",  "g");
+        numToLetter.put("12",  "f");
+        numToLetter.put("13",  "d");
         numToLetter.put("14",  "s");
-        numToLetter.put("13",  "a");
+        numToLetter.put("15",  "a");
 
-        numToLetter.put("5", "k");
+        numToLetter.put("5", "h");
 
-        numToLetter.put("52", "h");
-        numToLetter.put("55", "j");
-        numToLetter.put("51", "k");
+        numToLetter.put("51", "h");
+        numToLetter.put("52", "j");
+        numToLetter.put("53", "k");
         numToLetter.put("54", "l");
-        numToLetter.put("53", "m");
+        numToLetter.put("55", "m");
 
-        numToLetter.put("3", "e");
+        numToLetter.put("3", "t");
 
-        numToLetter.put("32", "t");
-        numToLetter.put("35", "r");
-        numToLetter.put("31", "e");
+        numToLetter.put("31", "t");
+        numToLetter.put("32", "r");
+        numToLetter.put("33", "e");
         numToLetter.put("34", "w");
-        numToLetter.put("33", "q");
+        numToLetter.put("35", "q");
 
-        numToLetter.put("4", "i");
+        numToLetter.put("4", "y");
 
-        numToLetter.put("42", "y");
-        numToLetter.put("45", "u");
-        numToLetter.put("41", "i");
+        numToLetter.put("41", "y");
+        numToLetter.put("42", "u");
+        numToLetter.put("43", "i");
         numToLetter.put("44", "o");
-        numToLetter.put("43", "p");
+        numToLetter.put("45", "p");
 
-        numToLetter.put("2", "v");
+        numToLetter.put("2", "n");
 
-        numToLetter.put("22", "x");
-        numToLetter.put("25", "c");
-        numToLetter.put("21", "v");
-        numToLetter.put("24", "b");
-        numToLetter.put("23", "n");
+        numToLetter.put("21", "n");
+        numToLetter.put("22", "b");
+        numToLetter.put("23", "v");
+        numToLetter.put("24", "c");
+        numToLetter.put("25", "x");
         return numToLetter;
     }
 
