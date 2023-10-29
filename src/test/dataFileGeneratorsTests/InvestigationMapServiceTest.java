@@ -44,7 +44,7 @@ public class InvestigationMapServiceTest {
 
         //with only fullcode, 3-3 and plain3-3 you get length 105592
         //assertEquals(121114, readyToprint.size());
-        assertEquals(50393, readyToprint.size());
+        assertEquals(51663, readyToprint.size());
         assertEquals("一\td",readyToprint.get(0));
         assertEquals("比\tfm", readyToprint.get(100));
         //assertEquals("一\t1",readyToprint.get(0));

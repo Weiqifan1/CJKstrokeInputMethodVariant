@@ -18,7 +18,7 @@ public class TryingOutDifferentIdeas {
         StrokeMapService strokeMapService = new StrokeMapService();
         Map<String, CJKChaaar> charToInfoCJKMap = strokeMapService.charToInfoCJKMap();
 
-        HashMap<String, List<CJKChaaar>> twoFour = IS.sixSixMap;
+        HashMap<String, List<CJKChaaar>> twoFour = IS.sixSixMap; // go to  public String fullCodeToSixSix(
         Map<String, List<CJKChaaar>> sortedByListLengthAndJunda = getSortedByJundaAndListLength(twoFour);
         Map<String, List<String>> charPlusJundaOrd = getCharPlusJundaord(twoFour);
 

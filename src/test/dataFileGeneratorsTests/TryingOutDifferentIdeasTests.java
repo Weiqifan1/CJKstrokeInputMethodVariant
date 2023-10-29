@@ -24,7 +24,7 @@ public class TryingOutDifferentIdeasTests {
         StrokeMapService strokeMapService = new StrokeMapService();
         Map<String, CJKChaaar> charToInfoCJKMap = strokeMapService.charToInfoCJKMap();
 
-        Map<String, String> radicals = initialRadicals(charToInfoCJKMap);
+        Map<String, String> radicals = initialRadicals(charToInfoCJKMap); //see public String fullCodeToSixSix(
         
         TryingOutDifferentIdeas ti = new TryingOutDifferentIdeas();
         ti.generateradicalCandidates();
@@ -32,6 +32,19 @@ public class TryingOutDifferentIdeasTests {
 
 
     private Map<String, String> initialRadicals(Map<String, CJKChaaar> charToInfoCJKMap) {
+
+        List<CJKChaaar> tzairadicalList = List.of(
+                        "錯", "穌", "鲍", "驗", "問", //"靶",
+                        "館", "電", "說", "等", "鬍", "髟", "路", "結", "蝶" ,"體",
+                        "軟").stream()
+                .map(x -> charToInfoCJKMap.get(x)).collect(Collectors.toList());
+
+        List<CJKChaaar> jundaradicalList = List.of(
+                        "勒", "電", "等", "稣", "路", "蝶", "體", "竭", "萌"
+                //, , "稣", , "模", , "軟"
+                        ).stream()
+                .map(x -> charToInfoCJKMap.get(x)).collect(Collectors.toList());
+
 
         List<CJKChaaar> candiateChars = List.of(
                         "錯", "穌", "鲍", "驗", "問", //"靶",
@@ -55,7 +68,9 @@ public class TryingOutDifferentIdeasTests {
         radicalMap.put("14521111", "F8"); //電
         radicalMap.put("14524134", "F8"); //電
         radicalMap.put("14524444", "F8"); //電
-        radicalMap.put("", "G"); //說
+        radicalMap.put("4111251", "G7"); //說
+        radicalMap.put("1111251", "G7"); //說
+        radicalMap.put("314314", "H6"); //"等"
         Map<String, String> numToLetter = new HashMap<>();
         numToLetter.put("1", "d");
         return numToLetter;

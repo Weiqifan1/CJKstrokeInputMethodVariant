@@ -131,6 +131,9 @@ public class CJKChaaar {
 
     private void generateCodesFromConwayCode(String conwayCode, String cjk) {
         ConwayCodeService cs = new ConwayCodeService();
+        if (cjk == "英") {
+            String test = "";
+        }
         Set<String> fullCode = cs.codesFromConway(conwayCode);
         this.fullCode = fullCode;
         this.editedFullCode = editFullCode(fullCode);

@@ -189,12 +189,12 @@ public class ConwayCodeService {
 
     public String fullCodeToSixSix(String fullCode) {
         String sixCodeRaw;
-        if (fullCode.length() < 4) {
+        if (fullCode.length() < 10) {
             sixCodeRaw = fullCode;
         } else {
             sixCodeRaw =
-                    fullCode.substring(0,4); //+
-                            //fullCode.substring(fullCode.length()-6, fullCode.length());
+                    fullCode.substring(0,10);// +
+                            //fullCode.substring(fullCode.length()-2, fullCode.length());
         }
         List<String> pairs = Arrays.stream(sixCodeRaw.split("(?<=\\G.{2})")).toList();
 
