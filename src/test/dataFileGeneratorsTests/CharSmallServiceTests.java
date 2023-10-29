@@ -47,7 +47,7 @@ public class CharSmallServiceTests {
     @Test
     void generateCharSmall_jundaFirst() {
 
-        Parameters params = new Parameters(List.of(8,2),
+        Parameters params = new Parameters(List.of(10,0),
                 BasicStroke.DoubleStrokeOnly,
                 Freq.TzaiFirst,
                 InitialRadicals.InitialRadicalsOnly);
@@ -55,9 +55,11 @@ public class CharSmallServiceTests {
         List<CharSmall> jundaSorted = SCS.generateChars(params);
         Map<String, List<CharSmall>> sortByFreq = SCS.codeToCharSortetByFreq(jundaSorted);
         Map<String, List<CharSmall>> sortedMap = SCS.sortMapByListLength(sortByFreq);
-        Map<String, List<String>> stringifyed = SCS.stringifyMap(sortedMap);
 
+        Map<String, List<String>> stringifyed = SCS.stringifyMap(sortedMap);
         List<String> toListTest = SCS.getStringsFromIndex(stringifyed, 8);
+
+        Map<Double, String> doubleToCjk = SCS.sortMap(8, sortedMap);
         
         assertEquals(51663, 123);
     }

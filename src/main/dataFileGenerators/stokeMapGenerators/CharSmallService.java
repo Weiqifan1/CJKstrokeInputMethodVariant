@@ -312,6 +312,32 @@ public class CharSmallService {
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (a, b) -> a, LinkedHashMap::new));
     }
 
+    public static Map<Double, String> sortMap(int X, Map<String, List<CharSmall>> map) {
+        Map<String, List<CharSmall>> onlyFew = map.entrySet().stream()
+                .filter(z -> z.getValue().size() > X)
+                .collect(Collectors.toMap(
+                        x -> x.getKey(),
+                        y -> y.getValue().subList(X, y.getValue().size())));
+
+        Set<Double> alreadyUsed = new HashSet<>();
+        Map<Double, String> result = new HashMap<>();
+        for (List<CharSmall> eachOne : onlyFew.values()) {
+            String toUse = String.join(" ", eachOne.stream().map(x -> x.getCJK()).toList());
+            Double newDouble = eachOne.get(0).getFrequency();
+            while (alreadyUsed.contains(newDouble)) {
+                newDouble = newDouble + 0.0001;
+            }
+            if (!alreadyUsed.contains(newDouble)) {
+                result.put(newDouble, toUse);
+                alreadyUsed.add(newDouble);
+            } else {
+                System.out.println("ERROR: dublicate frequency" + newDouble + " "+ toUse);
+            }
+        }
+        Map<Double, String> sortedMap = new TreeMap<>(result);
+        return sortedMap;
+    }
+
     public static Map<String, List<String>> stringifyMap(Map<String, List<CharSmall>> sortedMap) {
         return sortedMap.entrySet().stream()
                 .collect(Collectors.toMap(Map.Entry::getKey,
