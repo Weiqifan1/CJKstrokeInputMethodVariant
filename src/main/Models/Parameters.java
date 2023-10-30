@@ -5,6 +5,7 @@ import main.Models.sortingEnums.Freq;
 import main.Models.sortingEnums.InitialRadicals;
 
 import java.util.List;
+import java.util.Map;
 
 public class Parameters {
 
@@ -12,12 +13,18 @@ public class Parameters {
     private BasicStroke basicStroke;
     private Freq freq;
     private InitialRadicals initialRadicals;
+    private Map<String, List<String>> radicals;
 
-    public Parameters(List<Integer> strokeRange, BasicStroke basicStroke, Freq freq, InitialRadicals initialRadicals) {
+    public Parameters(List<Integer> strokeRange,
+                      BasicStroke basicStroke,
+                      Freq freq,
+                      InitialRadicals initialRadicals,
+                      Map<String, List<String>> radicals) {
         this.strokeRange = strokeRange;
         this.basicStroke = basicStroke;
         this.freq = freq;
         this.initialRadicals = initialRadicals;
+        this.radicals = radicals;
     }
 
     public List<Integer> getStrokeRange() {
@@ -34,5 +41,9 @@ public class Parameters {
 
     public InitialRadicals getInitialRadicals() {
         return initialRadicals;
+    }
+
+    public Map<String, List<String>> getRadicals() {
+        return radicals;
     }
 }

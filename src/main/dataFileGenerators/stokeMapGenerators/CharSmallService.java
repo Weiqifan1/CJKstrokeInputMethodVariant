@@ -33,9 +33,8 @@ public class CharSmallService {
     private CharSmall generateChar(CJKChaaar CJK, Parameters params) {
 
         Set<String> initialRadicalsFromFull = CJK.getFullCode();
-        //generateCodeWithRadicals(CJK.getFullCode(), ); //TODO: create radical functions
 
-        //encoded means that the code might be changed from single stroke to double stroke
+        //TODO: reimpelent the code string to be an object that can handle radicals
         Set<String> withCodeRange = createCoderange(initialRadicalsFromFull, params.getStrokeRange());
         Set<String> toEncoded = encodedStrokes(params.getBasicStroke(), withCodeRange);
         Double createFrequency = createFrequencyFromParam(CJK, params.getFreq());
@@ -243,6 +242,26 @@ public class CharSmallService {
         return numToLetter;
     }
 
+
+    public Map<String, List<String>> JundaRadicals() {
+        //codes, numOfCodes, letter, exception
+        List<String> tree = List.of("1234", "4", "A", ""); // 木
+        List<String> foot = List.of("1512121", "7", "B",""); // 跑
+        List<String> bamboo = List.of("312312", "6", "C",""); // 签
+        List<String> insect = List.of("151214", "6", "D",""); // 蛀
+        List<String> handGroundWork = List.of("121", "3", "E", ""); // 扣址工
+        List<String> eye = List.of("25111", "5", "F", ""); // 盯
+
+        Map<String, List<String>> result = new HashMap<>();
+        result.put(tree.get(0), tree);
+        result.put(foot.get(0), foot);
+        result.put(bamboo.get(0), bamboo);
+        result.put(insect.get(0), insect);
+        result.put(handGroundWork.get(0), handGroundWork);
+        result.put(eye.get(0), eye);
+        return result;
+    }
+
     private Map<String, String> jundaAndTzaiRadicals() {
         Map<String, String> radicalMap = new HashMap<>();
         radicalMap.put("34112431", "A8"); //錯
@@ -290,12 +309,6 @@ public class CharSmallService {
                 ).stream()
                 .map(x -> charToInfoCJKMap.get(x)).collect(Collectors.toList());
 
-
-        List<CJKChaaar> candiateChars = List.of(
-                        "錯", "穌", "鲍", "驗", "問", //"靶",
-                        "館", "電", "說", "等", "鬍", "髟", "路", "結", "蝶" ,"體",
-                        "軟").stream()
-                .map(x -> charToInfoCJKMap.get(x)).collect(Collectors.toList());
         return null;
     }
     public static Map<String, List<CharSmall>> codeToCharSortetByFreq(List<CharSmall> jundaSorted) {
@@ -312,6 +325,17 @@ public class CharSmallService {
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (a, b) -> a, LinkedHashMap::new));
     }
 
+    public static Map<String, List<CharSmall>> sortMapByRarestFreqAtIndex(Map<String, List<CharSmall>> map,
+                                                                          Integer X) {
+        Comparator<CharSmall> comparator = Comparator.comparingDouble(a -> a.getFrequency());
+        return map.entrySet().stream()
+                .filter(entry -> entry.getValue().size() > X)
+                .peek(entry -> Collections.sort(entry.getValue(), comparator))
+                .sorted(Comparator.comparingDouble(entry -> entry.getValue().get(X).getFrequency()))
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
+                        (oldValue, newValue) -> oldValue, LinkedHashMap::new));
+    }
+
     public static Map<Double, String> sortMap(int X, Map<String, List<CharSmall>> map) {
         Map<String, List<CharSmall>> onlyFew = map.entrySet().stream()
                 .filter(z -> z.getValue().size() > X)
@@ -321,9 +345,9 @@ public class CharSmallService {
 
         Set<Double> alreadyUsed = new HashSet<>();
         Map<Double, String> result = new HashMap<>();
-        for (List<CharSmall> eachOne : onlyFew.values()) {
-            String toUse = String.join(" ", eachOne.stream().map(x -> x.getCJK()).toList());
-            Double newDouble = eachOne.get(0).getFrequency();
+        for (Map.Entry<String, List<CharSmall>> eachOne : onlyFew.entrySet()) {
+            String toUse = eachOne.getKey() + " " +String.join(" ", eachOne.getValue().stream().map(x -> x.getCJK()).toList());
+            Double newDouble = eachOne.getValue().get(0).getFrequency();
             while (alreadyUsed.contains(newDouble)) {
                 newDouble = newDouble + 0.0001;
             }
