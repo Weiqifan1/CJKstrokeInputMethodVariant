@@ -31,15 +31,23 @@ public class CharSmallService {
         //TODO: reimpelent the code string to be an object that can handle radicals
         Double createFrequency = createFrequencyFromParam(CJK, params.getFreq());
         Set<CodeConverter> codeConverter = new HashSet<>();
-        if (CJK.getCJK().equals("萬")) {
+        if (CJK.getCJK().equals("滢")) {
             String test2 = "";
         }
         for (String eachCode : CJK.getFullCode()) {
             if (eachCode.equals("1212251125214")) {
                 String test3 = "";
             }
-            CodeConverter singleConverter = new CodeConverter(CJK, eachCode, params);
-            codeConverter.add(singleConverter);
+            if (params.getIncludeLongDoubleStrokes()) {
+                CodeConverter singleConverter1 = new CodeConverter(CJK, eachCode, params, false);
+                codeConverter.add(singleConverter1);
+                CodeConverter singleConverter2 = new CodeConverter(CJK, eachCode, params, true);
+                codeConverter.add(singleConverter2);
+
+            }else {
+                CodeConverter singleConverter = new CodeConverter(CJK, eachCode, params, false);
+                codeConverter.add(singleConverter);
+            }
         }
         CharSmall resultChar = new CharSmall(CJK.getCJK(), createFrequency, codeConverter, CJK.getConwayCode());
         return resultChar;
@@ -155,6 +163,24 @@ public class CharSmallService {
                 Set.of(), plantCodeStructure));
         radicalMap.put("2112", new RadicalRecord("2112", 4, "A" ,
                 Set.of(), plantCodeStructure));
+        //foot radical
+        String footConway = "251(215|2121"; //251215  2512121
+        radicalMap.put("251215", new RadicalRecord("251215", 6, "B" ,
+                Set.of(), footConway));
+        radicalMap.put("2512121", new RadicalRecord("2512121", 7, "B" ,
+                Set.of(), footConway));
+        //䈨
+        radicalMap.put("314314", new RadicalRecord("314314", 6, "C" ,
+                Set.of(), ""));
+        //虳
+        radicalMap.put("251214", new RadicalRecord("251214", 6, "D" ,
+                Set.of(), ""));
+        //楮
+        radicalMap.put("1234", new RadicalRecord("1234", 4, "E" ,
+                Set.of(), ""));
+        //滢
+        radicalMap.put("441", new RadicalRecord("441", 3, "F" ,
+                Set.of("斗"), ""));
         return radicalMap;
     }
 

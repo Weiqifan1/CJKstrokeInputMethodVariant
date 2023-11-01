@@ -1,6 +1,5 @@
 package main.Models;
 
-import java.awt.datatransfer.StringSelection;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -15,12 +14,12 @@ public class CodeConverter {
     private String substringLeftAfterRadical;
     private String finalCodes;
 
-    public CodeConverter(CJKChaaar CJK, String fullCode, Parameters params) {
+    public CodeConverter(CJKChaaar CJK, String fullCode, Parameters params, Boolean includeDoubleLong) {
         //private Set<String> createCoderange(Set<String> codesWithInitialRadicalsToEncoded, List<Integer> strokeRange)
         if (fullCode.equals("1212251125214")) {
             String test3 = "";
         }
-        List<String> substringTripple = getSubstringTupple(CJK, fullCode, params);
+        List<String> substringTripple = getSubstringTupple(CJK, fullCode, params, includeDoubleLong);
         this.substringFromRadical = substringTripple.get(0);
         this.substringLeftAfterRadical = substringTripple.get(1);
         this.finalCodes = substringTripple.get(2);
@@ -31,18 +30,58 @@ public class CodeConverter {
 
     private List<String> getSubstringTupple(CJKChaaar CJK,
                                             String fullCode,
-                                            Parameters params) {
+                                            Parameters params,
+                                            Boolean includeDoubleLong) {
         //should return a list of 3 strings: substringFromRad, substrinAfterrad, fnal code
         //芖
         if (CJK.getCJK().equals("芖") || CJK.getCJK().equals("𢰸")) {
             String test = "";
         }
+        List<String> result = new ArrayList<>();
+        if (includeDoubleLong) {
+            result = longCodes(CJK, fullCode, params);
+        }else {
+            result = noLongCodes(CJK, fullCode, params);
+        }
+        return result;
+    }
+
+    private List<String> longCodes(CJKChaaar cjk, String fullCode, Parameters params) {
+        List<String> result = new ArrayList<>();
+        String toEncoded = encodedStrokes(params.getBasicStroke(), fullCode);
+        String withCodeRange = createCoderange(
+                toEncoded,
+                List.of(5,1));
+
+        String finalCode = "";
+        if (withCodeRange.length() == 6) {
+            finalCode = withCodeRange;
+        } else {
+            Integer diff = 6 - withCodeRange.length();
+            finalCode = withCodeRange + multiplyString("j", diff);
+        }
+        //fullCode = radicalLetter + withCodeRange;
+        result.add("");
+        result.add(fullCode);
+        result.add(withCodeRange);
+        return result;
+    }
+
+    public static String multiplyString(String str, int n) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < n; i++) {
+            sb.append(str);
+        }
+        return sb.toString();
+    }
+
+    private List<String> noLongCodes(CJKChaaar CJK, String fullCode, Parameters params) {
+        List<String> result = new ArrayList<>();
         String chosenRadical = "";
         String substringsFromRad = "";
         String substringAfterRad = "";
         String finalCode = "";
         String radicalLetter = "";
-        List<String> result = new ArrayList<>();
         int radicalCodeLength = 0;
         if (InitialRadicals.InitialRadicalsOnly.equals(params.getInitialRadicals())) {
             if (Objects.nonNull(params.getRadicals()) && params.getRadicals().keySet().size() > 0) {

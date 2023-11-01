@@ -14,17 +14,24 @@ public class Parameters {
     private Freq freq;
     private InitialRadicals initialRadicals;
     private Map<String, RadicalRecord> radicals;
+    private Boolean includeLongDoubleStrokes;
 
     public Parameters(List<Integer> strokeRange,
                       BasicStroke basicStroke,
                       Freq freq,
                       InitialRadicals initialRadicals,
-                      Map<String, RadicalRecord> radicals) {
+                      Map<String, RadicalRecord> radicals,
+                      Boolean includeLongDoubleStrokes) {
         this.strokeRange = strokeRange;
         this.basicStroke = basicStroke;
         this.freq = freq;
         this.initialRadicals = initialRadicals;
         this.radicals = radicals;
+        this.includeLongDoubleStrokes = includeLongDoubleStrokes;
+    }
+
+    public Boolean getIncludeLongDoubleStrokes() {
+        return includeLongDoubleStrokes;
     }
 
     public List<Integer> getStrokeRange() {
