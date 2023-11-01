@@ -2,10 +2,7 @@ package test.dataFileGeneratorsTests;
 
 
 
-import main.Models.CJKChaaar;
-import main.Models.CJKfrequency;
-import main.Models.CharSmall;
-import main.Models.Parameters;
+import main.Models.*;
 import main.Models.sortingEnums.BasicStroke;
 import main.Models.sortingEnums.Freq;
 import main.Models.sortingEnums.InitialRadicals;
@@ -46,17 +43,15 @@ public class CharSmallServiceTests {
 
     @Test
     void generateCharSmall_jundaFirst() {
-
+        RadicalExamples examples = new RadicalExamples();
         Parameters params = new Parameters(List.of(3,1),
                 BasicStroke.DoubleStrokeOnly,
                 Freq.JundaFirst,
                 InitialRadicals.InitialRadicalsOnly,
-                SCS.testBasicRadicals(),
+                examples.testBasicRadicals(),
                 true);
 
-        List<CharSmall> jundaSorted = SCS.generateChars(params);
-        Map<String, List<CharSmall>> sortByFreq = SCS.codeToCharSortetByFreq(jundaSorted);
-        Map<String, List<CharSmall>> sortedMap = SCS.sortMapByRarestFreqAtIndex(sortByFreq, 9);
+        Map<String, List<CharSmall>> sortedMap = SCS.generateSortedByFreq(params);
 
         Map<String, List<String>> stringifyed = SCS.stringifyMap(sortedMap);
         List<String> toListTest = SCS.getStringsFromIndex(stringifyed, 9);

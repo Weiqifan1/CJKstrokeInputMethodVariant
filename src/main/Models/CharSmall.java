@@ -10,6 +10,8 @@ public class CharSmall {
     private Set<CodeConverter> converterCodes;
     private String conwayCode;
 
+    public Set<String> codesForPrint;
+
     public CharSmall(String CJK, Double frequency, Set<CodeConverter> converterCodes, String conwayCode) {
         this.CJK = CJK;
         this.frequency = frequency;
