@@ -13,13 +13,13 @@ public class Parameters {
     private BasicStroke basicStroke;
     private Freq freq;
     private InitialRadicals initialRadicals;
-    private Map<String, List<String>> radicals;
+    private Map<String, RadicalRecord> radicals;
 
     public Parameters(List<Integer> strokeRange,
                       BasicStroke basicStroke,
                       Freq freq,
                       InitialRadicals initialRadicals,
-                      Map<String, List<String>> radicals) {
+                      Map<String, RadicalRecord> radicals) {
         this.strokeRange = strokeRange;
         this.basicStroke = basicStroke;
         this.freq = freq;
@@ -43,7 +43,7 @@ public class Parameters {
         return initialRadicals;
     }
 
-    public Map<String, List<String>> getRadicals() {
+    public Map<String, RadicalRecord> getRadicals() {
         return radicals;
     }
 }

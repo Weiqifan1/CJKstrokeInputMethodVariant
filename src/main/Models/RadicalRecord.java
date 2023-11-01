@@ -18,19 +18,19 @@ public class RadicalRecord {
         this.exceptions = exceptions;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public String getCode() {
+        return code;
     }
 
-    public void setCodeLength(Integer codeLength) {
-        this.codeLength = codeLength;
+    public Integer getCodeLength() {
+        return codeLength;
     }
 
-    public void setLetter(String letter) {
-        this.letter = letter;
+    public String getLetter() {
+        return letter;
     }
 
-    public void setExceptions(Set<String> exceptions) {
-        this.exceptions = exceptions;
+    public Set<String> getExceptions() {
+        return exceptions;
     }
 }

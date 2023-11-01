@@ -47,11 +47,11 @@ public class CharSmallServiceTests {
     @Test
     void generateCharSmall_jundaFirst() {
 
-        Parameters params = new Parameters(List.of(6,2),
+        Parameters params = new Parameters(List.of(1,0),
                 BasicStroke.DoubleStrokeOnly,
                 Freq.JundaFirst,
                 InitialRadicals.InitialRadicalsOnly,
-                SCS.JundaRadicals());
+                SCS.testBasicRadicals());
 
         List<CharSmall> jundaSorted = SCS.generateChars(params);
         Map<String, List<CharSmall>> sortByFreq = SCS.codeToCharSortetByFreq(jundaSorted);

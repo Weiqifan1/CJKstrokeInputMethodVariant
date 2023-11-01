@@ -1,9 +1,12 @@
 package main.Models;
 
+import java.awt.datatransfer.StringSelection;
 import java.util.*;
 import java.util.stream.Collectors;
 
 import main.Models.sortingEnums.BasicStroke;
+import main.Models.sortingEnums.InitialRadicals;
+
 public class CodeConverter {
     private String fullCode;
     private Map<String, RadicalRecord> radicals;
@@ -12,16 +15,69 @@ public class CodeConverter {
     private String substringLeftAfterRadical;
     private String finalCodes;
 
-    public CodeConverter(String fullCode, Map<String, RadicalRecord> radicals, Parameters params) {
+    public CodeConverter(String CJK, String fullCode, Parameters params) {
         //private Set<String> createCoderange(Set<String> codesWithInitialRadicalsToEncoded, List<Integer> strokeRange)
-        String withCodeRange = createCoderange(fullCode, params.getStrokeRange());
-        String toEncoded = encodedStrokes(params.getBasicStroke(), withCodeRange);
-
-        this.finalCodes = toEncoded;
+        if (fullCode.equals("1212251125214")) {
+            String test3 = "";
+        }
+        List<String> substringTripple = getSubstringTupple(CJK, fullCode, params);
+        this.substringFromRadical = substringTripple.get(0);
+        this.substringLeftAfterRadical = substringTripple.get(1);
+        this.finalCodes = substringTripple.get(2);
         this.fullCode = fullCode;
         this.radicals = radicals;
         this.params = params;
     }
+
+    private List<String> getSubstringTupple(String CJK,
+                                            String fullCode,
+                                            Parameters params) {
+        //should return a list of 3 strings: substringFromRad, substrinAfterrad, fnal code
+        //芖
+        if (CJK.equals("芖") || CJK.equals("𢰸")) {
+            String test = "";
+        }
+        String chosenRadical = "";
+        String substringsFromRad = "";
+        String substringAfterRad = "";
+        String finalCode = "";
+        String radicalLetter = "";
+        List<String> result = new ArrayList<>();
+        int radicalCodeLength = 0;
+        if (InitialRadicals.InitialRadicalsOnly.equals(params.getInitialRadicals())) {
+            if (Objects.nonNull(params.getRadicals()) && params.getRadicals().keySet().size() > 0) {
+                for (String radicalCode : params.getRadicals().keySet()) {
+                    if (fullCode.startsWith(radicalCode) && radicalCode.length() > radicalCodeLength) {
+                        chosenRadical = radicalCode;
+                        radicalCodeLength = chosenRadical.length();
+                        substringAfterRad = fullCode.substring(radicalCodeLength, fullCode.length());
+                    }
+                }
+            }
+            if (substringAfterRad == "") {
+                substringAfterRad = fullCode;
+            }
+
+
+            if (chosenRadical != "") {
+                substringsFromRad = chosenRadical;
+                RadicalRecord radicalFound = params.getRadicals().get(chosenRadical);
+                radicalLetter = radicalFound.getLetter();
+            }
+            String toEncoded = encodedStrokes(params.getBasicStroke(), substringAfterRad);
+            finalCode = radicalLetter + toEncoded;
+            String withCodeRange = createCoderange(
+                    finalCode,
+                    params.getStrokeRange());
+
+            //fullCode = radicalLetter + withCodeRange;
+            result.add(substringsFromRad);
+            result.add(substringAfterRad);
+            result.add(withCodeRange);
+        }
+        return result;
+    }
+
 
     public String getFullCode() {
         return fullCode;
