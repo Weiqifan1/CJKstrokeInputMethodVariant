@@ -62,7 +62,9 @@ public class CharSmallServiceTests {
         List<String> toListTest = SCS.getStringsFromIndex(stringifyed, 9);
 
         Map<Double, String> doubleToCjk = SCS.sortMap(9, sortedMap);
-        
+        //   s        d         f       j      k      l
+        //  bamboo   insect   foot    tree   plant   waterRad
+
         assertEquals(51663, 123);
     }
 
