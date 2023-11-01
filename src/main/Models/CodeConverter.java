@@ -15,7 +15,7 @@ public class CodeConverter {
     private String substringLeftAfterRadical;
     private String finalCodes;
 
-    public CodeConverter(String CJK, String fullCode, Parameters params) {
+    public CodeConverter(CJKChaaar CJK, String fullCode, Parameters params) {
         //private Set<String> createCoderange(Set<String> codesWithInitialRadicalsToEncoded, List<Integer> strokeRange)
         if (fullCode.equals("1212251125214")) {
             String test3 = "";
@@ -29,12 +29,12 @@ public class CodeConverter {
         this.params = params;
     }
 
-    private List<String> getSubstringTupple(String CJK,
+    private List<String> getSubstringTupple(CJKChaaar CJK,
                                             String fullCode,
                                             Parameters params) {
         //should return a list of 3 strings: substringFromRad, substrinAfterrad, fnal code
         //芖
-        if (CJK.equals("芖") || CJK.equals("𢰸")) {
+        if (CJK.getCJK().equals("芖") || CJK.getCJK().equals("𢰸")) {
             String test = "";
         }
         String chosenRadical = "";
@@ -47,7 +47,8 @@ public class CodeConverter {
         if (InitialRadicals.InitialRadicalsOnly.equals(params.getInitialRadicals())) {
             if (Objects.nonNull(params.getRadicals()) && params.getRadicals().keySet().size() > 0) {
                 for (String radicalCode : params.getRadicals().keySet()) {
-                    if (fullCode.startsWith(radicalCode) && radicalCode.length() > radicalCodeLength) {
+                    if (radicalCode.length() > radicalCodeLength
+                            && selectRadical(CJK, fullCode, radicalCode, radicalCodeLength, params.getRadicals())) {
                         chosenRadical = radicalCode;
                         radicalCodeLength = chosenRadical.length();
                         substringAfterRad = fullCode.substring(radicalCodeLength, fullCode.length());
@@ -76,6 +77,23 @@ public class CodeConverter {
             result.add(withCodeRange);
         }
         return result;
+    }
+
+    private boolean selectRadical(CJKChaaar CJK,
+                                  String fullCode,
+                                  String radicalCode,
+                                  int radicalCodeLength,
+                                  Map<String, RadicalRecord> radicals) {
+        //fullCode.startsWith(radicalCode)
+        if (fullCode.startsWith(radicalCode)) {
+            RadicalRecord relevantRadical = radicals.get(radicalCode);
+            String conway = CJK.getConwayCode();
+            String radicalCodeStructure = relevantRadical.getCodeStructure();
+            if (conway.startsWith(radicalCodeStructure) || radicalCodeStructure.equals("")) {
+                return true;
+            }
+        }
+        return false;
     }
 
 

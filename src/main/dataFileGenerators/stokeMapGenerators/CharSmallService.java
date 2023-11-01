@@ -38,7 +38,7 @@ public class CharSmallService {
             if (eachCode.equals("1212251125214")) {
                 String test3 = "";
             }
-            CodeConverter singleConverter = new CodeConverter(CJK.getCJK(), eachCode, params);
+            CodeConverter singleConverter = new CodeConverter(CJK, eachCode, params);
             codeConverter.add(singleConverter);
         }
         CharSmall resultChar = new CharSmall(CJK.getCJK(), createFrequency, codeConverter, CJK.getConwayCode());
@@ -146,9 +146,15 @@ public class CharSmallService {
         Map<String, RadicalRecord> radicalMap = new HashMap<>();
         //String code, Integer codeLength, String letter, Set<String> exceptions
         //(122|1212|2112)251125(5|21)4 萬
-        radicalMap.put("122", new RadicalRecord("122", 3, "A" ,Set.of(), ""));
-        radicalMap.put("1212", new RadicalRecord("1212", 4, "A" ,Set.of(), ""));
-        radicalMap.put("2112", new RadicalRecord("2112", 4, "A" ,Set.of(), ""));
+        //plant radical codeStructure:
+        //𡖂 (122|1212|1221|2112)1325111(215|2121)515(34|35)354
+        String plantCodeStructure = "(122|";
+        radicalMap.put("122", new RadicalRecord("122", 3, "A" ,
+                Set.of(), plantCodeStructure));
+        radicalMap.put("1212", new RadicalRecord("1212", 4, "A" ,
+                Set.of(), plantCodeStructure));
+        radicalMap.put("2112", new RadicalRecord("2112", 4, "A" ,
+                Set.of(), plantCodeStructure));
         return radicalMap;
     }
 

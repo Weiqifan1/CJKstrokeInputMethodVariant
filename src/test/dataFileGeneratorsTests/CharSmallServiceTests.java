@@ -47,7 +47,7 @@ public class CharSmallServiceTests {
     @Test
     void generateCharSmall_jundaFirst() {
 
-        Parameters params = new Parameters(List.of(1,0),
+        Parameters params = new Parameters(List.of(3,1),
                 BasicStroke.DoubleStrokeOnly,
                 Freq.JundaFirst,
                 InitialRadicals.InitialRadicalsOnly,
