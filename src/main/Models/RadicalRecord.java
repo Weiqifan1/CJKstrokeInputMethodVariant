@@ -10,12 +10,22 @@ public class RadicalRecord {
     private Integer codeLength;
     private String letter;
     private Set<String> exceptions;
+    private String codeStructure;
 
-    public RadicalRecord(String code, Integer codeLength, String letter, Set<String> exceptions) {
+    public RadicalRecord(String code,
+                         Integer codeLength,
+                         String letter,
+                         Set<String> exceptions,
+                         String codeStructure) {
         this.code = code;
         this.codeLength = codeLength;
         this.letter = letter;
         this.exceptions = exceptions;
+        this.codeStructure = codeStructure;
+    }
+
+    public String getCodeStructure() {
+        return codeStructure;
     }
 
     public String getCode() {

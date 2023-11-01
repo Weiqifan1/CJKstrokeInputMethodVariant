@@ -146,41 +146,41 @@ public class CharSmallService {
         Map<String, RadicalRecord> radicalMap = new HashMap<>();
         //String code, Integer codeLength, String letter, Set<String> exceptions
         //(122|1212|2112)251125(5|21)4 萬
-        radicalMap.put("122", new RadicalRecord("122", 3, "A" ,Set.of()));
-        radicalMap.put("1212", new RadicalRecord("1212", 4, "A" ,Set.of()));
-        radicalMap.put("2112", new RadicalRecord("2112", 4, "A" ,Set.of()));
+        radicalMap.put("122", new RadicalRecord("122", 3, "A" ,Set.of(), ""));
+        radicalMap.put("1212", new RadicalRecord("1212", 4, "A" ,Set.of(), ""));
+        radicalMap.put("2112", new RadicalRecord("2112", 4, "A" ,Set.of(), ""));
         return radicalMap;
     }
 
     private Map<String, RadicalRecord> jundaAndTzaiRadicals() {
         Map<String, RadicalRecord> radicalMap = new HashMap<>();
         //String code, Integer codeLength, String letter, Set<String> exceptions
-        radicalMap.put("34112431", new RadicalRecord("34112431", 8, "A" ,Set.of()));
-        radicalMap.put("31115", new RadicalRecord("31115",5, "A", Set.of())); //错
-        radicalMap.put("35251214444", new RadicalRecord("35251214444", 11, "B", Set.of())); //穌
-        radicalMap.put("35251211", new RadicalRecord("35251211", 8,  "B" ,Set.of())); //鲍
-        radicalMap.put("1211254444", new RadicalRecord("1211254444", 10,  "C", Set.of())); //驗
-        radicalMap.put("2111254444", new RadicalRecord("2111254444",10, "C", Set.of())); //驗
-        radicalMap.put("551", new RadicalRecord("551",3, "C", Set.of())); //验
-        radicalMap.put("25112511", new RadicalRecord("25112511",8, "D", Set.of())); //問
-        radicalMap.put("425", new RadicalRecord("425", 3, "D", Set.of())); //问
-        radicalMap.put("245", new RadicalRecord("245", 3,"D", Set.of())); //问
-        radicalMap.put("344511211", new RadicalRecord("344511211", 9, "E", Set.of())); //館
-        radicalMap.put("341511211", new RadicalRecord("341511211", 9, "E", Set.of())); //館
-        radicalMap.put("34451154", new RadicalRecord("34451154", 8, "E", Set.of())); //館
-        radicalMap.put("34151154", new RadicalRecord("34151154", 8,"E", Set.of())); //館
-        radicalMap.put("355", new RadicalRecord("355", 3, "E", Set.of())); //馆
-        radicalMap.put("12521111", new RadicalRecord("12521111", 8,  "F", Set.of())); //電
-        radicalMap.put("12524134", new RadicalRecord("12524134",8, "F", Set.of())); //電
-        radicalMap.put("12524444", new RadicalRecord("12524444", 8, "F", Set.of())); //電
-        radicalMap.put("14521111", new RadicalRecord("14521111", 8, "F", Set.of())); //電
-        radicalMap.put("14524134", new RadicalRecord("14524134", 8, "F", Set.of())); //電
-        radicalMap.put("14524444", new RadicalRecord("14524444", 8, "F", Set.of())); //電
-        radicalMap.put("4111251", new RadicalRecord("4111251", 7, "G", Set.of())); //說
-        radicalMap.put("1111251", new RadicalRecord("1111251", 7, "G", Set.of())); //說
-        radicalMap.put("45", new RadicalRecord("45", 2,  "G", Set.of())); //说
-        radicalMap.put("314314", new RadicalRecord("314314", 6, "H", Set.of())); //"等"
-        radicalMap.put("122125112", new RadicalRecord("122125112", 9,"I", Set.of())); //靶
+        radicalMap.put("34112431", new RadicalRecord("34112431", 8, "A" ,Set.of(), ""));
+        radicalMap.put("31115", new RadicalRecord("31115",5, "A", Set.of(), "")); //错
+        radicalMap.put("35251214444", new RadicalRecord("35251214444", 11, "B", Set.of(), "")); //穌
+        radicalMap.put("35251211", new RadicalRecord("35251211", 8,  "B" ,Set.of(), "")); //鲍
+        radicalMap.put("1211254444", new RadicalRecord("1211254444", 10,  "C", Set.of(), "")); //驗
+        radicalMap.put("2111254444", new RadicalRecord("2111254444",10, "C", Set.of(), "")); //驗
+        radicalMap.put("551", new RadicalRecord("551",3, "C", Set.of(), "")); //验
+        radicalMap.put("25112511", new RadicalRecord("25112511",8, "D", Set.of(), "")); //問
+        radicalMap.put("425", new RadicalRecord("425", 3, "D", Set.of(), "")); //问
+        radicalMap.put("245", new RadicalRecord("245", 3,"D", Set.of(), "")); //问
+        radicalMap.put("344511211", new RadicalRecord("344511211", 9, "E", Set.of(), "")); //館
+        radicalMap.put("341511211", new RadicalRecord("341511211", 9, "E", Set.of(), "")); //館
+        radicalMap.put("34451154", new RadicalRecord("34451154", 8, "E", Set.of(), "")); //館
+        radicalMap.put("34151154", new RadicalRecord("34151154", 8,"E", Set.of(), "")); //館
+        radicalMap.put("355", new RadicalRecord("355", 3, "E", Set.of(), "")); //馆
+        radicalMap.put("12521111", new RadicalRecord("12521111", 8,  "F", Set.of(), "")); //電
+        radicalMap.put("12524134", new RadicalRecord("12524134",8, "F", Set.of(), "")); //電
+        radicalMap.put("12524444", new RadicalRecord("12524444", 8, "F", Set.of(), "")); //電
+        radicalMap.put("14521111", new RadicalRecord("14521111", 8, "F", Set.of(), "")); //電
+        radicalMap.put("14524134", new RadicalRecord("14524134", 8, "F", Set.of(), "")); //電
+        radicalMap.put("14524444", new RadicalRecord("14524444", 8, "F", Set.of(), "")); //電
+        radicalMap.put("4111251", new RadicalRecord("4111251", 7, "G", Set.of(), "")); //說
+        radicalMap.put("1111251", new RadicalRecord("1111251", 7, "G", Set.of(), "")); //說
+        radicalMap.put("45", new RadicalRecord("45", 2,  "G", Set.of(), "")); //说
+        radicalMap.put("314314", new RadicalRecord("314314", 6, "H", Set.of(), "")); //"等"
+        radicalMap.put("122125112", new RadicalRecord("122125112", 9,"I", Set.of(), "")); //靶
         return radicalMap;
     }
 
