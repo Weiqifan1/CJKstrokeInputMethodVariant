@@ -54,22 +54,23 @@ public class CodeConverter {
             String testRadical = "";
         }
 
-        String toEncoded = encodedStrokes(params.getBasicStroke(), fullCode);
         String withCodeRange = createCoderange(
-                toEncoded,
-                List.of(5,1));
+                fullCode,
+                List.of(10,2));
+        String toEncoded = encodedStrokes(params.getBasicStroke(), withCodeRange);
+
 
         String finalCode = "";
-        if (withCodeRange.length() == 6) {
-            finalCode = withCodeRange;
+        if (toEncoded.length() == 6) {
+            finalCode = toEncoded;
         } else {
-            Integer diff = 6 - withCodeRange.length();
-            finalCode = withCodeRange + multiplyString("j", diff);
+            Integer diff = 6 - toEncoded.length();
+            finalCode = toEncoded + multiplyString("j", diff);
         }
         //fullCode = radicalLetter + withCodeRange;
         result.add("");
         result.add(fullCode);
-        result.add(withCodeRange);
+        result.add(finalCode);
         return result;
     }
 
@@ -195,35 +196,16 @@ public class CodeConverter {
         this.finalCodes = finalCodes;
     }
 
-    private String createCoderange(String codesWithInitialRadicalsToEncoded, List<Integer> strokeRange) {
-        String result = "";
-        if (Objects.isNull(strokeRange)) {
-            return codesWithInitialRadicalsToEncoded;
+    private String createCoderange(String codes, List<Integer> strokeRange) {
+        if (Objects.nonNull(strokeRange) && codes.length() <= strokeRange.get(0) + strokeRange.get(1)) {
+            return codes;
+        } else if (Objects.nonNull(strokeRange)) {
+            String firstPart = codes.substring(0, strokeRange.get(0));
+            String lastPart = codes.substring(codes.length()-strokeRange.get(1),codes.length());
+            return firstPart + lastPart;
         } else {
-            String each = codesWithInitialRadicalsToEncoded;
-                Integer len = strokeRange.get(0) + strokeRange.get(1);
-                if (each.length() < len) {
-                    result = each;
-                } else if (strokeRange.get(1) == 0) {
-                    String newstr = "";
-                    try {
-                        newstr = each.substring(0, strokeRange.get(0));
-                    } catch (Exception e) {
-                        String test = "";
-                    }
-                    result = newstr;
-                } else {
-                    String newstr = "";
-                    try {
-                        newstr = each.substring(0, strokeRange.get(0))
-                                + each.substring(each.length()-strokeRange.get(1), each.length());
-                    } catch (Exception e) {
-                        String test = "";
-                    }
-                    result = newstr;
-                }
+            return codes;
         }
-        return result;
     }
 
     private String encodedStrokes(BasicStroke basicStroke,
