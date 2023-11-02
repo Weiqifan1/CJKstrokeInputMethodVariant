@@ -48,6 +48,12 @@ public class CodeConverter {
 
     private List<String> longCodes(CJKChaaar cjk, String fullCode, Parameters params) {
         List<String> result = new ArrayList<>();
+        if (cjk.getCJK().equals("影")) {
+            String testLastStrokes = "";
+        } else if (cjk.getCJK().equals("芖")) {
+            String testRadical = "";
+        }
+
         String toEncoded = encodedStrokes(params.getBasicStroke(), fullCode);
         String withCodeRange = createCoderange(
                 toEncoded,
@@ -76,6 +82,11 @@ public class CodeConverter {
     }
 
     private List<String> noLongCodes(CJKChaaar CJK, String fullCode, Parameters params) {
+        if (CJK.getCJK().equals("影")) {
+            String testLastStrokes = "";
+        } else if (CJK.getCJK().equals("芖")) {
+            String testRadical = "";
+        }
         List<String> result = new ArrayList<>();
         String chosenRadical = "";
         String substringsFromRad = "";
