@@ -50,7 +50,8 @@ public class IntevtigationMapService {
 
     public List<String> generateMapOfElemsToCreateFile(String separator) {
         RadicalExamples radiClass = new RadicalExamples();
-        Map<String, RadicalRecord> radicals = radiClass.testBasicRadicals();
+        //the number of elements in the lis must correspond to the number of radicals
+        Map<String, RadicalRecord> radicals = radiClass.testBasicRadicals(List.of("a"));
         CharSmallService smallService = new CharSmallService();
 
         Parameters params = new Parameters(List.of(3,1),

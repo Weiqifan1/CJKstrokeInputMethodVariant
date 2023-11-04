@@ -2,7 +2,7 @@ package main.Models;
 
 import java.util.*;
 import java.util.stream.Collectors;
-
+import java.util.ArrayList;
 import main.Models.sortingEnums.BasicStroke;
 
 public class CodeConverter {
@@ -33,8 +33,8 @@ public class CodeConverter {
                                             Boolean includeDoubleLong) {
         //should return a list of 3 strings: substringFromRad, substrinAfterrad, fnal code
         //芖
-        if (CJK.getCJK().equals("芖") || CJK.getCJK().equals("𢰸")) {
-            String test = "";
+        if (CJK.getCJK().equals("踈") || CJK.getCJK().equals("𢰸")) {
+            String test = ""; //{Double@2241} 4299.0 -> ffhw 摞 埙 貢 埚 損 攔 頡 擻 捵 捰 塤 欯 擃 揋 歖 蛓 坱 捑 壧 堁 抰 埧 鼚 撌 㙅 㙉 㙗 㠬 㨛 㩧 㰻 䠭 垻 墤 抧 撔 擑 踈 𨁈
         }
         List<String> result = new ArrayList<>();
         if (includeDoubleLong) {
@@ -84,7 +84,8 @@ public class CodeConverter {
     private List<String> noLongCodes(CJKChaaar CJK, String fullCode, Parameters params) {
         List<String> finalEnd = null;
         //I will write this code without using params
-        if (CJK.getCJK().equals("啃")) {//qy 啃 夂 夊 //{Double@2273} 3345.0 -> qy 啃 芍 芨 芄 趿 趵 芃 䒘 䒟 夂 夊 芕
+        if (CJK.getCJK().equals("踈")) {//qy 啃 夂 夊 //{Double@2273} 3345.0 -> qy 啃 芍 芨 芄 趿 趵 芃 䒘 䒟 夂 夊 芕
+            //{Double@2241} 4299.0 -> ffhw 摞 埙 貢 茛 埚 菉 芵 損 攔 頡 擻 捵 捰 塤 欯
             String test = "";
         }
         String radCode = getRadCode(CJK, fullCode, params);
@@ -221,6 +222,7 @@ public class CodeConverter {
         }
     }
 
+    //long code encoded strokes
     private String encodedStrokes(BasicStroke basicStroke,
                                        String initialRadicalsFromFull) {
         Set<String> numbers = java.util.stream.IntStream.range(0, 10)
@@ -231,7 +233,21 @@ public class CodeConverter {
 
     private String generateLettersFromSingleStrokes(String strToUse, String regex, Map<String, String> stringStringMap) {
         List<String> pairs = Arrays.stream(strToUse.split(regex)).toList();
-        String pairsWithLetter = pairs.stream().map(x -> stringStringMap.get(x)).collect(Collectors.joining());
+        List<String> listToUse = new ArrayList<>();
+        listToUse = pairs;
+        /*
+        //saveLast pair and take last letter
+        if (pairs.size() > 4) {
+            String lastPair = pairs.get(pairs.size() - 1);
+            String lastStr = lastPair.substring(lastPair.length() - 1);
+            //listToUse = pairs.subList(0, pairs.size() - 1);
+            //listToUse.add(lastStr);
+            listToUse.addAll(pairs);
+            listToUse.set(pairs.size() -1, lastStr);
+        } else {
+            listToUse = pairs;
+        }*/
+        String pairsWithLetter = listToUse.stream().map(x -> stringStringMap.get(x)).collect(Collectors.joining());
         return pairsWithLetter;
     }
 
