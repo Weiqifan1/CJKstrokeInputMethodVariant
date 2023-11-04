@@ -44,7 +44,7 @@ public class CharSmallServiceTests {
     @Test
     void generateCharSmall_jundaFirst() {
         RadicalExamples examples = new RadicalExamples();
-        Parameters params = new Parameters(List.of(3,1),
+        Parameters params = new Parameters(List.of(6,2),
                 BasicStroke.DoubleStrokeOnly,
                 Freq.JundaFirst,
                 InitialRadicals.InitialRadicalsOnly,

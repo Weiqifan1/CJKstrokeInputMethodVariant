@@ -4,7 +4,6 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import main.Models.sortingEnums.BasicStroke;
-import main.Models.sortingEnums.InitialRadicals;
 
 public class CodeConverter {
     private String fullCode;
@@ -39,16 +38,16 @@ public class CodeConverter {
         }
         List<String> result = new ArrayList<>();
         if (includeDoubleLong) {
-            result = longCodes(CJK, fullCode, params);
+            result = longCodes(CJK, fullCode, params, List.of(10, 2));
         }else {
             result = noLongCodes(CJK, fullCode, params);
         }
         return result;
     }
 
-    private List<String> longCodes(CJKChaaar cjk, String fullCode, Parameters params) {
+    private List<String> longCodes(CJKChaaar cjk, String fullCode, Parameters params, List<Integer> intsToEncodeWithRange) {
         List<String> result = new ArrayList<>();
-        if (cjk.getCJK().equals("影")) {
+        if (cjk.getCJK().equals("舛")) { // qyjjjj 舛 䢷 夂 夅 夊  影
             String testLastStrokes = "";
         } else if (cjk.getCJK().equals("芖")) {
             String testRadical = "";
@@ -56,7 +55,7 @@ public class CodeConverter {
 
         String withCodeRange = createCoderange(
                 fullCode,
-                List.of(10,2));
+                intsToEncodeWithRange);
         String toEncoded = encodedStrokes(params.getBasicStroke(), withCodeRange);
 
 
@@ -83,51 +82,65 @@ public class CodeConverter {
     }
 
     private List<String> noLongCodes(CJKChaaar CJK, String fullCode, Parameters params) {
-        if (CJK.getCJK().equals("影")) {
-            String testLastStrokes = "";
-        } else if (CJK.getCJK().equals("芖")) {
-            String testRadical = "";
+        List<String> finalEnd = null;
+        //I will write this code without using params
+        if (CJK.getCJK().equals("啃")) {//qy 啃 夂 夊 //{Double@2273} 3345.0 -> qy 啃 芍 芨 芄 趿 趵 芃 䒘 䒟 夂 夊 芕
+            String test = "";
         }
-        List<String> result = new ArrayList<>();
-        String chosenRadical = "";
-        String substringsFromRad = "";
-        String substringAfterRad = "";
-        String finalCode = "";
-        String radicalLetter = "";
-        int radicalCodeLength = 0;
-        if (InitialRadicals.InitialRadicalsOnly.equals(params.getInitialRadicals())) {
-            if (Objects.nonNull(params.getRadicals()) && params.getRadicals().keySet().size() > 0) {
-                for (String radicalCode : params.getRadicals().keySet()) {
-                    if (radicalCode.length() > radicalCodeLength
-                            && selectRadical(CJK, fullCode, radicalCode, radicalCodeLength, params.getRadicals())) {
-                        chosenRadical = radicalCode;
-                        radicalCodeLength = chosenRadical.length();
-                        substringAfterRad = fullCode.substring(radicalCodeLength, fullCode.length());
-                    }
-                }
+        String radCode = getRadCode(CJK, fullCode, params);
+        RadicalRecord radLetter = null;
+        if (radCode.length() > 0) {
+            radLetter = params.getRadicals().get(radCode);
+            if (!CJK.getConwayCode().startsWith(radLetter.getCodeStructure()) || radLetter.getExceptions().contains(CJK.getCJK())) {
+                radLetter = null;
+                radCode = "";
+            }else {
+                String haveRadical = "";
             }
-            if (substringAfterRad == "") {
-                substringAfterRad = fullCode;
-            }
-
-
-            if (chosenRadical != "") {
-                substringsFromRad = chosenRadical;
-                RadicalRecord radicalFound = params.getRadicals().get(chosenRadical);
-                radicalLetter = radicalFound.getLetter();
-            }
-            String toEncoded = encodedStrokes(params.getBasicStroke(), substringAfterRad);
-            finalCode = radicalLetter + toEncoded;
-            String withCodeRange = createCoderange(
-                    finalCode,
-                    params.getStrokeRange());
-
-            //fullCode = radicalLetter + withCodeRange;
-            result.add(substringsFromRad);
-            result.add(substringAfterRad);
-            result.add(withCodeRange);
         }
-        return result;
+        List<Integer> codeShort = params.getStrokeRange();
+        String fullCodeMinusRad = fullCode;
+        if (radCode.length() > 0) {
+            Integer firstCode = codeShort.get(0);
+            codeShort = List.of(firstCode - 2, codeShort.get(1));
+            fullCodeMinusRad = fullCode.substring(radCode.length(), fullCode.length());
+        }
+
+        String withCodeRange = createCoderange(
+                fullCodeMinusRad,
+                codeShort);
+        String toEncoded = encodedStrokes(params.getBasicStroke(), withCodeRange);
+
+        if (Objects.nonNull(radLetter)) {
+            String finalCode = radLetter.getLetter() + toEncoded;
+            String substringAfterRad = "";
+            if (fullCode.length() > radLetter.getCode().length()) {
+                substringAfterRad = fullCode.substring(radLetter.getCode().length(), fullCode.length());
+            }
+            finalEnd = List.of(radLetter.getCode(),
+                    substringAfterRad,
+                    finalCode);
+        } else {
+            String finalCode = toEncoded;
+            finalEnd = List.of("", fullCode, finalCode);
+        }
+
+        return finalEnd;
+        //fullCode = radicalLetter + withCodeRange;
+        //result.add(substringsFromRad);
+        //result.add(substringAfterRad);
+        //result.add(finalCode);
+    }
+
+    private String getRadCode(CJKChaaar cjk, String fullCode, Parameters params) {
+        //return the start of a radical code if fullcode start with a radical, return empty string otherwise
+        String radCode = "";
+        for (String rad : params.getRadicals().keySet()) {
+            if (fullCode.startsWith(rad) && rad.length() > radCode.length()) {
+                radCode = rad;
+            }
+        }
+        return radCode;
     }
 
     private boolean selectRadical(CJKChaaar CJK,
@@ -212,28 +225,7 @@ public class CodeConverter {
                                        String initialRadicalsFromFull) {
         Set<String> numbers = java.util.stream.IntStream.range(0, 10)
                 .mapToObj(String::valueOf).collect(Collectors.toSet());
-        String result = "";
-        String eachCode = initialRadicalsFromFull;
-            String resultString = null;
-            String strToUse = null;
-            String initial = eachCode.substring(0,1);
-            if (numbers.contains(initial)) {
-                strToUse = eachCode;
-            }else {
-                strToUse = eachCode.substring(1, eachCode.length());
-            }
-
-            if (BasicStroke.SingleStrokeOnly.equals(basicStroke)) {
-                resultString = generateLettersFromSingleStrokes(strToUse, "(?<=\\G.{1})", singleLetters());
-            } else if (BasicStroke.DoubleStrokeOnly.equals(basicStroke)) {
-                resultString = generateLettersFromSingleStrokes(strToUse, "(?<=\\G.{2})", doubleLetters());
-            } else if (BasicStroke.BothSingleAndDouble.equals(basicStroke)) {
-                resultString = generateLettersFromSingleStrokes(strToUse, "(?<=\\G.{1})", singleLetters());
-                result = resultString;
-                resultString = generateLettersFromSingleStrokes(strToUse, "(?<=\\G.{2})", doubleLetters());
-                result = resultString;
-            }
-            result = resultString;
+        String result = generateLettersFromSingleStrokes(initialRadicalsFromFull, "(?<=\\G.{2})", doubleLetters());
         return result;
     }
 
