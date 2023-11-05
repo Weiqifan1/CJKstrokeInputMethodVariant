@@ -4,6 +4,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class CharSmall {
+    private final Double secondaryFreq;
     private String CJK;
     private Double frequency;
     private Set<String> codes;
@@ -12,14 +13,18 @@ public class CharSmall {
 
     public Set<String> codesForPrint;
 
-    public CharSmall(String CJK, Double frequency, Set<CodeConverter> converterCodes, String conwayCode) {
+    public CharSmall(String CJK, Double frequency, Double secondaryFreq, Set<CodeConverter> converterCodes, String conwayCode) {
         this.CJK = CJK;
         this.frequency = frequency;
+        this.secondaryFreq = secondaryFreq;
         this.converterCodes = converterCodes;
         this.codes = converterCodes.stream().map(x -> x.getFinalCodes()).collect(Collectors.toSet());
         this.conwayCode = conwayCode;
     }
 
+    public Double getSecondaryFreq() {
+        return secondaryFreq;
+    }
     public String getCJK() {
         return CJK;
     }

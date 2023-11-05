@@ -39,6 +39,7 @@ public class CharSmallService {
     private CharSmall generateChar(CJKChaaar CJK, Parameters params) {
         //TODO: reimpelent the code string to be an object that can handle radicals
         Double createFrequency = createFrequencyFromParam(CJK, params.getFreq());
+        Double secondaryFreq = createFrequencyFromParam2(CJK, params.getFreq());
         Set<CodeConverter> codeConverter = new HashSet<>();
         if (CJK.getCJK().equals("滢")) {
             String test2 = "";
@@ -58,8 +59,44 @@ public class CharSmallService {
                 codeConverter.add(singleConverter);
             }
         }
-        CharSmall resultChar = new CharSmall(CJK.getCJK(), createFrequency, codeConverter, CJK.getConwayCode());
+        CharSmall resultChar = new CharSmall(CJK.getCJK(), createFrequency,secondaryFreq, codeConverter, CJK.getConwayCode());
         return resultChar;
+    }
+
+    private Double createFrequencyFromParam2(CJKChaaar cjk, Freq freq) {
+        Double result = 0.0;
+
+        Integer jundaOrd = Objects.nonNull(cjk.getJunda()) ? cjk.getJunda().getOrdinal() : null;
+        Integer tzaiOrd = Objects.nonNull(cjk.getTzai()) ? cjk.getTzai().getOrdinal() : null;
+        Double jundaOccurRatio = Objects.nonNull(cjk.getJunda())
+                ? getRatio(cjk.getJunda().getOccurrences(), cjk.getJunda().getTotalOccurrences()) : null;
+        Double tzaiOccurRatio = Objects.nonNull(cjk.getTzai())
+                ? getRatio(cjk.getTzai().getOccurrences(), cjk.getTzai().getTotalOccurrences()) : null;
+
+        String hex = cjk.getUnicodeHex().substring(2, cjk.getUnicodeHex().length());
+        Integer resultHex = Integer.parseUnsignedInt(hex, 16);
+        Double doubleHex = Double.parseDouble(String.valueOf(resultHex));
+
+        if (Freq.Intersperced.equals(freq)) {
+            result = getIntersperced(jundaOccurRatio, tzaiOccurRatio, doubleHex);
+        } else if (Freq.TzaiFirst.equals(freq)) {
+            if (Objects.nonNull(jundaOrd)) {
+                result = Double.valueOf(jundaOrd);
+            } else if (Objects.nonNull(tzaiOrd)) {
+                result = Double.valueOf(1000000 + tzaiOrd);
+            } else {
+                result = 2000000 + doubleHex;
+            }
+        } else if (Freq.JundaFirst.equals(freq)) {
+            if (Objects.nonNull(tzaiOrd)) {
+                result = Double.valueOf(tzaiOrd);
+            } else if (Objects.nonNull(jundaOrd)) {
+                result = Double.valueOf(1000000 + jundaOrd);
+            } else {
+                result = 2000000 + doubleHex;
+            }
+        }
+        return result;
     }
 
     private Double createFrequencyFromParam(CJKChaaar cjk, Freq freq) {
@@ -243,7 +280,8 @@ public class CharSmallService {
         Set<Double> alreadyUsed = new HashSet<>();
         Map<Double, String> result = new HashMap<>();
         for (Map.Entry<String, List<CharSmall>> eachOne : onlyFew.entrySet()) {
-            String toUse = eachOne.getKey() + " " +String.join(" ", eachOne.getValue().stream().map(x -> x.getCJK()).toList());
+            String toUse = eachOne.getKey() + " " +String.join(" ", eachOne.getValue().stream()
+                    .map(x -> x.getCJK() + "--" + x.getFrequency() + "--" + x.getSecondaryFreq()).toList());
             Double newDouble = eachOne.getValue().get(0).getFrequency();
             while (alreadyUsed.contains(newDouble)) {
                 newDouble = newDouble + 0.0001;
