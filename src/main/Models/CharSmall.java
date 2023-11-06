@@ -12,14 +12,14 @@ public class CharSmall {
     private String conwayCode;
 
     public Set<String> codesForPrint;
-    public String firstOrderSplit;
+    public Set<String> firstOrderSplit;
 
     public CharSmall(String CJK,
                      Double frequency,
                      Double secondaryFreq,
                      Set<CodeConverter> converterCodes,
                      String conwayCode,
-                     String firstOrderSplit) {
+                     Set<String> firstOrderSplit) {
         this.CJK = CJK;
         this.frequency = frequency;
         this.secondaryFreq = secondaryFreq;

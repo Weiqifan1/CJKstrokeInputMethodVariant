@@ -15,7 +15,7 @@ public class StrokeMapService {
         RadicalSplitService radicalSplitService = new RadicalSplitService();
         Map<String, CJKfrequency> jundaMap = reader.jundaMap();
         Map<String, CJKfrequency> tzaiMap = reader.tzaiMap();
-        Map<String, String> radicalSplitMap = radicalSplitService.getRadicalSplitMap();
+        Map<String, Set<String>> radicalSplitMap = radicalSplitService.getRadicalSplitMap();
 
         Set<CJKChaaar> CJKset = rawConwayStrings.stream()
                 .map(line -> conwayRawStringToObj(line, jundaMap, tzaiMap, radicalSplitMap))
@@ -36,7 +36,7 @@ public class StrokeMapService {
         RadicalSplitService radicalSplitService = new RadicalSplitService();
         Map<String, CJKfrequency> jundaMap = reader.jundaMap();
         Map<String, CJKfrequency> tzaiMap = reader.tzaiMap();
-        Map<String, String> radicalSplitMap = radicalSplitService.getRadicalSplitMap();
+        Map<String, Set<String>> radicalSplitMap = radicalSplitService.getRadicalSplitMap();
 
         Set<CJKChaaar> CJKset = rawConwayStrings.stream()
                 .map(line -> conwayRawStringToObj(line, jundaMap, tzaiMap, radicalSplitMap))
@@ -58,7 +58,7 @@ public class StrokeMapService {
         Set<String> rawConwayStrings = reader.codePointCharacterSequencyRawLine();
         Map<String, CJKfrequency> jundaMap = reader.jundaMap();
         Map<String, CJKfrequency> tzaiMap = reader.tzaiMap();
-        Map<String, String> radicalSplitMap = radicalSplitService.getRadicalSplitMap();
+        Map<String, Set<String>> radicalSplitMap = radicalSplitService.getRadicalSplitMap();
 
         Set<CJKChaaar> CJKset = rawConwayStrings.stream()
                 .map(line -> conwayRawStringToObj(line, jundaMap, tzaiMap, radicalSplitMap))
@@ -75,7 +75,7 @@ public class StrokeMapService {
     private CJKChaaar conwayRawStringToObj(String rawConwayLine,
                                            Map<String, CJKfrequency> jundaMap,
                                            Map<String, CJKfrequency> tzaiMap,
-                                           Map<String, String> firstorderSplitMap) {
+                                           Map<String, Set<String>> firstorderSplitMap) {
         List<String> conwayList = List.of(rawConwayLine.split("\t"))
                 .stream().map(item -> item.trim()).toList();
         String CJKcharWithSetMark = conwayList.get(1);
@@ -93,7 +93,7 @@ public class StrokeMapService {
             String test = "";
         }
 
-        String firstOrderSplit = firstorderSplitMap.get(cleanCJKChar);
+        Set<String> firstOrderSplit = firstorderSplitMap.get(cleanCJKChar);
 
         CJKChaaar cjkChar = new CJKChaaar(
                 cleanCJKChar,
@@ -112,7 +112,7 @@ public class StrokeMapService {
         RadicalSplitService radicalSplitService = new RadicalSplitService();
         Map<String, CJKfrequency> jundaMap = reader.jundaMap();
         Map<String, CJKfrequency> tzaiMap = reader.tzaiMap();
-        Map<String, String> radicalSplitMap = radicalSplitService.getRadicalSplitMap();
+        Map<String, Set<String>> radicalSplitMap = radicalSplitService.getRadicalSplitMap();
 
         Set<CJKChaaar> CJKset = rawConwayStrings.stream()
                 .map(line -> conwayRawStringToObj(line, jundaMap, tzaiMap, radicalSplitMap)).collect(Collectors.toSet());

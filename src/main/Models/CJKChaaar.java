@@ -3,6 +3,7 @@ package main.Models;
 import main.dataFileGenerators.stokeMapGenerators.ConwayCodeService;
 import main.dataFileGenerators.stokeMapGenerators.IntevtigationMapService;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -15,7 +16,7 @@ public class CJKChaaar {
     private CJKfrequency junda;
     private CJKfrequency tzai;
     
-    private String firstOrderSplit;
+    private Set<String> firstOrderSplit;
     
     public Double getIntersperced() {
         return intersperced;
@@ -49,7 +50,7 @@ public class CJKChaaar {
                      String conwayCode,
                      CJKfrequency junda,
                      CJKfrequency tzai,
-                     String firstOrderSplit) {
+                     Set<String> firstOrderSplit) {
         this.CJK = CJK;
         this.CJKWithSetMark = CJKWithSetMark;
         this.UnicodeHex = unicodeHex;
@@ -84,7 +85,7 @@ public class CJKChaaar {
         }
     }
 
-    public String getFirstOrderSplit() {
+    public Set<String> getFirstOrderSplit() {
         return firstOrderSplit;
     }
 

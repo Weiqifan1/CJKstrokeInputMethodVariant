@@ -2,6 +2,7 @@ package main.dataFileGenerators.stokeMapGenerators;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class RadicalSplitService {
 
@@ -10,7 +11,7 @@ public class RadicalSplitService {
         return "";
     }
 
-    public Map<String, String> getRadicalSplitMap() {
+    public Map<String, Set<String>> getRadicalSplitMap() {
         return new HashMap<>();
     }
 }
