@@ -11,17 +11,20 @@ public class RadicalRecord {
     private String letter;
     private Set<String> exceptions;
     private String codeStructure;
+    private String radicalAtPositionOne;
 
     public RadicalRecord(String code,
                          Integer codeLength,
                          String letter,
                          Set<String> exceptions,
-                         String codeStructure) {
+                         String codeStructure,
+                         String radicalAtPositionOne) {
         this.code = code;
         this.codeLength = codeLength;
         this.letter = letter;
         this.exceptions = exceptions;
         this.codeStructure = codeStructure;
+        this.radicalAtPositionOne = radicalAtPositionOne;
     }
 
     public String getCodeStructure() {
@@ -42,5 +45,9 @@ public class RadicalRecord {
 
     public Set<String> getExceptions() {
         return exceptions;
+    }
+
+    public String getRadicalAtPositionOne() {
+        return radicalAtPositionOne;
     }
 }

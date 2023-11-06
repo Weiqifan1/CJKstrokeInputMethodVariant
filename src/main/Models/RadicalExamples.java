@@ -20,54 +20,54 @@ public class RadicalExamples {
 
         if (letters.get(0) != "") {
             radicalMap.put("122", new RadicalRecord("122", 3, letters.get(0) , //plant
-                    Set.of(), plantCodeStructure));
+                    Set.of(), plantCodeStructure, ""));
             radicalMap.put("1212", new RadicalRecord("1212", 4, letters.get(0) , //plant
-                    Set.of(), plantCodeStructure));
+                    Set.of(), plantCodeStructure, ""));
             radicalMap.put("2112", new RadicalRecord("2112", 4, letters.get(0) , //plant
-                    Set.of(), plantCodeStructure));
+                    Set.of(), plantCodeStructure, ""));
         }
 
         //foot radical
         if (letters.get(1) != "") {
             String footConway = "251(215|2121"; //251215  2512121
             radicalMap.put("251215", new RadicalRecord("251215", 6, letters.get(1) , //foot
-                    Set.of(), footConway));
+                    Set.of(), footConway, ""));
             radicalMap.put("2512121", new RadicalRecord("2512121", 7, letters.get(1) , //foot
-                    Set.of(), footConway));
+                    Set.of(), footConway, ""));
         }
 
         //䈨
 
         if (letters.get(2) != "") {
             radicalMap.put("314314", new RadicalRecord("314314", 6, letters.get(2) ,  //bamboo
-                    Set.of(), ""));
+                    Set.of(), "", ""));
         }
 
         //虳
 
         if (letters.get(3) != "") {
             radicalMap.put("251214", new RadicalRecord("251214", 6, letters.get(3) ,  //insect
-                    Set.of(), ""));
+                    Set.of(), "", ""));
         }
 
         //楮
 
         if (letters.get(4) != "") {
             radicalMap.put("1234", new RadicalRecord("1234", 4, letters.get(4) ,  //tree
-                    Set.of(), ""));
+                    Set.of(), "", ""));
         }
 
         //滢
 
         if (letters.get(5) != "") {
             radicalMap.put("441", new RadicalRecord("441", 3, letters.get(5) , //waterRadical
-                    Set.of("斗"), ""));
+                    Set.of("斗"), "", ""));
         }
 
         // 摞
         if (letters.get(6) != "") {
             radicalMap.put("121", new RadicalRecord("121", 3, letters.get(6) , //hand
-                    Set.of(), "121"));
+                    Set.of(), "121", "扌"));
         }
 
         return radicalMap;
