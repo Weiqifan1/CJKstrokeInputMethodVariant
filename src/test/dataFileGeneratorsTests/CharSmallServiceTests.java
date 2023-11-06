@@ -38,17 +38,22 @@ public class CharSmallServiceTests {
                 BasicStroke.DoubleStrokeOnly,
                 Freq.JundaFirst,
                 InitialRadicals.InitialRadicalsOnly,
-                examples.testBasicRadicals(List.of("s", "d", "f", "j","k", "l")),
-                true);
+                //plant   foot    bamboo  insect    tree   waterradical hand
+                examples.testBasicRadicals(List.of("", "", "", "","", "", "A")),
+                false);
 
         Map<String, List<CharSmall>> sortedMap = SCS.generateSortedByFreq(params);
 
+        Set<String> Astrings = sortedMap.keySet().stream().filter(x -> x.startsWith("A")).collect(Collectors.toSet());
+        List<List<CharSmall>> AstringCodes = Astrings.stream()
+                .map(x -> sortedMap.get(x)).collect(Collectors.toList());
+        
+        List<CharSmall> testHand = sortedMap.get("A");
+        
         Map<String, List<String>> stringifyed = SCS.stringifyMap(sortedMap);
         List<String> toListTest = SCS.getStringsFromIndex(stringifyed, 9);
 
-        Map<Double, String> doubleToCjk = SCS.sortMap(9, sortedMap);
-        //   s        d         f       j      k      l
-        //  bamboo   insect   foot    tree   plant   waterRad
+        Map<Double, String> doubleToCjk = SCS.sortMap(0, sortedMap);
 
         assertEquals(51663, 123);
     }
