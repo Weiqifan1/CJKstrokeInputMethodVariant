@@ -12,11 +12,14 @@ public class StrokeMapService {
     public Map<Integer, CJKChaaar> tzaiToCJKMap() {
         CodepointCharacterSequenceReader reader = new CodepointCharacterSequenceReader();
         Set<String> rawConwayStrings = reader.codePointCharacterSequencyRawLine();
+        RadicalSplitService radicalSplitService = new RadicalSplitService();
         Map<String, CJKfrequency> jundaMap = reader.jundaMap();
         Map<String, CJKfrequency> tzaiMap = reader.tzaiMap();
+        Map<String, String> radicalSplitMap = radicalSplitService.getRadicalSplitMap();
 
         Set<CJKChaaar> CJKset = rawConwayStrings.stream()
-                .map(line -> conwayRawStringToObj(line, jundaMap, tzaiMap)).collect(Collectors.toSet());
+                .map(line -> conwayRawStringToObj(line, jundaMap, tzaiMap, radicalSplitMap))
+                .collect(Collectors.toSet());
 
         Map<Integer, CJKChaaar> result = CJKset.stream()
                 .filter(CJK -> !Objects.isNull(CJK.getTzai()))
@@ -30,11 +33,14 @@ public class StrokeMapService {
     public Map<Integer, CJKChaaar> jundaToCJKMap() {
         CodepointCharacterSequenceReader reader = new CodepointCharacterSequenceReader();
         Set<String> rawConwayStrings = reader.codePointCharacterSequencyRawLine();
+        RadicalSplitService radicalSplitService = new RadicalSplitService();
         Map<String, CJKfrequency> jundaMap = reader.jundaMap();
         Map<String, CJKfrequency> tzaiMap = reader.tzaiMap();
+        Map<String, String> radicalSplitMap = radicalSplitService.getRadicalSplitMap();
 
         Set<CJKChaaar> CJKset = rawConwayStrings.stream()
-                .map(line -> conwayRawStringToObj(line, jundaMap, tzaiMap)).collect(Collectors.toSet());
+                .map(line -> conwayRawStringToObj(line, jundaMap, tzaiMap, radicalSplitMap))
+                .collect(Collectors.toSet());
 
         Map<Integer, CJKChaaar> result = CJKset.stream()
                 .filter(CJK -> !Objects.isNull(CJK.getJunda()))
@@ -48,12 +54,15 @@ public class StrokeMapService {
 
     public Map<String, CJKChaaar> charToInfoCJKMap() {
         CodepointCharacterSequenceReader reader = new CodepointCharacterSequenceReader();
+        RadicalSplitService radicalSplitService = new RadicalSplitService();
         Set<String> rawConwayStrings = reader.codePointCharacterSequencyRawLine();
         Map<String, CJKfrequency> jundaMap = reader.jundaMap();
         Map<String, CJKfrequency> tzaiMap = reader.tzaiMap();
+        Map<String, String> radicalSplitMap = radicalSplitService.getRadicalSplitMap();
 
         Set<CJKChaaar> CJKset = rawConwayStrings.stream()
-                .map(line -> conwayRawStringToObj(line, jundaMap, tzaiMap)).collect(Collectors.toSet());
+                .map(line -> conwayRawStringToObj(line, jundaMap, tzaiMap, radicalSplitMap))
+                .collect(Collectors.toSet());
 
         Map<String, CJKChaaar> result = CJKset.stream()
                 .collect(Collectors.toMap(
@@ -65,7 +74,8 @@ public class StrokeMapService {
 
     private CJKChaaar conwayRawStringToObj(String rawConwayLine,
                                            Map<String, CJKfrequency> jundaMap,
-                                           Map<String, CJKfrequency> tzaiMap) {
+                                           Map<String, CJKfrequency> tzaiMap,
+                                           Map<String, String> firstorderSplitMap) {
         List<String> conwayList = List.of(rawConwayLine.split("\t"))
                 .stream().map(item -> item.trim()).toList();
         String CJKcharWithSetMark = conwayList.get(1);
@@ -83,24 +93,29 @@ public class StrokeMapService {
             String test = "";
         }
 
+        String firstOrderSplit = firstorderSplitMap.get(cleanCJKChar);
+
         CJKChaaar cjkChar = new CJKChaaar(
                 cleanCJKChar,
                 CJKcharWithSetMark,
                 conwayList.get(0),
                 conwayList.get(2),
                 jundaLookup,
-                tzaiLookup);
+                tzaiLookup,
+                firstOrderSplit);
         return cjkChar;
     }
 
     public Map<String, CJKChaaar> charToInfoCJKMapONLYPLANT() {
         CodepointCharacterSequenceReader reader = new CodepointCharacterSequenceReader();
         Set<String> rawConwayStrings = reader.codePointCharacterSequencyRawLine();
+        RadicalSplitService radicalSplitService = new RadicalSplitService();
         Map<String, CJKfrequency> jundaMap = reader.jundaMap();
         Map<String, CJKfrequency> tzaiMap = reader.tzaiMap();
+        Map<String, String> radicalSplitMap = radicalSplitService.getRadicalSplitMap();
 
         Set<CJKChaaar> CJKset = rawConwayStrings.stream()
-                .map(line -> conwayRawStringToObj(line, jundaMap, tzaiMap)).collect(Collectors.toSet());
+                .map(line -> conwayRawStringToObj(line, jundaMap, tzaiMap, radicalSplitMap)).collect(Collectors.toSet());
 
         //onlyPlant
         Set<CJKChaaar> modifiedCJK = CJKset.stream().filter(x -> hasPlantonly(x)).collect(Collectors.toSet());

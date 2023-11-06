@@ -14,7 +14,9 @@ public class CJKChaaar {
     private String ConwayCode;
     private CJKfrequency junda;
     private CJKfrequency tzai;
-
+    
+    private String firstOrderSplit;
+    
     public Double getIntersperced() {
         return intersperced;
     }
@@ -46,7 +48,8 @@ public class CJKChaaar {
                      String unicodeHex,
                      String conwayCode,
                      CJKfrequency junda,
-                     CJKfrequency tzai) {
+                     CJKfrequency tzai,
+                     String firstOrderSplit) {
         this.CJK = CJK;
         this.CJKWithSetMark = CJKWithSetMark;
         this.UnicodeHex = unicodeHex;
@@ -54,6 +57,7 @@ public class CJKChaaar {
         this.junda = junda;
         this.tzai = tzai;
         this.intersperced = generateInterspercedFrequency(junda, tzai, UnicodeHex);
+        this.firstOrderSplit = firstOrderSplit;
         generateCodesFromConwayCode(conwayCode, CJK);
     }
 
@@ -78,6 +82,10 @@ public class CJKChaaar {
             Integer result = Integer.parseUnsignedInt(hex, 16);
             return Double.parseDouble(String.valueOf(result));
         }
+    }
+
+    public String getFirstOrderSplit() {
+        return firstOrderSplit;
     }
 
     public boolean isMultiSet() {

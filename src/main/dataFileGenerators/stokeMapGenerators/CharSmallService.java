@@ -59,7 +59,13 @@ public class CharSmallService {
                 codeConverter.add(singleConverter);
             }
         }
-        CharSmall resultChar = new CharSmall(CJK.getCJK(), createFrequency,secondaryFreq, codeConverter, CJK.getConwayCode());
+        CharSmall resultChar = new CharSmall(
+                CJK.getCJK(),
+                createFrequency,
+                secondaryFreq,
+                codeConverter,
+                CJK.getConwayCode(),
+                CJK.getFirstOrderSplit());
         return resultChar;
     }
 

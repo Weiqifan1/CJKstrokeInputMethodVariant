@@ -12,14 +12,21 @@ public class CharSmall {
     private String conwayCode;
 
     public Set<String> codesForPrint;
+    public String firstOrderSplit;
 
-    public CharSmall(String CJK, Double frequency, Double secondaryFreq, Set<CodeConverter> converterCodes, String conwayCode) {
+    public CharSmall(String CJK,
+                     Double frequency,
+                     Double secondaryFreq,
+                     Set<CodeConverter> converterCodes,
+                     String conwayCode,
+                     String firstOrderSplit) {
         this.CJK = CJK;
         this.frequency = frequency;
         this.secondaryFreq = secondaryFreq;
         this.converterCodes = converterCodes;
         this.codes = converterCodes.stream().map(x -> x.getFinalCodes()).collect(Collectors.toSet());
         this.conwayCode = conwayCode;
+        this.firstOrderSplit = firstOrderSplit;
     }
 
     public Double getSecondaryFreq() {
