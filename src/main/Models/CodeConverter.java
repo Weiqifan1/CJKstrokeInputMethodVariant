@@ -92,7 +92,9 @@ public class CodeConverter {
         RadicalRecord radLetter = null;
         if (radCode.length() > 0) {
             radLetter = params.getRadicals().get(radCode);
-            if (!CJK.getConwayCode().startsWith(radLetter.getCodeStructure()) || radLetter.getExceptions().contains(CJK.getCJK())) {
+            if (!CJK.getConwayCode().startsWith(radLetter.getCodeStructure())
+                    || radLetter.getExceptions().contains(CJK.getCJK())
+                    || !fullfillTertieryRequirement(CJK, radLetter)) {
                 radLetter = null;
                 radCode = "";
             }else {
@@ -131,6 +133,33 @@ public class CodeConverter {
         //result.add(substringsFromRad);
         //result.add(substringAfterRad);
         //result.add(finalCode);
+    }
+
+    private boolean fullfillTertieryRequirement(CJKChaaar cjk, RadicalRecord radLetter) {
+        //return true if the radLetter is corect,
+        //return false if radletter should be null;
+        if (radLetter.getRadicalAtPositionOne().length() > 0) {
+            //挋   載 㧳䳲鋬鸷挚势紥贽蛰㐝垫踅裚梊䋢䭁烲銴娎蜇焎悊埑逝㿱哲誓硩乴晢䀸㔼
+            // jeg skal bruge en liste af mod-undtagelser til radikalerne
+            if (radLetter.getRadicalAtPositionOne().equals("扌")
+                    //&& cjk.getCJK().equals("挋")
+
+            ) {
+                //get second elemn in first order split
+                Set<Set<String>> orderSplit = cjk.getFirstOrderSplit().stream()
+                        .map(x -> Arrays.stream(x.split("")).collect(Collectors.toSet()))
+                        .collect(Collectors.toSet());
+                for (Set<String> eachSplit : orderSplit) {
+                    if (eachSplit.contains(radLetter.getRadicalAtPositionOne())) {
+                        return true;
+                    } else {
+                        String test = "";
+                    }
+                }
+                return false;
+            }
+        }
+        return false;
     }
 
     private String getRadCode(CJKChaaar cjk, String fullCode, Parameters params) {

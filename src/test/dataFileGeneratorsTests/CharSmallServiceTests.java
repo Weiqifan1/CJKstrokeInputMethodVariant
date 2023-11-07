@@ -46,8 +46,10 @@ public class CharSmallServiceTests {
 
         Set<String> Astrings = sortedMap.keySet().stream().filter(x -> x.startsWith("A")).collect(Collectors.toSet());
         List<List<CharSmall>> AstringCodes = Astrings.stream()
-                .map(x -> sortedMap.get(x)).collect(Collectors.toList());
-        
+                .map(x -> sortedMap.get(x))
+                .collect(Collectors.toList());
+        List<String> Aflat = flatten(AstringCodes);
+
         List<CharSmall> testHand = sortedMap.get("A");
         
         Map<String, List<String>> stringifyed = SCS.stringifyMap(sortedMap);
@@ -140,6 +142,16 @@ public class CharSmallServiceTests {
         } else {
             return false;
         }
+    }
+
+    public static List<String> flatten(List<List<CharSmall>> nestedList) {
+        List<String> flatList = new ArrayList<>();
+        for (List<CharSmall> list : nestedList) {
+            for (CharSmall each : list) {
+                flatList.add(each.getCJK());
+            }
+        }
+        return flatList.stream().distinct().collect(Collectors.toList());
     }
 
 }
