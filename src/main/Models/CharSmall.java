@@ -1,5 +1,7 @@
 package main.Models;
 
+import main.Models.sortingEnums.SplitRadicals;
+
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -12,14 +14,14 @@ public class CharSmall {
     private String conwayCode;
 
     public Set<String> codesForPrint;
-    public Set<String> firstOrderSplit;
+    public SplitRadicals firstOrderSplit;
 
     public CharSmall(String CJK,
                      Double frequency,
                      Double secondaryFreq,
                      Set<CodeConverter> converterCodes,
                      String conwayCode,
-                     Set<String> firstOrderSplit) {
+                     SplitRadicals firstOrderSplit) {
         this.CJK = CJK;
         this.frequency = frequency;
         this.secondaryFreq = secondaryFreq;

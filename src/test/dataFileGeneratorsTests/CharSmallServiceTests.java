@@ -39,7 +39,7 @@ public class CharSmallServiceTests {
                 Freq.JundaFirst,
                 InitialRadicals.InitialRadicalsOnly,
                 //plant   foot    bamboo  insect    tree   waterradical hand
-                examples.testBasicRadicals(List.of("", "", "", "","", "", "A")),
+                examples.testBasicRadicals(List.of("", "", "", "","", "", "")),
                 false);
 
         Map<String, List<CharSmall>> sortedMap = SCS.generateSortedByFreq(params);
@@ -55,7 +55,7 @@ public class CharSmallServiceTests {
         Map<String, List<String>> stringifyed = SCS.stringifyMap(sortedMap);
         List<String> toListTest = SCS.getStringsFromIndex(stringifyed, 9);
 
-        Map<Double, String> doubleToCjk = SCS.sortMap(0, sortedMap);
+        Map<Double, String> doubleToCjk = SCS.sortMap(9, sortedMap);
 
         assertEquals(51663, 123);
     }

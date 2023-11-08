@@ -1,9 +1,11 @@
 package main.Models;
 
+import main.Models.sortingEnums.SplitRadicals;
 import main.dataFileGenerators.stokeMapGenerators.ConwayCodeService;
 import main.dataFileGenerators.stokeMapGenerators.IntevtigationMapService;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -16,7 +18,7 @@ public class CJKChaaar {
     private CJKfrequency junda;
     private CJKfrequency tzai;
     
-    private Set<String> firstOrderSplit;
+    private SplitRadicals firstOrderSplit;
     
     public Double getIntersperced() {
         return intersperced;
@@ -50,7 +52,7 @@ public class CJKChaaar {
                      String conwayCode,
                      CJKfrequency junda,
                      CJKfrequency tzai,
-                     Set<String> firstOrderSplit) {
+                     Map<String, Set<String>> firstorderSplitMap) {
         this.CJK = CJK;
         this.CJKWithSetMark = CJKWithSetMark;
         this.UnicodeHex = unicodeHex;
@@ -58,7 +60,7 @@ public class CJKChaaar {
         this.junda = junda;
         this.tzai = tzai;
         this.intersperced = generateInterspercedFrequency(junda, tzai, UnicodeHex);
-        this.firstOrderSplit = firstOrderSplit;
+        this.firstOrderSplit = new SplitRadicals(CJK, firstorderSplitMap);
         generateCodesFromConwayCode(conwayCode, CJK);
     }
 
@@ -85,7 +87,7 @@ public class CJKChaaar {
         }
     }
 
-    public Set<String> getFirstOrderSplit() {
+    public SplitRadicals getFirstOrderSplit() {
         return firstOrderSplit;
     }
 

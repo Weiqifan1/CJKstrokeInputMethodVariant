@@ -19,6 +19,8 @@ import java.util.stream.Collectors;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class StrokeMapServiceTests {
+    private RadicalSplitService RSS;
+    private Map<String, Set<String>> radicalSplitMap;
     private StrokeMapService strokeMapService = null;
     private Map<String, CJKChaaar> charToInfoCJKMap = null;
     private Map<String, CJKfrequency> jundaMap = null;
@@ -32,6 +34,7 @@ public class StrokeMapServiceTests {
         CodepointCharacterSequenceReader reader = new CodepointCharacterSequenceReader();
         this.jundaMap = reader.jundaMap();
         this.tzaiMap = reader.tzaiMap();
+        this.radicalSplitMap = RSS.getRadicalSplitMap();
     }
 
     @Test
@@ -75,7 +78,7 @@ public class StrokeMapServiceTests {
                 "贝", 1133, 24675l, 193504018l);
         CJKChaaar compare1 = new CJKChaaar(
                 "贝", "贝*", "U+8D1D", "2534",
-                jundaFreq1, null, new HashSet<>());
+                jundaFreq1, null, this.radicalSplitMap);
         assertEquals(compare1.getCJK(), res1.getCJK());
         assertEquals(compare1.getCJKWithSetMark(), res1.getCJKWithSetMark());
         assertEquals(compare1.getConwayCode(), res1.getConwayCode());
@@ -92,7 +95,7 @@ public class StrokeMapServiceTests {
                 "貝", 1228, 15970l, 171894734l);
         CJKChaaar compare2 = new CJKChaaar(
                 "貝", "貝^", "U+8C9D", "2511134",
-                jundaFreq2, tzaiFreq2 ,new HashSet<>());
+                jundaFreq2, tzaiFreq2 ,this.radicalSplitMap);
         assertEquals(compare2.getCJK(), res2.getCJK());
         assertEquals(compare2.getCJKWithSetMark(), res2.getCJKWithSetMark());
     }

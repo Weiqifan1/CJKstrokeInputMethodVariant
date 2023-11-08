@@ -146,7 +146,9 @@ public class CodeConverter {
 
             ) {
                 //get second elemn in first order split
-                Set<Set<String>> orderSplit = cjk.getFirstOrderSplit().stream()
+                Set<String> currentCjkStrings = cjk.getFirstOrderSplit().getStringFromSplitRadical();
+
+                Set<Set<String>> orderSplit = currentCjkStrings.stream()
                         .map(x -> Arrays.stream(x.split("")).collect(Collectors.toSet()))
                         .collect(Collectors.toSet());
                 for (Set<String> eachSplit : orderSplit) {

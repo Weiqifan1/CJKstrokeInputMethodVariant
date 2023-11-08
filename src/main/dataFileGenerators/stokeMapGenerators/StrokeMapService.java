@@ -93,8 +93,6 @@ public class StrokeMapService {
             String test = "";
         }
 
-        Set<String> firstOrderSplit = firstorderSplitMap.get(cleanCJKChar);
-
         CJKChaaar cjkChar = new CJKChaaar(
                 cleanCJKChar,
                 CJKcharWithSetMark,
@@ -102,7 +100,7 @@ public class StrokeMapService {
                 conwayList.get(2),
                 jundaLookup,
                 tzaiLookup,
-                firstOrderSplit);
+                firstorderSplitMap);
         return cjkChar;
     }
 
