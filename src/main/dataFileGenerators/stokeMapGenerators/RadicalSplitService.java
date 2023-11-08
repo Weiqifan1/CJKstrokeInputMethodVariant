@@ -1,7 +1,5 @@
 package main.dataFileGenerators.stokeMapGenerators;
 
-import main.Models.sortingEnums.SplitRadicals;
-
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;

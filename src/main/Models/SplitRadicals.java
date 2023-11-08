@@ -1,4 +1,4 @@
-package main.Models.sortingEnums;
+package main.Models;
 
 import java.util.HashSet;
 import java.util.Map;

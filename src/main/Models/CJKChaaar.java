@@ -1,10 +1,7 @@
 package main.Models;
 
-import main.Models.sortingEnums.SplitRadicals;
 import main.dataFileGenerators.stokeMapGenerators.ConwayCodeService;
-import main.dataFileGenerators.stokeMapGenerators.IntevtigationMapService;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;

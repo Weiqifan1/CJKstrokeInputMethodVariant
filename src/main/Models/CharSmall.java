@@ -1,7 +1,5 @@
 package main.Models;
 
-import main.Models.sortingEnums.SplitRadicals;
-
 import java.util.Set;
 import java.util.stream.Collectors;
 
