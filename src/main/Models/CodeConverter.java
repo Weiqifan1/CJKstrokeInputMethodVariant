@@ -138,31 +138,25 @@ public class CodeConverter {
     private boolean fullfillTertieryRequirement(CJKChaaar cjk, RadicalRecord radLetter) {
         //return true if the radLetter is corect,
         //return false if radletter should be null;
+        String currentCjkStrings = cjk.getFirstOrderSplit().getStringFromSplitRadical();
+        List<String> unicode = getUnicodeCharacters(currentCjkStrings);
+        if (unicode.contains(radLetter.getRadicalAtPositionOne())) {
+            return true;
+        }
+        return false;
+    }
+    /*
         if (radLetter.getRadicalAtPositionOne().length() > 0) {
             //挋   載 㧳䳲鋬鸷挚势紥贽蛰㐝垫踅裚梊䋢䭁烲銴娎蜇焎悊埑逝㿱哲誓硩乴晢䀸㔼
             // jeg skal bruge en liste af mod-undtagelser til radikalerne
             if (radLetter.getRadicalAtPositionOne().equals("扌")
                     //&& cjk.getCJK().equals("挋")
-
             ) {
                 //get second elemn in first order split
-                Set<String> currentCjkStrings = cjk.getFirstOrderSplit().getStringFromSplitRadical();
-
-                Set<Set<String>> orderSplit = currentCjkStrings.stream()
-                        .map(x -> Arrays.stream(x.split("")).collect(Collectors.toSet()))
-                        .collect(Collectors.toSet());
-                for (Set<String> eachSplit : orderSplit) {
-                    if (eachSplit.contains(radLetter.getRadicalAtPositionOne())) {
-                        return true;
-                    } else {
-                        String test = "";
-                    }
-                }
-                return false;
             }
         }
         return false;
-    }
+    */
 
     private String getRadCode(CJKChaaar cjk, String fullCode, Parameters params) {
         //return the start of a radical code if fullcode start with a radical, return empty string otherwise
@@ -338,6 +332,24 @@ public class CodeConverter {
         numToLetter.put("24", "c");
         numToLetter.put("25", "x");
         return numToLetter;
+    }
+
+
+    public static List<String> getUnicodeCharacters(String utf16String) {
+        List<String> unicodeChars = new ArrayList<>();
+        for (int i = 0; i < utf16String.length(); i++) {
+            char c = utf16String.charAt(i);
+            if (Character.isHighSurrogate(c) && i + 1 < utf16String.length()) {
+                char c2 = utf16String.charAt(i + 1);
+                if (Character.isLowSurrogate(c2)) {
+                    unicodeChars.add(Character.toString(c) + Character.toString(c2));
+                    i++;
+                }
+            } else {
+                unicodeChars.add(Character.toString(c));
+            }
+        }
+        return unicodeChars;
     }
 
 }

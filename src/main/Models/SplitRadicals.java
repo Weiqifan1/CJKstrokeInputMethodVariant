@@ -31,11 +31,18 @@ public class SplitRadicals {
         return charSet;
     }
 
-    public Set<String> getStringFromSplitRadical() {
-        String temp = originalInputString + " code needed";
-        Set<String> result = new HashSet<>();
-        result.add(temp);
-        return result;
+    public String getStringFromSplitRadical() {
+        if (Objects.isNull(splitRadicals) || splitRadicals.isEmpty()) {
+            return originalInputString;
+        } else {
+            List<SplitRadicals> rad = this.getSplitRadicals().stream().toList().get(0);
+            String resultStr = "";
+            for (SplitRadicals eachRad : rad) {
+                String eachStringifyed = eachRad.getStringFromSplitRadical();
+                resultStr = resultStr + eachStringifyed;
+            }
+            return resultStr;
+        }
     }
 
     public SplitRadicals(String originalInputString, Map<String, Set<String>> idsMap) {
