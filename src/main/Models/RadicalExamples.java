@@ -18,56 +18,64 @@ public class RadicalExamples {
 
         String plantCodeStructure = "(122|";
 
-        if (letters.get(0) != "") {
+        //plant radical
+        if (letters.size() > 0 && letters.get(0) != "") {
             radicalMap.put("122", new RadicalRecord("122", 3, letters.get(0) , //plant
-                    Set.of(), plantCodeStructure, ""));
+                    Set.of(), plantCodeStructure, Set.of()));
             radicalMap.put("1212", new RadicalRecord("1212", 4, letters.get(0) , //plant
-                    Set.of(), plantCodeStructure, ""));
+                    Set.of(), plantCodeStructure, Set.of()));
             radicalMap.put("2112", new RadicalRecord("2112", 4, letters.get(0) , //plant
-                    Set.of(), plantCodeStructure, ""));
+                    Set.of(), plantCodeStructure, Set.of()));
         }
 
         //foot radical
-        if (letters.get(1) != "") {
+        if (letters.size() > 1 && letters.get(1) != "") {
             String footConway = "251(215|2121"; //251215  2512121
             radicalMap.put("251215", new RadicalRecord("251215", 6, letters.get(1) , //foot
-                    Set.of(), footConway, ""));
+                    Set.of(), footConway, Set.of()));
             radicalMap.put("2512121", new RadicalRecord("2512121", 7, letters.get(1) , //foot
-                    Set.of(), footConway, ""));
+                    Set.of(), footConway, Set.of()));
         }
+        //  Set.of("口止")
 
         //䈨
-
-        if (letters.get(2) != "") {
+        if (letters.size() > 2 && letters.get(2) != "") {
             radicalMap.put("314314", new RadicalRecord("314314", 6, letters.get(2) ,  //bamboo
-                    Set.of(), "", ""));
+                    Set.of(), "314314", Set.of()));
         }
+        /*Set.of(
+                    "𠂉丨丿乛亅", "𠂊亅[GK]𠂉亅[T]" , "𠂉亅[T]丿乛亅",
+                    "𠂊亅[GK]丿一亅", "𠂉丨丿一亅", "𠂉亅[T]𠂊亅", "丿一亅丿乛亅",
+                    "𠂉亅[T]𠂉亅", "𠂉亅[T]𠂉丨", "𠂉丨𠂉亅", "𠂊亅[GK]𠂉丨")*/
 
         //虳
-
-        if (letters.get(3) != "") {
+        if (letters.size() > 3 && letters.get(3) != "") {
             radicalMap.put("251214", new RadicalRecord("251214", 6, letters.get(3) ,  //insect
-                    Set.of(), "", ""));
+                    Set.of(), "251214", Set.of("虫")));
         }
 
         //楮
-
-        if (letters.get(4) != "") {
+        if (letters.size() > 4 && letters.get(4) != "") {
             radicalMap.put("1234", new RadicalRecord("1234", 4, letters.get(4) ,  //tree
-                    Set.of(), "", ""));
-        }
+                    Set.of(), "1234", Set.of("木")));
+        } //Set.of("木")
 
         //滢
-
-        if (letters.get(5) != "") {
+        if (letters.size() > 5 && letters.get(5) != "") {
             radicalMap.put("441", new RadicalRecord("441", 3, letters.get(5) , //waterRadical
-                    Set.of("斗"), "", ""));
+                    Set.of("斗"), "", Set.of()));
         }
 
         // 摞
-        if (letters.get(6) != "") {
+        if (letters.size() > 6 && letters.get(6) != "") {
             radicalMap.put("121", new RadicalRecord("121", 3, letters.get(6) , //hand
-                    Set.of(), "121", "扌"));
+                    Set.of(), "121", Set.of("扌")));
+        }
+
+        // 瞋
+        if (letters.size() > 7 && letters.get(7) != "") {
+            radicalMap.put("25111", new RadicalRecord("25111", 5, letters.get(7) , //eye
+                    Set.of(), "25111", Set.of("目")));
         }
 
         return radicalMap;

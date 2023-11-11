@@ -1,5 +1,6 @@
 package main.Models;
 
+import java.util.List;
 import java.util.Set;
 
 public class RadicalRecord {
@@ -11,14 +12,14 @@ public class RadicalRecord {
     private String letter;
     private Set<String> exceptions;
     private String codeStructure;
-    private String radicalAtPositionOne;
+    private Set<String> radicalAtPositionOne;
 
     public RadicalRecord(String code,
                          Integer codeLength,
                          String letter,
                          Set<String> exceptions,
                          String codeStructure,
-                         String radicalAtPositionOne) {
+                         Set<String> radicalAtPositionOne) {
         this.code = code;
         this.codeLength = codeLength;
         this.letter = letter;
@@ -47,7 +48,7 @@ public class RadicalRecord {
         return exceptions;
     }
 
-    public String getRadicalAtPositionOne() {
+    public Set<String> getRadicalAtPositionOne() {
         return radicalAtPositionOne;
     }
 }

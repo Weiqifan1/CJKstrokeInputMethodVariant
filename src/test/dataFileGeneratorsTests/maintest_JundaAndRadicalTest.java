@@ -40,32 +40,44 @@ public class maintest_JundaAndRadicalTest {
                 BasicStroke.DoubleStrokeOnly,
                 Freq.JundaFirst,
                 InitialRadicals.InitialRadicalsOnly,
-                //plant   foot    bamboo  insect    tree   waterradical hand
-                examples.testBasicRadicals(List.of("", "", "", "","", "", "A")),
+                //plant   foot    bamboo  insect    tree   waterradical hand eye
+                examples.testBasicRadicals(List.of("", "B", "C", "D","A", "", "E", "F")),
                 false);
 
         Map<String, List<CharSmall>> sortedMap = SCS.generateSortedByFreq(params);
-        List<List<CharSmall>> values = getValues(sortedMap);
-        List<CharSmall> testHand = flattenNested(values);
 
-        Set<String> shapeCharacters = radService.generateSetCharacters();
-        List<String> OneTwoOneNOThand = testHand.stream()
-                .filter(x -> isoneTwoNotHand(x, shapeCharacters))
-                .map(x -> cjkAndFreq(x)).toList();
+        List<String> Aflat = generateLetterFlat("A", sortedMap);
+        List<String> Bflat = generateLetterFlat("B", sortedMap);
+        List<String> Cflat = generateLetterFlat("C", sortedMap);
+        List<String> Dflat = generateLetterFlat("D", sortedMap);
+        List<String> Eflat = generateLetterFlat("E", sortedMap);
+        List<String> Fflat = generateLetterFlat("F", sortedMap);
+        List<String> Gflat = generateLetterFlat("G", sortedMap);
 
-        Set<String> Astrings = sortedMap.keySet().stream().filter(x -> x.startsWith("A")).collect(Collectors.toSet());
-        List<List<CharSmall>> AstringCodes = Astrings.stream()
-                .map(x -> sortedMap.get(x))
-                .collect(Collectors.toList());
-        List<String> Aflat = flatten(AstringCodes);
-        
-        Map<String, List<String>> stringifyed = SCS.stringifyMap(sortedMap);
-        List<String> toListTest = SCS.getStringsFromIndex(stringifyed, 9);
+        //Map<String, List<String>> stringifyed = SCS.stringifyMap(sortedMap);
+        //List<String> toListTest = SCS.getStringsFromIndex(stringifyed, 9);
 
         Map<Double, String> doubleToCjk = SCS.sortMap(9, sortedMap);
 
         assertEquals(51663, 123);
     }
+
+    private List<String> generateLetterFlat(String a, Map<String, List<CharSmall>> sortedMap) {
+        /*
+        List<CharSmall> testHand = flattenNested(values);
+        Set<String> shapeCharacters = radService.generateSetCharacters();
+        List<String> OneTwoOneNOThand = testHand.stream()
+                .filter(x -> isoneTwoNotHand(x, shapeCharacters))
+                .map(x -> cjkAndFreq(x)).toList();
+*/
+        Set<String> Astrings = sortedMap.keySet().stream().filter(x -> x.startsWith(a)).collect(Collectors.toSet());
+        List<List<CharSmall>> AstringCodes = Astrings.stream()
+                .map(x -> sortedMap.get(x))
+                .collect(Collectors.toList());
+        List<String> Aflat = flatten(AstringCodes);
+        return Aflat;
+    }
+
 
     private String cjkAndFreq(CharSmall x) {
         String output = "";
