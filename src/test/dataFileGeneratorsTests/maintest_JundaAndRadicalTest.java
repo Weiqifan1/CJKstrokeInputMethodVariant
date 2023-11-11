@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class CharSmallServiceTests {
+public class maintest_JundaAndRadicalTest {
 
 
     private CharSmallService SCS;
