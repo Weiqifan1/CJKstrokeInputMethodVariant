@@ -78,6 +78,14 @@ public class RadicalExamples {
                     Set.of(), "25111", Set.of("目")));
         }
 
+        //誠
+        if (letters.size() > 8 && letters.get(8) != "") {
+            radicalMap.put("1111251", new RadicalRecord("1111251", 7, letters.get(8) , //eye
+                    Set.of(), "(1|4)111251", Set.of("言")));
+            radicalMap.put("4111251", new RadicalRecord("4111251", 7, letters.get(8) , //eye
+                    Set.of(), "(1|4)111251", Set.of("言")));
+        }
+
         return radicalMap;
     }
 }

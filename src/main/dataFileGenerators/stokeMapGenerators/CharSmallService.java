@@ -41,9 +41,9 @@ public class CharSmallService {
         Double createFrequency = createFrequencyFromParam(CJK, params.getFreq());
         Double secondaryFreq = createFrequencyFromParam2(CJK, params.getFreq());
         Set<CodeConverter> codeConverter = new HashSet<>();
-        if (CJK.getCJK().equals("滢")) {
-            String test2 = "";
-        }
+        //if (CJK.getCJK().equals("誠")) {
+        //    String test2 = "";
+        //}
         for (String eachCode : CJK.getFullCode()) {
             if (eachCode.equals("1212251125214")) {
                 String test3 = "";

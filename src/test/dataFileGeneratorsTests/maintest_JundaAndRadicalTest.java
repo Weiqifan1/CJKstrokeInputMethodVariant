@@ -38,10 +38,13 @@ public class maintest_JundaAndRadicalTest {
         RadicalExamples examples = new RadicalExamples();
         Parameters params = new Parameters(List.of(6,2),
                 BasicStroke.DoubleStrokeOnly,
-                Freq.JundaFirst,
+                Freq.TzaiFirst,
                 InitialRadicals.InitialRadicalsOnly,
-                //plant   foot    bamboo  insect    tree   waterradical hand eye
-                examples.testBasicRadicals(List.of("", "B", "C", "D","A", "", "E", "F")),
+                //plant   foot    bamboo  insect    tree   waterradical hand eye,,
+                //say
+                examples.testBasicRadicals(List.of(
+                        "", "B", "C", "D","A", "", "E", "F",
+                        "K" , "")),
                 false);
 
         Map<String, List<CharSmall>> sortedMap = SCS.generateSortedByFreq(params);
@@ -53,6 +56,9 @@ public class maintest_JundaAndRadicalTest {
         List<String> Eflat = generateLetterFlat("E", sortedMap);
         List<String> Fflat = generateLetterFlat("F", sortedMap);
         List<String> Gflat = generateLetterFlat("G", sortedMap);
+        List<String> Hflat = generateLetterFlat("H", sortedMap);
+
+        List<String> Kflat = generateLetterFlat("K", sortedMap);
 
         //Map<String, List<String>> stringifyed = SCS.stringifyMap(sortedMap);
         //List<String> toListTest = SCS.getStringsFromIndex(stringifyed, 9);
