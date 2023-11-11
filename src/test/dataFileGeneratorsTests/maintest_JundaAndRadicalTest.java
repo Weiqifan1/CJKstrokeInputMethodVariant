@@ -38,34 +38,34 @@ public class maintest_JundaAndRadicalTest {
         RadicalExamples examples = new RadicalExamples();
         Parameters params = new Parameters(List.of(6,2),
                 BasicStroke.DoubleStrokeOnly,
-                Freq.JundaFirst,
+                Freq.TzaiFirst,
                 InitialRadicals.InitialRadicalsOnly,
                 //plant   foot    bamboo  insect    tree   waterradical hand eye,,
-                //say   thread縱   Gold  dor
+                //say誠   thread縱   Gold錶  dor闍  horse馱    eat餞   car 軔
                 examples.testBasicRadicals(List.of(
-                        "", "B", "C", "D","A", "", "E", "F",
-                        "K" , "L", "M", "N", "O", "P" ,"Q", "R")),
+                        "", "u", "w", "r","e", "", "i", "o",
+                        "v" , "h", "t", "n", "b", "y" ,"g")),
                 false);
 
         Map<String, List<CharSmall>> sortedMap = SCS.generateSortedByFreq(params);
 
-        List<String> Aflat = generateLetterFlat("A", sortedMap);
-        List<String> Bflat = generateLetterFlat("B", sortedMap);
-        List<String> Cflat = generateLetterFlat("C", sortedMap);
-        List<String> Dflat = generateLetterFlat("D", sortedMap);
-        List<String> Eflat = generateLetterFlat("E", sortedMap);
-        List<String> Fflat = generateLetterFlat("F", sortedMap);
-        List<String> Gflat = generateLetterFlat("G", sortedMap);
-        List<String> Hflat = generateLetterFlat("H", sortedMap);
+        List<String> BAMBOOflat = generateLetterFlat("w", sortedMap);
+        List<String> TREEflat = generateLetterFlat("e", sortedMap);
+        List<String> INSECTflat = generateLetterFlat("r", sortedMap);
+        List<String> FOOTflat = generateLetterFlat("u", sortedMap);
+        List<String> HANDflat = generateLetterFlat("i", sortedMap);
+        List<String> EYEflat = generateLetterFlat("o", sortedMap);
+        //List<String> Gflat = generateLetterFlat("", sortedMap);
+        //List<String> Hflat = generateLetterFlat("", sortedMap);
 
-        List<String> Kflat = generateLetterFlat("K", sortedMap);
-        List<String> Lflat = generateLetterFlat("L", sortedMap);
-        List<String> Mflat = generateLetterFlat("M", sortedMap);
-        List<String> Nflat = generateLetterFlat("N", sortedMap);
-        List<String> Oflat = generateLetterFlat("O", sortedMap);
-        List<String> Pflat = generateLetterFlat("P", sortedMap);
-        List<String> Qflat = generateLetterFlat("Q", sortedMap);
-        List<String> Rflat = generateLetterFlat("R", sortedMap);
+        List<String> GOLDflat = generateLetterFlat("t", sortedMap);
+        List<String> EATflat = generateLetterFlat("y", sortedMap);
+        List<String> CARflat = generateLetterFlat("g", sortedMap);
+        List<String> THREADflat = generateLetterFlat("h", sortedMap);
+        List<String> SAYflat = generateLetterFlat("v", sortedMap);
+        List<String> HORSEflat = generateLetterFlat("b", sortedMap);
+        List<String> DOORflat = generateLetterFlat("n", sortedMap);
+        //List<String> Rflat = generateLetterFlat("", sortedMap);
 
         //Map<String, List<String>> stringifyed = SCS.stringifyMap(sortedMap);
         //List<String> toListTest = SCS.getStringsFromIndex(stringifyed, 9);
@@ -211,7 +211,7 @@ public class maintest_JundaAndRadicalTest {
         List<String> flatList = new ArrayList<>();
         for (List<CharSmall> list : nestedList) {
             for (CharSmall each : list) {
-                flatList.add(each.getCJK());
+                flatList.add(each.getCJK()+"--"+each.getFrequency()+"--"+each.getSecondaryFreq());
             }
         }
         return flatList.stream().distinct().collect(Collectors.toList());
