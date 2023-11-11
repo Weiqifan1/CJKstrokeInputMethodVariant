@@ -85,7 +85,7 @@ public class CodeConverter {
     private List<String> noLongCodes(CJKChaaar CJK, String fullCode, Parameters params) {
         List<String> finalEnd = null;
         //I will write this code without using params
-        if (CJK.getCJK().equals("誠")) {//qy 啃 夂 夊 //{Double@2273} 3345.0 -> qy 啃 芍 芨 芄 趿 趵 芃 䒘 䒟 夂 夊 芕
+        if (CJK.getCJK().equals("軔")) {
             //{Double@2241} 4299.0 -> ffhw 摞 埙 貢 茛 埚 菉 芵 損 攔 頡 擻 捵 捰 塤 欯
             String test = "";
         }

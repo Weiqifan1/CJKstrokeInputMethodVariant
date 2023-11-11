@@ -41,10 +41,10 @@ public class maintest_JundaAndRadicalTest {
                 Freq.TzaiFirst,
                 InitialRadicals.InitialRadicalsOnly,
                 //plant   foot    bamboo  insect    tree   waterradical hand eye,,
-                //say
+                //say   thread縱   Gold  dor
                 examples.testBasicRadicals(List.of(
                         "", "B", "C", "D","A", "", "E", "F",
-                        "K" , "")),
+                        "K" , "L", "M", "N", "O", "P" ,"Q", "R")),
                 false);
 
         Map<String, List<CharSmall>> sortedMap = SCS.generateSortedByFreq(params);
@@ -59,6 +59,13 @@ public class maintest_JundaAndRadicalTest {
         List<String> Hflat = generateLetterFlat("H", sortedMap);
 
         List<String> Kflat = generateLetterFlat("K", sortedMap);
+        List<String> Lflat = generateLetterFlat("L", sortedMap);
+        List<String> Mflat = generateLetterFlat("M", sortedMap);
+        List<String> Nflat = generateLetterFlat("N", sortedMap);
+        List<String> Oflat = generateLetterFlat("O", sortedMap);
+        List<String> Pflat = generateLetterFlat("P", sortedMap);
+        List<String> Qflat = generateLetterFlat("Q", sortedMap);
+        List<String> Rflat = generateLetterFlat("R", sortedMap);
 
         //Map<String, List<String>> stringifyed = SCS.stringifyMap(sortedMap);
         //List<String> toListTest = SCS.getStringsFromIndex(stringifyed, 9);

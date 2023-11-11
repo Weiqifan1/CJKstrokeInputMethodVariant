@@ -80,10 +80,56 @@ public class RadicalExamples {
 
         //誠
         if (letters.size() > 8 && letters.get(8) != "") {
-            radicalMap.put("1111251", new RadicalRecord("1111251", 7, letters.get(8) , //eye
+            radicalMap.put("1111251", new RadicalRecord("1111251", 7, letters.get(8) , //say
                     Set.of(), "(1|4)111251", Set.of("言")));
-            radicalMap.put("4111251", new RadicalRecord("4111251", 7, letters.get(8) , //eye
+            radicalMap.put("4111251", new RadicalRecord("4111251", 7, letters.get(8) , //say
                     Set.of(), "(1|4)111251", Set.of("言")));
+        }
+
+        //縱
+        if (letters.size() > 9 && letters.get(9) != "") {
+            radicalMap.put("554444", new RadicalRecord("554444", 6, letters.get(9) , //thread
+                    Set.of(), "(554234|554444)", Set.of()));
+            radicalMap.put("554234", new RadicalRecord("554234", 6, letters.get(9) , //thread
+                    Set.of(), "(554234|554444)", Set.of()));
+        }
+
+        //錶
+        if (letters.size() > 10 && letters.get(10) != "") {
+            radicalMap.put("34112431", new RadicalRecord("34112431", 8, letters.get(10) , //gold
+                    Set.of(), "34112431", Set.of()));
+        }
+
+        //闍            //2511251112132511(|4)
+        if (letters.size() > 11 && letters.get(11) != "") {
+            radicalMap.put("25112511", new RadicalRecord("25112511", 8, letters.get(11) , //dor
+                    Set.of(), "25112511", Set.of("𠁣𠃛")));
+        }
+
+        //馱
+        if (letters.size() > 12 && letters.get(12) != "") {
+            radicalMap.put("1211254444", new RadicalRecord("1211254444", 10, letters.get(12) , //horse
+                    Set.of(), "(12|21)11254444", Set.of()));
+            radicalMap.put("2111254444", new RadicalRecord("2111254444", 10, letters.get(12) , //horse
+                    Set.of(), "(12|21)11254444", Set.of()));
+        }
+
+        //餞
+        if (letters.size() > 13 && letters.get(13) != "") {
+            radicalMap.put("344511211", new RadicalRecord("", 9, letters.get(13) , //eat
+                    Set.of(), "34(1|4)(51154|511211)", Set.of()));
+            radicalMap.put("34451154", new RadicalRecord("", 8, letters.get(13) , //eat
+                    Set.of(), "34(1|4)(51154|511211)", Set.of()));
+            radicalMap.put("34151154", new RadicalRecord("", 8, letters.get(13) , //eat
+                    Set.of(), "34(1|4)(51154|511211)", Set.of()));
+            radicalMap.put("341511211", new RadicalRecord("", 9, letters.get(13) , //eat
+                    Set.of(), "34(1|4)(51154|511211)", Set.of()));
+        }
+
+        //軔
+        if (letters.size() > 14 && letters.get(14) != "") {
+            radicalMap.put("1251112", new RadicalRecord("1251112", 7, letters.get(14) , //char
+                    Set.of(), "1251112", Set.of()));
         }
 
         return radicalMap;
