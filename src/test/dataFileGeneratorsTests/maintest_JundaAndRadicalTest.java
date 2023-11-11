@@ -38,7 +38,7 @@ public class maintest_JundaAndRadicalTest {
         RadicalExamples examples = new RadicalExamples();
         Parameters params = new Parameters(List.of(6,2),
                 BasicStroke.DoubleStrokeOnly,
-                Freq.TzaiFirst,
+                Freq.JundaFirst,
                 InitialRadicals.InitialRadicalsOnly,
                 //plant   foot    bamboo  insect    tree   waterradical hand eye,,
                 //say   thread縱   Gold  dor

@@ -38,8 +38,14 @@ public class CharSmallService {
 
     private CharSmall generateChar(CJKChaaar CJK, Parameters params) {
         //TODO: reimpelent the code string to be an object that can handle radicals
+        if (CJK.getCJK().equals("硢")) {
+            String test = "";
+        }
         Double createFrequency = createFrequencyFromParam(CJK, params.getFreq());
         Double secondaryFreq = createFrequencyFromParam2(CJK, params.getFreq());
+        if (createFrequency < 1000 && secondaryFreq < 1000) {
+            String test = "";
+        }
         Set<CodeConverter> codeConverter = new HashSet<>();
         //if (CJK.getCJK().equals("誠")) {
         //    String test2 = "";
@@ -84,7 +90,7 @@ public class CharSmallService {
         Double doubleHex = Double.parseDouble(String.valueOf(resultHex));
 
         if (Freq.Intersperced.equals(freq)) {
-            result = getIntersperced(jundaOccurRatio, tzaiOccurRatio, doubleHex);
+            result = getIntersperced(jundaOrd, tzaiOrd, doubleHex);
         } else if (Freq.TzaiFirst.equals(freq)) {
             if (Objects.nonNull(jundaOrd)) {
                 result = Double.valueOf(jundaOrd);
@@ -120,7 +126,7 @@ public class CharSmallService {
         Double doubleHex = Double.parseDouble(String.valueOf(resultHex));
 
         if (Freq.Intersperced.equals(freq)) {
-            result = getIntersperced(jundaOccurRatio, tzaiOccurRatio, doubleHex);
+            result = getIntersperced(jundaOrd, tzaiOrd, doubleHex);
         } else if (Freq.JundaFirst.equals(freq)) {
             if (Objects.nonNull(jundaOrd)) {
                 result = Double.valueOf(jundaOrd);
@@ -141,20 +147,20 @@ public class CharSmallService {
         return result;
     }
 
-    private Double getIntersperced(Double jundaOccurRatio,
-                                   Double tzaiOccurRatio,
+    private Double getIntersperced(Integer jundaOrd,
+                                   Integer tzaiOrd,
                                    Double doubleHex) {
         // CJKfrequency(String character, int ordinal, Long occurrences, Long totalOccurrences)
-        if (Objects.nonNull(jundaOccurRatio) && Objects.nonNull(tzaiOccurRatio)) {
-            if (jundaOccurRatio < tzaiOccurRatio) {
-                return jundaOccurRatio;
-            } else if (tzaiOccurRatio < jundaOccurRatio) {
-                return tzaiOccurRatio;
+        if (Objects.nonNull(jundaOrd) && Objects.nonNull(tzaiOrd)) {
+            if (jundaOrd < tzaiOrd) {
+                return (double) jundaOrd;
+            } else {
+                return (double) tzaiOrd;
             }
-        } else if (Objects.nonNull(jundaOccurRatio)) {
-            return jundaOccurRatio;
-        } else if (Objects.nonNull(tzaiOccurRatio)) {
-            return tzaiOccurRatio;
+        } else if (Objects.nonNull(jundaOrd)) {
+            return (double) jundaOrd;
+        } else if (Objects.nonNull(tzaiOrd)) {
+            return (double) tzaiOrd;
         }
         return 100000 + doubleHex;
     }
