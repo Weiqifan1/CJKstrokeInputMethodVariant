@@ -4,6 +4,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.ArrayList;
 import main.Models.sortingEnums.BasicStroke;
+import main.dataFileGenerators.stokeMapGenerators.RadicalSplitService;
 
 public class CodeConverter {
     private String fullCode;
@@ -138,9 +139,13 @@ public class CodeConverter {
     private boolean fullfillTertieryRequirement(CJKChaaar cjk, RadicalRecord radLetter) {
         //return true if the radLetter is corect,
         //return false if radletter should be null;
+        RadicalSplitService radService = new RadicalSplitService();
         String currentCjkStrings = cjk.getFirstOrderSplit().getStringFromSplitRadical();
         List<String> unicode = getUnicodeCharacters(currentCjkStrings);
-        if (unicode.contains(radLetter.getRadicalAtPositionOne())) {
+        Set<String> shapeChars = radService.generateSetCharacters();
+        List<String> unicodeNoShape = unicode.stream().filter(x -> !shapeChars.contains(x)).toList();
+        if (unicodeNoShape.size() > 0
+                && unicodeNoShape.get(0).equals(radLetter.getRadicalAtPositionOne())) {
             return true;
         }
         return false;

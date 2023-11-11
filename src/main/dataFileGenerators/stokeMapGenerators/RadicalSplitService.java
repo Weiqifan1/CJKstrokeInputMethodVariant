@@ -12,6 +12,14 @@ public class RadicalSplitService {
         return "";
     }
 
+    public Set<String> generateSetCharacters() {
+        Set<String> charSet = new HashSet<>();
+        for (int i = 0x2FF0; i <= 0x2FFF; i++) {
+            charSet.add(new String(Character.toChars(i)));
+        }
+        return charSet;
+    }
+
     public Map<String, Set<String>> getRadicalSplitMap() {
         String filePath = "src/main/staticDataFiles/ids.txt";
         Map<String, Set<String>> result = getIdsMap(filePath);

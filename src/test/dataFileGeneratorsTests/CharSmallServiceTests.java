@@ -7,6 +7,7 @@ import main.Models.sortingEnums.BasicStroke;
 import main.Models.sortingEnums.Freq;
 import main.Models.sortingEnums.InitialRadicals;
 import main.dataFileGenerators.stokeMapGenerators.CharSmallService;
+import main.dataFileGenerators.stokeMapGenerators.RadicalSplitService;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -24,6 +25,7 @@ public class CharSmallServiceTests {
 
 
     private CharSmallService SCS;
+    private RadicalSplitService radService = new RadicalSplitService();
 
     @BeforeAll
     public void init(){
@@ -39,18 +41,23 @@ public class CharSmallServiceTests {
                 Freq.JundaFirst,
                 InitialRadicals.InitialRadicalsOnly,
                 //plant   foot    bamboo  insect    tree   waterradical hand
-                examples.testBasicRadicals(List.of("", "", "", "","", "", "")),
+                examples.testBasicRadicals(List.of("", "", "", "","", "", "A")),
                 false);
 
         Map<String, List<CharSmall>> sortedMap = SCS.generateSortedByFreq(params);
+        List<List<CharSmall>> values = getValues(sortedMap);
+        List<CharSmall> testHand = flattenNested(values);
+
+        Set<String> shapeCharacters = radService.generateSetCharacters();
+        List<String> OneTwoOneNOThand = testHand.stream()
+                .filter(x -> isoneTwoNotHand(x, shapeCharacters))
+                .map(x -> cjkAndFreq(x)).toList();
 
         Set<String> Astrings = sortedMap.keySet().stream().filter(x -> x.startsWith("A")).collect(Collectors.toSet());
         List<List<CharSmall>> AstringCodes = Astrings.stream()
                 .map(x -> sortedMap.get(x))
                 .collect(Collectors.toList());
         List<String> Aflat = flatten(AstringCodes);
-
-        List<CharSmall> testHand = sortedMap.get("A");
         
         Map<String, List<String>> stringifyed = SCS.stringifyMap(sortedMap);
         List<String> toListTest = SCS.getStringsFromIndex(stringifyed, 9);
@@ -60,13 +67,44 @@ public class CharSmallServiceTests {
         assertEquals(51663, 123);
     }
 
+    private String cjkAndFreq(CharSmall x) {
+        String output = "";
+        output = x.getCJK() + "-" +  x.getFrequency() + "-" + x.getSecondaryFreq();
+        return output;
+    }
+
+    private boolean isoneTwoNotHand(CharSmall x, Set<String> shapeCharacters) {
+        boolean isHand = false;
+        boolean isOneTwo = false;
+        if (Objects.nonNull(x.getConverterCodes())) {
+            for (CodeConverter convert : x.getConverterCodes()) {
+                if (convert.getFinalCodes().startsWith("A")) {
+                    isHand = true;
+                }
+            }
+        }
+        if (x.getConwayCode().startsWith("121")) {
+            isOneTwo = true;
+        }
+        return isOneTwo && !isHand;
+    }
+
+    private List<List<CharSmall>> getValues(Map<String, List<CharSmall>> sortedMap) {
+        List<List<CharSmall>> result = new ArrayList<>();
+        for (String eachKey : sortedMap.keySet()) {
+            List<CharSmall> foreachRes = sortedMap.get(eachKey);
+            result.add(foreachRes);
+        }
+        return result;
+    }
+
     @Test
     void testWhichKobinationOf() {
         Double lowest = 0.0;
         List<String> combiStrings = new ArrayList<>();
 
         ArrayList<ArrayList<String>> allCombis = new ArrayList<>();
-        ArrayList<String> copy = new ArrayList<>(List.of("s", "d", "f", "j", "k", "l"));
+        ArrayList<String> copy = new ArrayList<>(List.of("s", "d", "f", "j", "k", "l", "m"));
         allCombis = shuffleList(copy);
 
         for (List<String> subList : allCombis) {
@@ -78,7 +116,7 @@ public class CharSmallServiceTests {
         }
 
 
-        Map<Double, String> first = createDoubleToCjk(List.of("s", "d", "f", "j", "k", "l"));
+        Map<Double, String> first = createDoubleToCjk(List.of("s", "d", "f", "j", "k", "l", ""));
 
 
         assertEquals("a", "b");
@@ -154,4 +192,13 @@ public class CharSmallServiceTests {
         return flatList.stream().distinct().collect(Collectors.toList());
     }
 
+    public static List<CharSmall> flattenNested(List<List<CharSmall>> nestedList) {
+        List<CharSmall> flatList = new ArrayList<>();
+        for (List<CharSmall> list : nestedList) {
+            for (CharSmall each : list) {
+                flatList.add(each);
+            }
+        }
+        return flatList.stream().distinct().collect(Collectors.toList());
+    }
 }

@@ -1,5 +1,7 @@
 package main.Models;
 
+import main.dataFileGenerators.stokeMapGenerators.RadicalSplitService;
+
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -23,14 +25,6 @@ public class SplitRadicals {
         return shapeCharacters;
     }
 
-    private Set<String> generateSetCharacters() {
-        Set<String> charSet = new HashSet<>();
-        for (int i = 0x2FF0; i <= 0x2FFF; i++) {
-            charSet.add(new String(Character.toChars(i)));
-        }
-        return charSet;
-    }
-
     public String getStringFromSplitRadical() {
         if (Objects.isNull(splitRadicals) || splitRadicals.isEmpty()) {
             return originalInputString;
@@ -46,6 +40,7 @@ public class SplitRadicals {
     }
 
     public SplitRadicals(String originalInputString, Map<String, Set<String>> idsMap) {
+        RadicalSplitService radService = new RadicalSplitService();
         this.originalInputString = originalInputString;
         Set<String> followingStr = idsMap.get(originalInputString);
         if (Objects.isNull(followingStr)) {
@@ -62,7 +57,7 @@ public class SplitRadicals {
                 splitRadicals = temp.stream().filter(x -> Objects.nonNull(x)).collect(Collectors.toSet());
             }
         }
-        shapeCharacters = generateSetCharacters();
+        shapeCharacters = radService.generateSetCharacters();
     }
 
     public static List<String> getUnicodeCharacters(String utf16String) {
