@@ -51,22 +51,118 @@ public class IntevtigationMapService {
     public List<String> generateMapOfElemsToCreateFile(String separator) {
         RadicalExamples radiClass = new RadicalExamples();
         //the number of elements in the lis must correspond to the number of radicals
-        Map<String, RadicalRecord> radicals = radiClass.testBasicRadicals(List.of(
-                "", "", "", "", "", "", "", "a"));
         CharSmallService smallService = new CharSmallService();
 
-        Parameters params = new Parameters(List.of(3,1),
+        Parameters params = new Parameters(List.of(6,2),
+                BasicStroke.DoubleStrokeOnly,
+                Freq.JundaFirst,
+                InitialRadicals.InitialRadicalsOnly,
+                //plant   foot    bamboo  insect    tree   waterradical hand eye,,
+                //say誠   thread縱   Gold錶  dor闍  horse馱    eat餞   car 軔
+                radiClass.testBasicRadicals(List.of(
+                        "", "f", "l", "j","k", "", "s", "d",
+                        "v" , "h", "t", "n", "b", "y" ,"g")
+                ),
+                true);
+                /*
+                new Parameters(List.of(3,1),
                 BasicStroke.DoubleStrokeOnly,
                 Freq.JundaFirst,
                 InitialRadicals.InitialRadicalsOnly,
                 radicals,
-                true);
+                true);*/
 
         Map<String, List<CharSmall>> sortedMap = smallService.generateSortedByFreq(params);
 
         List<Integer> charLength = differentSizecodes2(sortedMap);
         List<String> result = generateDataForFile2(sortedMap, charLength, separator);
+        result = addalphabet(result);
+        result = addpunctuationECT(result);
+
         return result;
+    }
+
+    private List<String> addalphabet(List<String> input) {
+        List<String> result = new ArrayList<>(); // format: char \t letters
+        List<String> lowercase = Arrays.asList("abcdefghijklmnopqrstuvwxyz".split(""));
+        List<String> uppercase = Arrays.asList("ABCDEFGHIJKLMNOPQRSTUVWXYZ".split(""));
+        for (String each : lowercase) {
+            result.add(each  + "\t" + each.toLowerCase());
+        }
+        for (String each : uppercase) {
+            result.add(each  + "\t" + each.toLowerCase());
+        }
+        result.addAll(input);
+        return result;
+    }
+
+    private List<String> addpunctuationECT(List<String> input) {
+        List<String> punct = new ArrayList<>();
+        String punctString = "。⋯…⸺·.,、–";
+        String punctParens = "『』「」﹁﹂" + "﹏";
+        String punctEct = "～" + "\u3000" + "【】《》〈〉";
+        String ordinaryPunct = generateordinaryPunct();
+        List<String> punctToList = getUnicodeCharacters(punctString);
+        List<String> parenToList = getUnicodeCharacters(punctParens);
+        List<String> parenEct = getUnicodeCharacters(punctEct);
+        List<String> ordinaryToList = getUnicodeCharacters(ordinaryPunct);
+        for (String eachElem : punctToList) {
+            punct.add(eachElem + "\t" + "z" );
+        }
+        for (String eachElem : parenToList) {
+            punct.add(eachElem + "\t" + "zz" );
+        }
+        for (String eachElem : parenEct) {
+            punct.add(eachElem + "\t" + "zzz" );
+        }
+        //ordinaryToList
+        for (String eachElem : ordinaryToList) {
+            punct.add(eachElem + "\t" + "zzzz" );
+        }
+        punct.addAll(input);
+        return punct;
+    }
+
+    private String generateordinaryPunct() {
+        String punctuation = "";
+        for (int i = 0x20; i <= 0x2F; i++) {
+            punctuation += (char) i;
+        }
+        for (int i = 0x3A; i <= 0x40; i++) {
+            punctuation += (char) i;
+        }
+        for (int i = 0x5B; i <= 0x60; i++) {
+            punctuation += (char) i;
+        }
+        for (int i = 0x7B; i <= 0x7E; i++) {
+            punctuation += (char) i;
+        }
+        return punctuation;
+    }
+
+    public static String getUnicodeHexValues(String input) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < input.length(); i++) {
+            sb.append(String.format("\\u%04x", input.codePointAt(i)));
+        }
+        return sb.toString();
+    }
+
+    public static List<String> getUnicodeCharacters(String utf16String) {
+        List<String> unicodeChars = new ArrayList<>();
+        for (int i = 0; i < utf16String.length(); i++) {
+            char c = utf16String.charAt(i);
+            if (Character.isHighSurrogate(c) && i + 1 < utf16String.length()) {
+                char c2 = utf16String.charAt(i + 1);
+                if (Character.isLowSurrogate(c2)) {
+                    unicodeChars.add(Character.toString(c) + Character.toString(c2));
+                    i++;
+                }
+            } else {
+                unicodeChars.add(Character.toString(c));
+            }
+        }
+        return unicodeChars;
     }
 
     private List<String> generateDataForFile2(Map<String, List<CharSmall>> sortedMap,

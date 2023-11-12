@@ -46,7 +46,7 @@ public class maintest_JundaAndRadicalTest {
                                         "", "f", "l", "j","k", "", "s", "d",
                                         "v" , "h", "t", "n", "b", "y" ,"g")
                 ),
-                false);
+                true);
 
         Map<String, List<CharSmall>> sortedMap = SCS.generateSortedByFreq(params);
 
