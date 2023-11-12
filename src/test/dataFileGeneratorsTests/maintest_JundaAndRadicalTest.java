@@ -38,25 +38,24 @@ public class maintest_JundaAndRadicalTest {
         RadicalExamples examples = new RadicalExamples();
         Parameters params = new Parameters(List.of(6,2),
                 BasicStroke.DoubleStrokeOnly,
-                Freq.TzaiFirst,
+                Freq.JundaFirst,
                 InitialRadicals.InitialRadicalsOnly,
                 //plant   foot    bamboo  insect    tree   waterradical hand eye,,
                 //say誠   thread縱   Gold錶  dor闍  horse馱    eat餞   car 軔
                 examples.testBasicRadicals(List.of(
-                        "", "u", "w", "r","e", "", "i", "o",
-                        "v" , "h", "t", "n", "b", "y" ,"g")),
+                                        "", "f", "l", "j","k", "", "s", "d",
+                                        "v" , "h", "t", "n", "b", "y" ,"g")
+                ),
                 false);
 
         Map<String, List<CharSmall>> sortedMap = SCS.generateSortedByFreq(params);
 
-        List<String> BAMBOOflat = generateLetterFlat("w", sortedMap);
-        List<String> TREEflat = generateLetterFlat("e", sortedMap);
-        List<String> INSECTflat = generateLetterFlat("r", sortedMap);
-        List<String> FOOTflat = generateLetterFlat("u", sortedMap);
-        List<String> HANDflat = generateLetterFlat("i", sortedMap);
-        List<String> EYEflat = generateLetterFlat("o", sortedMap);
-        //List<String> Gflat = generateLetterFlat("", sortedMap);
-        //List<String> Hflat = generateLetterFlat("", sortedMap);
+        List<String> BAMBOOflat = generateLetterFlat("l", sortedMap);
+        List<String> TREEflat = generateLetterFlat("k", sortedMap);
+        List<String> INSECTflat = generateLetterFlat("j", sortedMap);
+        List<String> FOOTflat = generateLetterFlat("f", sortedMap);
+        List<String> EYEflat = generateLetterFlat("d", sortedMap);
+        List<String> HANDflat = generateLetterFlat("s", sortedMap);
 
         List<String> GOLDflat = generateLetterFlat("t", sortedMap);
         List<String> EATflat = generateLetterFlat("y", sortedMap);
@@ -65,13 +64,15 @@ public class maintest_JundaAndRadicalTest {
         List<String> SAYflat = generateLetterFlat("v", sortedMap);
         List<String> HORSEflat = generateLetterFlat("b", sortedMap);
         List<String> DOORflat = generateLetterFlat("n", sortedMap);
-        //List<String> Rflat = generateLetterFlat("", sortedMap);
+        List<String> PLANTflat = generateLetterFlat("A", sortedMap);
 
         //Map<String, List<String>> stringifyed = SCS.stringifyMap(sortedMap);
         //List<String> toListTest = SCS.getStringsFromIndex(stringifyed, 9);
 
         Map<Double, String> doubleToCjk = SCS.sortMap(9, sortedMap);
 
+        List<CharSmall> res = sortedMap.get("xgfw");
+        
         assertEquals(51663, 123);
     }
 
