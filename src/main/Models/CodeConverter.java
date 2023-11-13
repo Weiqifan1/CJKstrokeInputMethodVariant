@@ -85,7 +85,7 @@ public class CodeConverter {
     private List<String> noLongCodes(CJKChaaar CJK, String fullCode, Parameters params) {
         List<String> finalEnd = null;
         //I will write this code without using params
-        if (CJK.getCJK().equals("軔")) {
+        if (CJK.getCJK().equals("目")) {
             //{Double@2241} 4299.0 -> ffhw 摞 埙 貢 茛 埚 菉 芵 損 攔 頡 擻 捵 捰 塤 欯
             String test = "";
         }
@@ -277,6 +277,9 @@ public class CodeConverter {
         Set<String> numbers = java.util.stream.IntStream.range(0, 10)
                 .mapToObj(String::valueOf).collect(Collectors.toSet());
         String result = generateLettersFromSingleStrokes(initialRadicalsFromFull, "(?<=\\G.{2})", doubleLetters());
+        if (Objects.isNull(result) || result.equals("null")) {
+            result = "";
+        }
         return result;
     }
 

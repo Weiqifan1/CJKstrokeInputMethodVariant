@@ -6,21 +6,13 @@ import java.util.Map;
 
 import main.Models.*;
 
-import java.util.Map;
-
 import main.Models.sortingEnums.BasicStroke;
 import main.Models.sortingEnums.Freq;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-import main.Models.CJKChaaar;
 import main.Models.sortingEnums.InitialRadicals;
-
-import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 public class IntevtigationMapService {
 
@@ -98,32 +90,23 @@ public class IntevtigationMapService {
 
     private List<String> addpunctuationECT(List<String> input) {
         List<String> punct = new ArrayList<>();
-        String punctString = "。⋯…⸺·.,、–";
-        String punctParens = "『』「」﹁﹂" + "﹏";
-        String punctEct = "～" + "\u3000" + "【】《》〈〉";
-        String ordinaryPunct = generateordinaryPunct();
-        List<String> punctToList = getUnicodeCharacters(punctString);
-        List<String> parenToList = getUnicodeCharacters(punctParens);
-        List<String> parenEct = getUnicodeCharacters(punctEct);
-        List<String> ordinaryToList = getUnicodeCharacters(ordinaryPunct);
-        for (String eachElem : punctToList) {
-            punct.add(eachElem + "\t" + "z" );
-        }
-        for (String eachElem : parenToList) {
-            punct.add(eachElem + "\t" + "zz" );
-        }
-        for (String eachElem : parenEct) {
-            punct.add(eachElem + "\t" + "zzz" );
-        }
-        //ordinaryToList
-        for (String eachElem : ordinaryToList) {
-            punct.add(eachElem + "\t" + "zzzz" );
-        }
+
+        List<String> z1 = basicChiesePunkt("z");
+        List<String> z2 = dotsAndSashes("zz");
+        List<String> z3 = chineseExtraPunkt("zzz");
+        List<String> z4 = generateordinaryPunct("zzzz");
+
+        punct.addAll(z1);
+        punct.addAll(z2);
+        punct.addAll(z3);
+        punct.addAll(z4);
         punct.addAll(input);
         return punct;
     }
 
-    private String generateordinaryPunct() {
+    private List<String> generateordinaryPunct(String zlet) {
+        List<String> result = new ArrayList<>();
+        String separator = "\t";  //.add("【】" + "\t" + "zz");
         String punctuation = "";
         for (int i = 0x20; i <= 0x2F; i++) {
             punctuation += (char) i;
@@ -137,7 +120,40 @@ public class IntevtigationMapService {
         for (int i = 0x7B; i <= 0x7E; i++) {
             punctuation += (char) i;
         }
-        return punctuation;
+
+        List<String> dotsAndQuotes = List.of(
+                ",", ".", ":", ";", "'", "`", "\"", "‘","’"
+        );
+        List<String> numberChars = List.of(
+                "&", "~", "@", "#", "¶", "$", "£", "€", "¥"  //²³¤€¼  ¡²³¤5¼½¾‘’¥×
+        );
+        List<String> math = List.of(
+                "×", "%", "‰", "¼","½","¾", "²","³"   //¡¤€¥ç»¬!@#45^&8()_+}|":?><ø´
+        );
+        List<String> bracketsAndSlash = List.of(
+                "()", "[]", "{}", "<>", "^", "/",  "\\", "|"
+        );
+        List<String> ectChars = List.of(
+                "+", "-", "_", "*", "¤", "!", "?", "¡", "¿"
+        );
+
+        for (String each : dotsAndQuotes) {
+            result.add(each + separator + zlet + "x");
+        }
+        for (String each : numberChars) {
+            result.add(each + separator + zlet + "c");
+        }
+        for (String each : math) {
+            result.add(each + separator + zlet + "v");
+        }
+        for (String each : bracketsAndSlash) {
+            result.add(each + separator + zlet + "b");
+        }
+        for (String each : ectChars) {
+            result.add(each + separator + zlet + "n");
+        }
+
+        return result;
     }
 
     public static String getUnicodeHexValues(String input) {
@@ -146,6 +162,59 @@ public class IntevtigationMapService {
             sb.append(String.format("\\u%04x", input.codePointAt(i)));
         }
         return sb.toString();
+    }
+
+    public static List<String> basicChiesePunkt(String zlet) {
+        String punctString = "。，"+"\u3000"+"！？：；";
+        List<String> toUnicode = getUnicodeCharacters(punctString);
+        List<String> result = new ArrayList<>();
+        for (String eachElem : toUnicode) {
+            result.add(eachElem + "\t" + zlet);
+        }
+        result.add(toUnicode.get(0) + "\t" + zlet + "x");
+        result.add(toUnicode.get(1) + "\t" + zlet + "c");
+        result.add(toUnicode.get(2) + "\t" + zlet + "v");
+        result.add(toUnicode.get(3) + "\t" + zlet + "b");
+        result.add(toUnicode.get(4) + "\t" + zlet + "n");
+        result.add(toUnicode.get(5) + "\t" + zlet + "m");
+        return result;
+    }
+
+    public static List<String> dotsAndSashes(String zlet) {
+        String punctString = "⋯…·.⸺–,、";
+        List<String> toUnicode = getUnicodeCharacters(punctString);
+        List<String> result = new ArrayList<>();
+        for (String eachElem : toUnicode) {
+            result.add(eachElem + "\t" + zlet);
+        }
+        result.add(toUnicode.get(0) + "\t" + zlet + "x");
+        result.add(toUnicode.get(1) + "\t" + zlet + "c");
+        result.add(toUnicode.get(2) + "\t" + zlet + "v");
+        result.add(toUnicode.get(3) + "\t" + zlet + "b");
+        result.add(toUnicode.get(4) + "\t" + zlet + "n");
+        result.add(toUnicode.get(5) + "\t" + zlet + "m");
+        return result;
+    }
+
+    public static List<String> chineseExtraPunkt(String zlet) {
+        List<String> punct = new ArrayList<>();
+        punct.add("【】" + "\t" + zlet);
+        punct.add("〈〉" + "\t" + zlet);
+        punct.add("《》" + "\t" + zlet);
+        punct.add("「」" + "\t" + zlet);
+        punct.add("『』" + "\t" + zlet);
+        punct.add("﹁﹂" + "\t" + zlet);
+        punct.add("～" + "\t" + zlet);
+        punct.add("﹏" + "\t" + zlet);
+
+        punct.add("【】" + "\t" + zlet + "x");
+        punct.add("〈〉" + "\t" + zlet + "c");
+        punct.add("《》" + "\t" + zlet + "v");
+        punct.add("「」" + "\t" + zlet + "b");
+        punct.add("『』" + "\t" + zlet + "n");
+        punct.add("﹁﹂" + "\t" + zlet + "m");
+
+        return punct;
     }
 
     public static List<String> getUnicodeCharacters(String utf16String) {

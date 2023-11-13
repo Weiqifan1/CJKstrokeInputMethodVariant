@@ -69,7 +69,7 @@ public class maintest_JundaAndRadicalTest {
         //Map<String, List<String>> stringifyed = SCS.stringifyMap(sortedMap);
         //List<String> toListTest = SCS.getStringsFromIndex(stringifyed, 9);
 
-        Map<Double, String> doubleToCjk = SCS.sortMap(9, sortedMap);
+        Map<Double, String> doubleToCjk = SCS.sortMap(6, sortedMap);
 
         List<CharSmall> res = sortedMap.get("xgfw");
         
