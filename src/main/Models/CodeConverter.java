@@ -14,12 +14,16 @@ public class CodeConverter {
     private String substringLeftAfterRadical;
     private String finalCodes;
 
-    public CodeConverter(CJKChaaar CJK, String fullCode, Parameters params, Boolean includeDoubleLong) {
+    public CodeConverter(CJKChaaar CJK,
+                         String fullCode,
+                         Parameters params,
+                         Boolean includeDoubleLong,
+                         Map<String, String> letters) {
         //private Set<String> createCoderange(Set<String> codesWithInitialRadicalsToEncoded, List<Integer> strokeRange)
         if (fullCode.equals("1212251125214")) {
             String test3 = "";
         }
-        List<String> substringTripple = getSubstringTupple(CJK, fullCode, params, includeDoubleLong);
+        List<String> substringTripple = getSubstringTupple(CJK, fullCode, params, includeDoubleLong, letters);
         this.substringFromRadical = substringTripple.get(0);
         this.substringLeftAfterRadical = substringTripple.get(1);
         this.finalCodes = substringTripple.get(2);
@@ -31,7 +35,8 @@ public class CodeConverter {
     private List<String> getSubstringTupple(CJKChaaar CJK,
                                             String fullCode,
                                             Parameters params,
-                                            Boolean includeDoubleLong) {
+                                            Boolean includeDoubleLong,
+                                            Map<String, String> letters) {
         //should return a list of 3 strings: substringFromRad, substrinAfterrad, fnal code
         //芖
         if (CJK.getCJK().equals("踈") || CJK.getCJK().equals("𢰸")) {
@@ -39,14 +44,18 @@ public class CodeConverter {
         }
         List<String> result = new ArrayList<>();
         if (includeDoubleLong) {
-            result = longCodes(CJK, fullCode, params, List.of(10, 2));
+            result = longCodes(CJK, fullCode, params, List.of(10, 2), letters);
         }else {
-            result = noLongCodes(CJK, fullCode, params);
+            result = noLongCodes(CJK, fullCode, params, letters);
         }
         return result;
     }
 
-    private List<String> longCodes(CJKChaaar cjk, String fullCode, Parameters params, List<Integer> intsToEncodeWithRange) {
+    private List<String> longCodes(CJKChaaar cjk,
+                                   String fullCode,
+                                   Parameters params,
+                                   List<Integer> intsToEncodeWithRange,
+                                   Map<String, String> letters) {
         List<String> result = new ArrayList<>();
         if (cjk.getCJK().equals("舛")) { // qyjjjj 舛 䢷 夂 夅 夊  影
             String testLastStrokes = "";
@@ -57,7 +66,7 @@ public class CodeConverter {
         String withCodeRange = createCoderange(
                 fullCode,
                 intsToEncodeWithRange);
-        String toEncoded = encodedStrokes(params.getBasicStroke(), withCodeRange);
+        String toEncoded = encodedStrokes(params.getBasicStroke(), withCodeRange, letters);
 
 
         String finalCode = "";
@@ -82,7 +91,10 @@ public class CodeConverter {
         return sb.toString();
     }
 
-    private List<String> noLongCodes(CJKChaaar CJK, String fullCode, Parameters params) {
+    private List<String> noLongCodes(CJKChaaar CJK,
+                                     String fullCode,
+                                     Parameters params,
+                                     Map<String, String> letters) {
         List<String> finalEnd = null;
         //I will write this code without using params
         if (CJK.getCJK().equals("目")) {
@@ -113,7 +125,7 @@ public class CodeConverter {
         String withCodeRange = createCoderange(
                 fullCodeMinusRad,
                 codeShort);
-        String toEncoded = encodedStrokes(params.getBasicStroke(), withCodeRange);
+        String toEncoded = encodedStrokes(params.getBasicStroke(), withCodeRange, letters);
 
         if (Objects.nonNull(radLetter)) {
             String finalCode = radLetter.getLetter() + toEncoded;
@@ -273,10 +285,10 @@ public class CodeConverter {
 
     //long code encoded strokes
     private String encodedStrokes(BasicStroke basicStroke,
-                                       String initialRadicalsFromFull) {
+                                       String initialRadicalsFromFull, Map<String, String> letters) {
         Set<String> numbers = java.util.stream.IntStream.range(0, 10)
                 .mapToObj(String::valueOf).collect(Collectors.toSet());
-        String result = generateLettersFromSingleStrokes(initialRadicalsFromFull, "(?<=\\G.{2})", doubleLetters());
+        String result = generateLettersFromSingleStrokes(initialRadicalsFromFull, "(?<=\\G.{2})", letters);
         if (Objects.isNull(result) || result.equals("null")) {
             result = "";
         }

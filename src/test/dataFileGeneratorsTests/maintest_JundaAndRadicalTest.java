@@ -7,6 +7,7 @@ import main.Models.sortingEnums.BasicStroke;
 import main.Models.sortingEnums.Freq;
 import main.Models.sortingEnums.InitialRadicals;
 import main.dataFileGenerators.stokeMapGenerators.CharSmallService;
+import main.dataFileGenerators.stokeMapGenerators.ConwayCodeService;
 import main.dataFileGenerators.stokeMapGenerators.RadicalSplitService;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -35,6 +36,7 @@ public class maintest_JundaAndRadicalTest {
 
     @Test
     void generateCharSmall_jundaFirst() {
+        Map<String, String> letters = ConwayCodeService.doubleLetters();
         RadicalExamples examples = new RadicalExamples();
         Parameters params = new Parameters(List.of(6,2),
                 BasicStroke.DoubleStrokeOnly,
@@ -48,7 +50,7 @@ public class maintest_JundaAndRadicalTest {
                 ),
                 true);
 
-        Map<String, List<CharSmall>> sortedMap = SCS.generateSortedByFreq(params);
+        Map<String, List<CharSmall>> sortedMap = SCS.generateSortedByFreq(params, letters);
 
         List<String> BAMBOOflat = generateLetterFlat("l", sortedMap);
         List<String> TREEflat = generateLetterFlat("k", sortedMap);
@@ -126,6 +128,7 @@ public class maintest_JundaAndRadicalTest {
 
     @Test
     void testWhichKobinationOf() {
+        Map<String, String> letters = ConwayCodeService.doubleLetters();
         Double lowest = 0.0;
         List<String> combiStrings = new ArrayList<>();
 
@@ -142,7 +145,7 @@ public class maintest_JundaAndRadicalTest {
         }
 
 
-        Map<Double, String> first = createDoubleToCjk(List.of("s", "d", "f", "j", "k", "l", ""));
+        Map<Double, String> first = createDoubleToCjk(List.of("s", "d", "f", "j", "k", "l", ""), letters);
 
 
         assertEquals("a", "b");
@@ -167,8 +170,9 @@ public class maintest_JundaAndRadicalTest {
         return result;
     }
 
-    private Double getRadicalsFromLetters(List<String> letters) {
-        Map<Double, String> doubleToCjk = createDoubleToCjk(letters);
+    private Double getRadicalsFromLetters(List<String> radicalletters) {
+        Map<String, String> letters = ConwayCodeService.doubleLetters();
+        Map<Double, String> doubleToCjk = createDoubleToCjk(radicalletters, letters);
         SortedMap<Double, String> filteredMap = doubleToCjk.entrySet().stream()
                 .filter(entry -> isFourLetterOrLess(entry.getValue()))
                 .collect(Collectors.toMap(
@@ -181,16 +185,17 @@ public class maintest_JundaAndRadicalTest {
         return firstDouble;
     }
 
-    private Map<Double, String> createDoubleToCjk(List<String> letters) {
+    private Map<Double, String> createDoubleToCjk(List<String> radicalletters,
+                                                  Map<String, String> letters) {
         RadicalExamples examples = new RadicalExamples();
         Parameters params = new Parameters(List.of(6,2),
                 BasicStroke.DoubleStrokeOnly,
                 Freq.JundaFirst,
                 InitialRadicals.InitialRadicalsOnly,
-                examples.testBasicRadicals(letters),
+                examples.testBasicRadicals(radicalletters),
                 true);
 
-        Map<String, List<CharSmall>> sortedMap = SCS.generateSortedByFreq(params);
+        Map<String, List<CharSmall>> sortedMap = SCS.generateSortedByFreq(params, letters);
 
         Map<String, List<String>> stringifyed = SCS.stringifyMap(sortedMap);
         List<String> toListTest = SCS.getStringsFromIndex(stringifyed, 9);

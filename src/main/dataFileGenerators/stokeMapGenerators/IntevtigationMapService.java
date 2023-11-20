@@ -40,7 +40,7 @@ public class IntevtigationMapService {
         CJKList = charToInfoCJKMap.values().stream().toList();
     }
 
-    public List<String> generateMapOfElemsToCreateFile(String separator) {
+    public List<String> generateMapOfElemsToCreateFile(String separator, Map<String, String> letters) {
         RadicalExamples radiClass = new RadicalExamples();
         //the number of elements in the lis must correspond to the number of radicals
         CharSmallService smallService = new CharSmallService();
@@ -64,7 +64,7 @@ public class IntevtigationMapService {
                 radicals,
                 true);*/
 
-        Map<String, List<CharSmall>> sortedMap = smallService.generateSortedByFreq(params);
+        Map<String, List<CharSmall>> sortedMap = smallService.generateSortedByFreq(params, letters);
 
         List<Integer> charLength = differentSizecodes2(sortedMap);
         List<String> result = generateDataForFile2(sortedMap, charLength, separator);

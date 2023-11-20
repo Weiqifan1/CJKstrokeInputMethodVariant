@@ -9,6 +9,7 @@ import main.Models.sortingEnums.BasicStroke;
 import main.Models.sortingEnums.Freq;
 import main.Models.sortingEnums.InitialRadicals;
 import main.dataFileGenerators.stokeMapGenerators.CharSmallService;
+import main.dataFileGenerators.stokeMapGenerators.ConwayCodeService;
 import main.dataFileGenerators.stokeMapGenerators.IntevtigationMapService;
 import main.dataFileGenerators.stokeMapGenerators.StrokeMapService;
 import main.investigation.TryingOutDifferentIdeas;
@@ -97,15 +98,16 @@ public class TryingOutDifferentIdeasTests {
         RadicalExamples radiClass = new RadicalExamples();
         CharSmallService smallService = new CharSmallService();
 
-        Parameters params = new Parameters(List.of(6,2),
+        Map<String, String> letters = ConwayCodeService.doubleLetters();
+        Parameters params = new Parameters(List.of(6, 2),
                 BasicStroke.DoubleStrokeOnly,
                 Freq.JundaFirst,
                 InitialRadicals.InitialRadicalsOnly,
                 //plant   foot    bamboo  insect    tree   waterradical hand eye,,
                 //say誠   thread縱   Gold錶  dor闍  horse馱    eat餞   car 軔
                 radiClass.testBasicRadicals(List.of(
-                        "", "f", "l", "j","k", "", "s", "d",
-                        "v" , "h", "t", "n", "b", "y" ,"g")
+                        "", "f", "l", "j", "k", "", "s", "d",
+                        "v", "h", "t", "n", "b", "y", "g")
                 ),
                 true);
                 /*
@@ -116,7 +118,7 @@ public class TryingOutDifferentIdeasTests {
                 radicals,
                 true);*/
 
-        Map<String, List<CharSmall>> sortedMap = smallService.generateSortedByFreq(params);
+        Map<String, List<CharSmall>> sortedMap = smallService.generateSortedByFreq(params, letters);
         HashMap<String, CharSmall> cjkToSmallMap = new HashMap<>();
         List<List<CharSmall>> charsmall = sortedMap.values().stream().toList();
         for (List<CharSmall> small : charsmall) {
@@ -135,7 +137,7 @@ public class TryingOutDifferentIdeasTests {
             CJKChaaar cjk = charToInfoCJKMap.get(strPlusTab);
             if (Objects.nonNull(cjk) && Objects.nonNull(cjk.getJunda())) {
                 //create letter set
-                Set<String> letters = new HashSet<>();
+                Set<String> finalletters = new HashSet<>();
                 CharSmall objSmall = cjkToSmallMap.get(strPlusTab);
                 Set<String> liOf = new HashSet<>();
                 if (Objects.nonNull(objSmall)) {
@@ -143,10 +145,10 @@ public class TryingOutDifferentIdeasTests {
                 }
                 for (String singleCode : liOf) {
                     List<String> splicode = Arrays.stream(singleCode.split("")).toList();
-                    letters.addAll(splicode);
+                    finalletters.addAll(splicode);
                 }
 
-                for (String eachLetter : letters) {
+                for (String eachLetter : finalletters) {
                     Long numberOfLet = cjk.getJunda().getOccurrences();
                     Long previous = letterMapJunda.get(eachLetter);
                     Long updated = previous + numberOfLet;
@@ -193,7 +195,6 @@ public class TryingOutDifferentIdeasTests {
         firstStrokeSections.put("vert", vert);
 
         String tes = "";
-
 
 
         Map<String, Long> fingerfreq = new HashMap<>();

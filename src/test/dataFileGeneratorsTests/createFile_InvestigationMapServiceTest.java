@@ -1,6 +1,7 @@
 package test.dataFileGeneratorsTests;
 
 
+import main.dataFileGenerators.stokeMapGenerators.ConwayCodeService;
 import main.dataFileGenerators.stokeMapGenerators.IntevtigationMapService;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -13,6 +14,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -29,7 +31,8 @@ public class createFile_InvestigationMapServiceTest {
 
     @Test
     void generateMapOfElemsToCreateFileTest() {
-        List<String> readyToprint = IMS.generateMapOfElemsToCreateFile("\t");
+        Map<String, String> letters = ConwayCodeService.doubleLetters();
+        List<String> readyToprint = IMS.generateMapOfElemsToCreateFile("\t", letters);
 
         //with only fullcode, 3-3 and plain3-3 you get length 105592
         assertEquals(true, true);

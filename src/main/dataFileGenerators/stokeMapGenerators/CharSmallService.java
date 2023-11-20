@@ -14,9 +14,9 @@ public class CharSmallService {
     public Map<String, CJKChaaar> charToInfoCJKMap;
 
 
-    public Map<String, List<CharSmall>> generateSortedByFreq(Parameters params) {
+    public Map<String, List<CharSmall>> generateSortedByFreq(Parameters params, Map<String, String> letters) {
 
-        List<CharSmall> jundaSorted = generateChars(params);
+        List<CharSmall> jundaSorted = generateChars(params, letters);
         Map<String, List<CharSmall>> sortByFreq = codeToCharSortetByFreq(jundaSorted);
         //Map<String, List<CharSmall>> sortedMap = sortMapByRarestFreqAtIndex(sortByFreq, 9);
         return sortByFreq;
@@ -28,15 +28,18 @@ public class CharSmallService {
     }
 
 
-    public List<CharSmall> generateChars(Parameters params) {
+    public List<CharSmall> generateChars(Parameters params, Map<String, String> letters) {
         Collection<CJKChaaar> chars = charToInfoCJKMap.values();
         List<CharSmall> result = chars.stream()
-                .map(x -> generateChar(x, params))
+                .map(x -> generateChar(x, params, letters))
                 .collect(Collectors.toList());
         return result;
     }
 
-    private CharSmall generateChar(CJKChaaar CJK, Parameters params) {
+    private CharSmall generateChar(
+            CJKChaaar CJK,
+            Parameters params,
+            Map<String, String> letters) {
         //TODO: reimpelent the code string to be an object that can handle radicals
         if (CJK.getCJK().equals("硢")) {
             String test = "";
@@ -55,13 +58,13 @@ public class CharSmallService {
                 String test3 = "";
             }
             if (params.getIncludeLongDoubleStrokes()) {
-                CodeConverter singleConverter1 = new CodeConverter(CJK, eachCode, params, false);
+                CodeConverter singleConverter1 = new CodeConverter(CJK, eachCode, params, false, letters);
                 codeConverter.add(singleConverter1);
-                CodeConverter singleConverter2 = new CodeConverter(CJK, eachCode, params, true);
+                CodeConverter singleConverter2 = new CodeConverter(CJK, eachCode, params, true, letters);
                 codeConverter.add(singleConverter2);
 
             }else {
-                CodeConverter singleConverter = new CodeConverter(CJK, eachCode, params, false);
+                CodeConverter singleConverter = new CodeConverter(CJK, eachCode, params, false, letters);
                 codeConverter.add(singleConverter);
             }
         }

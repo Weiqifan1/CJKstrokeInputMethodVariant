@@ -204,9 +204,7 @@ public class ConwayCodeService {
         return pairsWithLetter;
     }
 
-
-
-    private Map<String, String> doubleLetters() {
+    public static Map<String, String> doubleLetters() {
         Map<String, String> numToLetter = new HashMap<>();
 
         numToLetter.put("1", "d");

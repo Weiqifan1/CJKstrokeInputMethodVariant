@@ -7,6 +7,7 @@ import main.Models.sortingEnums.BasicStroke;
 import main.Models.sortingEnums.Freq;
 import main.Models.sortingEnums.InitialRadicals;
 import main.dataFileGenerators.stokeMapGenerators.CharSmallService;
+import main.dataFileGenerators.stokeMapGenerators.ConwayCodeService;
 import main.dataFileGenerators.stokeMapGenerators.RadicalSplitService;
 import main.dataFileGenerators.stokeMapGenerators.StrokeMapService;
 import org.junit.jupiter.api.BeforeAll;
@@ -32,6 +33,7 @@ public class RadicalSplitServiceTest {
 
     @BeforeAll
     public void init(){
+        Map<String, String> letters = ConwayCodeService.doubleLetters();
         System.out.println("CharSmallService Init()");
         RSS = new RadicalSplitService();
         SCS = new CharSmallService();
@@ -50,7 +52,7 @@ public class RadicalSplitServiceTest {
                 examples.testBasicRadicals(List.of("", "", "", "","", "", "A")),
                 false);
 
-        List<CharSmall> jundaSorted = SCS.generateChars(params);
+        List<CharSmall> jundaSorted = SCS.generateChars(params, letters);
         sortByFreq = SCS.codeToCharSortetByFreq(jundaSorted);
     }
 
