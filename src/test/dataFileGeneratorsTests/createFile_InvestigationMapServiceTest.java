@@ -1,6 +1,7 @@
 package test.dataFileGeneratorsTests;
 
 
+import main.Models.CharSmall;
 import main.dataFileGenerators.stokeMapGenerators.ConwayCodeService;
 import main.dataFileGenerators.stokeMapGenerators.IntevtigationMapService;
 import org.junit.jupiter.api.BeforeAll;
@@ -32,7 +33,9 @@ public class createFile_InvestigationMapServiceTest {
     @Test
     void generateMapOfElemsToCreateFileTest() {
         Map<String, String> letters = ConwayCodeService.doubleLetters();
-        List<String> readyToprint = IMS.generateMapOfElemsToCreateFile("\t", letters);
+        Map<String, List<CharSmall>> temp = IMS.generateMapOfElemsToCreateFile("\t", letters);
+
+        List<String> readyToprint= IMS.generateElemsToCreateFile(temp, "\t");
 
         //with only fullcode, 3-3 and plain3-3 you get length 105592
         assertEquals(true, true);
