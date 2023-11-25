@@ -58,12 +58,26 @@ public class CharSmallService {
                 String test3 = "";
             }
             if (params.getIncludeLongDoubleStrokes()) {
-                CodeConverter singleConverter1 = new CodeConverter(CJK, eachCode, params, false, letters);
+                //generate Code converter object for long - 6 letter codes
+                CodeConverter singleConverter1 = new CodeConverter(CJK, eachCode, params, true, letters);
                 codeConverter.add(singleConverter1);
-                CodeConverter singleConverter2 = new CodeConverter(CJK, eachCode, params, true, letters);
+                //generate Code converter object for short - 4 - letter codes
+                CodeConverter singleConverter2 = new CodeConverter(CJK, eachCode, params, false, letters);
                 codeConverter.add(singleConverter2);
-
+                //generate Code converter object for short - 4 letter codes that doesnt use initial radicals
+                if (singleConverter2.getSubstringLeftAfterRadical().length() == 0) {
+                    Parameters params_noRadicals = new Parameters(
+                            params.getStrokeRange(),
+                            params.getBasicStroke(),
+                            params.getFreq(),
+                            params.getInitialRadicals(),
+                            new HashMap<>(),
+                            params.getIncludeLongDoubleStrokes());
+                    CodeConverter singleConverter3 = new CodeConverter(CJK, eachCode, params_noRadicals, false, letters);
+                    codeConverter.add(singleConverter3);
+                }
             }else {
+                //generate Code converter object for short - 4 - letter codes
                 CodeConverter singleConverter = new CodeConverter(CJK, eachCode, params, false, letters);
                 codeConverter.add(singleConverter);
             }
