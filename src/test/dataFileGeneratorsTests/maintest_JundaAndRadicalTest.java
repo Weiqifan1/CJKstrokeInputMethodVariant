@@ -36,7 +36,7 @@ public class maintest_JundaAndRadicalTest {
 
     @Test
     void generateCharSmall_jundaFirst() {
-        Map<String, String> letters = ConwayCodeService.doubleLetters();
+        Map<String, String> letters = ConwayCodeService.doubleLetters_n21();
         RadicalExamples examples = new RadicalExamples();
         Parameters params = new Parameters(List.of(6,2),
                 BasicStroke.DoubleStrokeOnly,
@@ -128,7 +128,7 @@ public class maintest_JundaAndRadicalTest {
 
     @Test
     void testWhichKobinationOf() {
-        Map<String, String> letters = ConwayCodeService.doubleLetters();
+        Map<String, String> letters = ConwayCodeService.doubleLetters_n21();
         Double lowest = 0.0;
         List<String> combiStrings = new ArrayList<>();
 
@@ -171,7 +171,7 @@ public class maintest_JundaAndRadicalTest {
     }
 
     private Double getRadicalsFromLetters(List<String> radicalletters) {
-        Map<String, String> letters = ConwayCodeService.doubleLetters();
+        Map<String, String> letters = ConwayCodeService.doubleLetters_n21();
         Map<Double, String> doubleToCjk = createDoubleToCjk(radicalletters, letters);
         SortedMap<Double, String> filteredMap = doubleToCjk.entrySet().stream()
                 .filter(entry -> isFourLetterOrLess(entry.getValue()))

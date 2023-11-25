@@ -8,12 +8,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
 
@@ -32,7 +26,7 @@ public class createFile_InvestigationMapServiceTest {
 
     @Test
     void generateMapOfElemsToCreateFileTest() {
-        Map<String, String> letters = ConwayCodeService.doubleLetters();
+        Map<String, String> letters = ConwayCodeService.doubleLetters_n21();
         Map<String, List<CharSmall>> temp = IMS.generateMapOfElemsToCreateFile("\t", letters);
 
         List<String> readyToprint= IMS.generateElemsToCreateFile(temp, "\t");

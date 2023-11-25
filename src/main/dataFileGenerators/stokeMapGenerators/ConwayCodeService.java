@@ -198,55 +198,68 @@ public class ConwayCodeService {
         }
         List<String> pairs = Arrays.stream(sixCodeRaw.split("(?<=\\G.{2})")).toList();
 
-        Map<String, String> numToLetter = doubleLetters();
+        Map<String, String> numToLetter = doubleLetters_n21();
 
         String pairsWithLetter = pairs.stream().map(x -> numToLetter.get(x)).collect(Collectors.joining());
         return pairsWithLetter;
     }
 
-    public static Map<String, String> doubleLetters() {
+    public static Map<String, String> doubleLetters_n21() {
         Map<String, String> numToLetter = new HashMap<>();
 
-        numToLetter.put("1", "d");
+        numToLetter.put("1", "g");
 
-        numToLetter.put("12",  "g");
-        numToLetter.put("15",  "f");
-        numToLetter.put("11",  "d");
+        numToLetter.put("11",  "g");
+        numToLetter.put("12",  "f");
+        numToLetter.put("13",  "d");
         numToLetter.put("14",  "s");
-        numToLetter.put("13",  "a");
+        numToLetter.put("15",  "a");
 
-        numToLetter.put("5", "k");
+        numToLetter.put("5", "h");
 
-        numToLetter.put("52", "h");
-        numToLetter.put("55", "j");
-        numToLetter.put("51", "k");
+        numToLetter.put("51", "h");
+        numToLetter.put("52", "j");
+        numToLetter.put("53", "k");
         numToLetter.put("54", "l");
-        numToLetter.put("53", "m");
+        numToLetter.put("55", "m");
 
-        numToLetter.put("3", "e");
+        numToLetter.put("3", "t");
 
-        numToLetter.put("32", "t");
-        numToLetter.put("35", "r");
-        numToLetter.put("31", "e");
+        numToLetter.put("31", "t");
+        numToLetter.put("32", "r");
+        numToLetter.put("33", "e");
         numToLetter.put("34", "w");
-        numToLetter.put("33", "q");
+        numToLetter.put("35", "q");
 
-        numToLetter.put("4", "i");
+        numToLetter.put("4", "y");
 
-        numToLetter.put("42", "y");
-        numToLetter.put("45", "u");
-        numToLetter.put("41", "i");
+        numToLetter.put("41", "y");
+        numToLetter.put("42", "u");
+        numToLetter.put("43", "i");
         numToLetter.put("44", "o");
-        numToLetter.put("43", "p");
+        numToLetter.put("45", "p");
 
-        numToLetter.put("2", "v");
+        numToLetter.put("2", "n");
 
-        numToLetter.put("22", "x");
-        numToLetter.put("25", "c");
-        numToLetter.put("21", "v");
-        numToLetter.put("24", "b");
-        numToLetter.put("23", "n");
+        numToLetter.put("21", "n");
+        numToLetter.put("22", "b");
+        numToLetter.put("23", "v");
+        numToLetter.put("24", "c");
+        numToLetter.put("25", "x");
         return numToLetter;
+    }
+
+
+    public static Map<String, String> doubleLetters_x21() {
+        Map<String, String> x21 = doubleLetters_n21();
+        x21.put("2", "x");
+
+        x21.put("21", "x");
+        x21.put("22", "c");
+        x21.put("23", "v");
+        x21.put("24", "b");
+        x21.put("25", "n");
+        return x21;
     }
 
     /*

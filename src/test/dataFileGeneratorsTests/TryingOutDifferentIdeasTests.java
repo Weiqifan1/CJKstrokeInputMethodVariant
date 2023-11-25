@@ -98,7 +98,7 @@ public class TryingOutDifferentIdeasTests {
         RadicalExamples radiClass = new RadicalExamples();
         CharSmallService smallService = new CharSmallService();
 
-        Map<String, String> letters = ConwayCodeService.doubleLetters();
+        Map<String, String> letters = ConwayCodeService.doubleLetters_n21();
         Parameters params = new Parameters(List.of(6, 2),
                 BasicStroke.DoubleStrokeOnly,
                 Freq.JundaFirst,

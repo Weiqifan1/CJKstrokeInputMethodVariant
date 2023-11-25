@@ -15,7 +15,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 import java.util.List;
 
@@ -33,7 +32,7 @@ public class RadicalSplitServiceTest {
 
     @BeforeAll
     public void init(){
-        Map<String, String> letters = ConwayCodeService.doubleLetters();
+        Map<String, String> letters = ConwayCodeService.doubleLetters_n21();
         System.out.println("CharSmallService Init()");
         RSS = new RadicalSplitService();
         SCS = new CharSmallService();
