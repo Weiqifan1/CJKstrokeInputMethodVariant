@@ -116,7 +116,7 @@ public class IntevtigationMapService {
         }
 
         List<String> dotsAndQuotes = List.of(
-                ",", ".", ":", ";", "'", "`", "\"", "‘","’"
+                ".",",", ":", ";","\"", "'", "`", "‘","’"
         );
         List<String> numberChars = List.of(
                 "&", "~", "@", "#", "¶", "$", "£", "€", "¥"  //²³¤€¼  ¡²³¤5¼½¾‘’¥×
@@ -159,7 +159,7 @@ public class IntevtigationMapService {
     }
 
     public static List<String> basicChiesePunkt(String zlet) {
-        String punctString = "。，"+"\u3000"+"！？：；";
+        String punctString = "。，"+"\u3000"+"？！：；";
         List<String> toUnicode = getUnicodeCharacters(punctString);
         List<String> result = new ArrayList<>();
         for (String eachElem : toUnicode) {
@@ -175,7 +175,7 @@ public class IntevtigationMapService {
     }
 
     public static List<String> dotsAndSashes(String zlet) {
-        String punctString = "⋯…·.⸺–,、";
+        String punctString = "、,⸺⋯…–·.";
         List<String> toUnicode = getUnicodeCharacters(punctString);
         List<String> result = new ArrayList<>();
         for (String eachElem : toUnicode) {
