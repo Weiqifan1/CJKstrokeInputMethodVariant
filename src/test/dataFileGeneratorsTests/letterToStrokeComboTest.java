@@ -2,6 +2,7 @@ package test.dataFileGeneratorsTests;
 
 import main.Models.CJKChaaar;
 import main.Models.CharSmall;
+import main.Models.sortingEnums.Freq;
 import main.dataFileGenerators.stokeMapGenerators.ConwayCodeService;
 import main.dataFileGenerators.stokeMapGenerators.IntevtigationMapService;
 import main.dataFileGenerators.stokeMapGenerators.StrokeMapService;
@@ -36,13 +37,13 @@ public class letterToStrokeComboTest {
     void countHandShifts_x21() {
         Map<String, String> letters_n21 = ConwayCodeService.doubleLetters_n21();
         Map<String, List<CharSmall>> codesN21 =
-                IMS.generateMapOfElemsToCreateFile("\t", letters_n21);
+                IMS.generateMapOfElemsToCreateFile("\t", letters_n21, Freq.JundaFirst);
         Long junda_n21 = changesFromLettersJUNDA(codesN21);
         Long tzai_n21 = changesFromLettersTZAI(codesN21);
 
         Map<String, String> letters_x21 = ConwayCodeService.doubleLetters_x21();
         Map<String, List<CharSmall>> codesX21 =
-                IMS.generateMapOfElemsToCreateFile("\t", letters_x21);
+                IMS.generateMapOfElemsToCreateFile("\t", letters_x21 ,Freq.JundaFirst);
         Long junda_x21 = changesFromLettersJUNDA(codesX21);
         Long tzai_x21 = changesFromLettersTZAI(codesX21);
 

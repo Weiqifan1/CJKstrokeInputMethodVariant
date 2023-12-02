@@ -40,14 +40,17 @@ public class IntevtigationMapService {
         CJKList = charToInfoCJKMap.values().stream().toList();
     }
 
-    public Map<String, List<CharSmall>> generateMapOfElemsToCreateFile(String separator, Map<String, String> letters) {
+    public Map<String, List<CharSmall>> generateMapOfElemsToCreateFile(
+            String separator,
+            Map<String, String> letters,
+            Freq jundaOrTzai) {
         RadicalExamples radiClass = new RadicalExamples();
         //the number of elements in the lis must correspond to the number of radicals
         CharSmallService smallService = new CharSmallService();
 
         Parameters params = new Parameters(List.of(6,2),
                 BasicStroke.DoubleStrokeOnly,
-                Freq.JundaFirst,
+                jundaOrTzai,
                 InitialRadicals.InitialRadicalsOnly,
                 //plant   foot    bamboo  insect    tree   waterradical hand eye,,
                 //say誠   thread縱   Gold錶  dor闍  horse馱    eat餞   car 軔
