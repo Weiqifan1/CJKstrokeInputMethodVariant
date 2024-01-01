@@ -68,8 +68,10 @@ public class maintest_JundaAndRadicalTest {
         List<String> DOORflat = generateLetterFlat("n", sortedMap);
         List<String> PLANTflat = generateLetterFlat("A", sortedMap);
 
-        //Map<String, List<String>> stringifyed = SCS.stringifyMap(sortedMap);
-        //List<String> toListTest = SCS.getStringsFromIndex(stringifyed, 9);
+
+
+        Map<String, List<String>> stringifyed = SCS.stringifyMap(sortedMap);
+        List<String> toListTest = SCS.getStringsFromIndex(stringifyed, 9);
 
         Map<Double, String> doubleToCjk = SCS.sortMap(6, sortedMap);
 
@@ -128,7 +130,7 @@ public class maintest_JundaAndRadicalTest {
 
     @Test
     void testWhichKobinationOf() {
-        Map<String, String> letters = ConwayCodeService.doubleLetters_n21();
+        Map<String, String> letters = ConwayCodeService.doubleLetters_x21();
         Double lowest = 0.0;
         List<String> combiStrings = new ArrayList<>();
 

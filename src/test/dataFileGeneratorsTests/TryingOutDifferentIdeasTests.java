@@ -13,6 +13,8 @@ import main.dataFileGenerators.stokeMapGenerators.ConwayCodeService;
 import main.dataFileGenerators.stokeMapGenerators.IntevtigationMapService;
 import main.dataFileGenerators.stokeMapGenerators.StrokeMapService;
 import main.investigation.TryingOutDifferentIdeas;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.util.*;
@@ -20,7 +22,22 @@ import java.util.stream.Collectors;
 
 public class TryingOutDifferentIdeasTests {
 
-    private IntevtigationMapService IMS;
+    static IntevtigationMapService IMS;
+    static Map<String, List<CharSmall>> ConstantTzai;
+    static List<String> TzaiResultList;
+    static Map<String, List<CharSmall>> ConstantJunda;
+    static List<String> JundaResultList;
+
+    @BeforeAll
+    public static void initConstant() {
+        // assuming getTestAllFrequencies() is a static method in the same class
+        // that returns a value of SomeType
+        ConstantTzai = tzaiFrequencyMap();
+        TzaiResultList = IMS.generateElemsToCreateFile(ConstantTzai, "\t");
+        ConstantJunda = jundaFrequencyMap();
+        JundaResultList = IMS.generateElemsToCreateFile(ConstantJunda, "\t");
+        IMS = new IntevtigationMapService();
+    }
 
     @Test
     void generateFrequencyOfAllCharAbove16() {
@@ -244,5 +261,100 @@ public class TryingOutDifferentIdeasTests {
 
         String tesgfh = "";
     }
+
+    ///**************** 2023-12-30 ******************
+    // tests that in the map of codes, the most common characters in either the junda or tzai lists comes first
+    //in the file letter to char file, and rarer characters comes later.
+
+    /**
+     Map<String, String> letters = ConwayCodeService.doubleLetters_x21();
+     Freq jundaOrTzai = Freq.TzaiFirst;
+
+     Map<String, List<CharSmall>> temp = IMS.generateMapOfElemsToCreateFile("\t", letters, jundaOrTzai);
+
+     List<String> readyToprint= IMS.generateElemsToCreateFile(temp, "\t");
+
+     //with only fullcode, 3-3 and plain3-3 you get length 105592
+     assertEquals(true, true);
+     */
+
+    static Map<String, List<CharSmall>> tzaiFrequencyMap() {
+        Map<String, String> letters = ConwayCodeService.doubleLetters_x21();
+        Freq jundaOrTzai = Freq.TzaiFirst;
+
+        RadicalExamples radiClass = new RadicalExamples();
+        //the number of elements in the lis must correspond to the number of radicals
+        CharSmallService smallService = new CharSmallService();
+
+        Parameters params = new Parameters(List.of(6,2),
+                BasicStroke.DoubleStrokeOnly,
+                jundaOrTzai,
+                InitialRadicals.InitialRadicalsOnly,
+                //plant   foot    bamboo  insect    tree   waterradical hand eye,,
+                //say誠   thread縱   Gold錶  dor闍  horse馱    eat餞   car 軔
+                radiClass.testBasicRadicals(List.of(
+                        "", "f", "l", "j","k", "", "s", "d",
+                        "v" , "h", "t", "n", "b", "y" ,"g")
+                ),
+                true);
+                /*
+                new Parameters(List.of(3,1),
+                BasicStroke.DoubleStrokeOnly,
+                Freq.JundaFirst,
+                InitialRadicals.InitialRadicalsOnly,
+                radicals,
+                true);*/
+
+        Map<String, List<CharSmall>> sortedMap = smallService.generateSortedByFreq(params, letters);
+        return sortedMap;
+    }
+
+
+    static Map<String, List<CharSmall>> jundaFrequencyMap() {
+        Map<String, String> letters = ConwayCodeService.doubleLetters_x21();
+        Freq jundaOrTzai = Freq.JundaFirst;
+
+        RadicalExamples radiClass = new RadicalExamples();
+        //the number of elements in the lis must correspond to the number of radicals
+        CharSmallService smallService = new CharSmallService();
+
+        Parameters params = new Parameters(List.of(6,2),
+                BasicStroke.DoubleStrokeOnly,
+                jundaOrTzai,
+                InitialRadicals.InitialRadicalsOnly,
+                //plant   foot    bamboo  insect    tree   waterradical hand eye,,
+                //say誠   thread縱   Gold錶  dor闍  horse馱    eat餞   car 軔
+                radiClass.testBasicRadicals(List.of(
+                        "", "f", "l", "j","k", "", "s", "d",
+                        "v" , "h", "t", "n", "b", "y" ,"g")
+                ),
+                true);
+                /*
+                new Parameters(List.of(3,1),
+                BasicStroke.DoubleStrokeOnly,
+                Freq.JundaFirst,
+                InitialRadicals.InitialRadicalsOnly,
+                radicals,
+                true);*/
+
+        Map<String, List<CharSmall>> sortedMap = smallService.generateSortedByFreq(params, letters);
+        return sortedMap;
+    }
+
+    //TODO: her er de tests der boer skrives:
+    //test at i junda mappen, findes i junda filen. samme for tszai
+    //hvis man tager ready to print og tager tegnene en for en, er alle slaeldne tegn senere end
+    //almindelige tegn. samme for tzai
+    @Test
+    void doesAllCharacterExistInMap_junda() {
+        Map<String, List<CharSmall>> maptotest = ConstantTzai;
+        List<String> readyToPrint = TzaiResultList;
+        
+        String test = "";
+
+        Assertions.assertTrue(true);
+
+    }
+
 
 }

@@ -14,11 +14,20 @@ public class CharSmallService {
     public Map<String, CJKChaaar> charToInfoCJKMap;
 
 
-    public Map<String, List<CharSmall>> generateSortedByFreq(Parameters params, Map<String, String> letters) {
+    public Map<String, List<CharSmall>> generateSortedByFreq(Parameters params,
+                                                             Map<String, String> letters
+            //, int indexToSortOuterMap
+    ) {
 
         List<CharSmall> jundaSorted = generateChars(params, letters);
         Map<String, List<CharSmall>> sortByFreq = codeToCharSortetByFreq(jundaSorted);
-        //Map<String, List<CharSmall>> sortedMap = sortMapByRarestFreqAtIndex(sortByFreq, 9);
+        //Map<String, List<CharSmall>> sortedMap = sortMapByRarestFreqAtIndex(sortByFreq, 9)
+        //2023 - 12 - 03
+        // hertil er hvert element liste sorteret korrekt, men selve mappen er ikke sorteret.
+        // den skal sorteres efter frekvensen af det index der angives,
+        // eller ogaa skal der laves en ny funktion der sortere.
+        // jeg tror ikke der er negative aspekter ved at sortere, det er jo bare
+        // "strengthening of a promise" om Rich Hickey siger;
         return sortByFreq;
     }
 
@@ -290,6 +299,8 @@ public class CharSmallService {
                 .flatMap(a -> a.getCodes().stream().map(c -> new AbstractMap.SimpleEntry<>(c, a)))
                 .collect(Collectors.groupingBy(Map.Entry::getKey, Collectors.mapping(Map.Entry::getValue, Collectors.toList())));
         map.values().forEach(l -> l.sort(Comparator.comparingDouble(CharSmall::getFrequency)));
+        //each entry in the map is sorted properly, but the whole map is also supposed to be sorted, such that
+        //the first
         return map;
     }
 
@@ -338,12 +349,13 @@ public class CharSmallService {
     }
 
     public static Map<String, List<String>> stringifyMap(Map<String, List<CharSmall>> sortedMap) {
-        return sortedMap.entrySet().stream()
+        LinkedHashMap<String, List<String>> result = sortedMap.entrySet().stream()
                 .collect(Collectors.toMap(Map.Entry::getKey,
                         e -> e.getValue().stream()
                                 .map(x -> x.getCJK() + " " + x.getFrequency())
                                 .collect(Collectors.toList()),
                         (a, b) -> a, LinkedHashMap::new));
+        return result;
     }
 
     public static List<String> getStringsFromIndex(Map<String, List<String>> map, int x) {

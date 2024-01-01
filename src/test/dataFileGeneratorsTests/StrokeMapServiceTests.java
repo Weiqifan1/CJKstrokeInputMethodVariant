@@ -34,6 +34,7 @@ public class StrokeMapServiceTests {
         CodepointCharacterSequenceReader reader = new CodepointCharacterSequenceReader();
         this.jundaMap = reader.jundaMap();
         this.tzaiMap = reader.tzaiMap();
+        this.RSS = new RadicalSplitService();
         this.radicalSplitMap = RSS.getRadicalSplitMap();
     }
 
@@ -43,6 +44,10 @@ public class StrokeMapServiceTests {
         assertEquals(9931, result.size());
         assertEquals("他", result.get(10).getCJK());
     }
+
+    // TODO: the 4 missing juda and tzai characters in the test CharToInfoCJKMap_FrequencyOverlapsTest
+    //should be investigated and, and if there are
+    //no right codes in the original files, then the 4 characters and their codes should be added to the maps.
 
     @Test
     void CharToInfoCJKMap_FrequencyOverlapsTest() {

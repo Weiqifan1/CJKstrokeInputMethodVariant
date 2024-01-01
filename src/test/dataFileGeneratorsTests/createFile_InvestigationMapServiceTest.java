@@ -34,7 +34,7 @@ public class createFile_InvestigationMapServiceTest {
     @Test
     void generateMapOfElemsToCreateFileTest() {
         Map<String, String> letters = ConwayCodeService.doubleLetters_x21();
-        Freq jundaOrTzai = Freq.JundaFirst;
+        Freq jundaOrTzai = Freq.TzaiFirst;
 
         Map<String, List<CharSmall>> temp = IMS.generateMapOfElemsToCreateFile("\t", letters, jundaOrTzai);
 
@@ -50,7 +50,7 @@ public class createFile_InvestigationMapServiceTest {
         //assertEquals("卩\t52", readyToprint.get(100));
 /*
         //generate file:
-        String filename = "src/main/generatedDataFiles/POFsimp.txt";
+        String filename = "src/main/generatedDataFiles/POFtrad.txt";
         String filePath = new File("").getAbsolutePath();
         filePath.concat(filename);
 
